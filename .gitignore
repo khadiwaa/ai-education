@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+.node_modules/
+
+# Build outputs
+dist/
+build/
+.docusaurus/
+.cache/
+
+# Slidev exports
+slides/exports/
+slides/.slidev/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/settings.json
+.idea/
+
+# Environment
+.env
+.env.local

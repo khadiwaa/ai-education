@@ -1,0 +1,26 @@
+/**
+ * Custom CSS for AI Education docs site
+ */
+
+:root {
+  --ifm-color-primary: #2e6bce;
+  --ifm-color-primary-dark: #2960b9;
+  --ifm-color-primary-darker: #275aae;
+  --ifm-color-primary-darkest: #204a90;
+  --ifm-color-primary-light: #3376e3;
+  --ifm-color-primary-lighter: #3d7de8;
+  --ifm-color-primary-lightest: #5b90ec;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #6ba3f5;
+  --ifm-color-primary-dark: #4f90f3;
+  --ifm-color-primary-darker: #4086f2;
+  --ifm-color-primary-darkest: #136be9;
+  --ifm-color-primary-light: #87b6f7;
+  --ifm-color-primary-lighter: #97bff8;
+  --ifm-color-primary-lightest: #c1d9fb;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
