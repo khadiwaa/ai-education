@@ -74,6 +74,20 @@ npm run start      # opens at localhost:3000
 
 ---
 
+## Self-assessment skill (Copilot CLI)
+
+If you're using GitHub Copilot CLI in this repo, a self-assessment skill is built in. Just say:
+
+```
+assess me
+quiz me
+test my understanding of module 2
+```
+
+The skill runs an interactive interview — 9 open-ended questions across all three Phase 1 modules. After each answer you get feedback; at the end you get a summary and recommended next steps. See [`.github/extensions/ai-assessment/README.md`](.github/extensions/ai-assessment/README.md) for details.
+
+---
+
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to add content, fix errors, or propose new modules.
