@@ -7,7 +7,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   url: 'https://your-org.github.io',
-  baseUrl: '/ai-education-hl/',
+  baseUrl: '/', // Change to '/ai-education-hl/' when deploying to GitHub Pages
 
   organizationName: 'your-org',
   projectName: 'ai-education-hl',
