@@ -84,7 +84,15 @@ quiz me
 test my understanding of module 2
 ```
 
-The skill runs an interactive interview — 9 open-ended questions across all three Phase 1 modules. After each answer you get feedback; at the end you get a summary and recommended next steps. See [`.github/extensions/ai-assessment/README.md`](.github/extensions/ai-assessment/README.md) for details.
+The skill runs an **interactive interview** — 9 open-ended questions across all three Phase 1 modules. After each answer you get feedback on what you demonstrated and one thing to deepen. At the end you get a verbal summary and a **saved report file**:
+
+```
+assessments/<your-name>-ai-assessment-<YYYY-MM-DD>.md
+```
+
+The report includes a score per question (1–3), overall score, strengths, development areas, and specific learning recommendations linked to any gaps. You can share it with your manager, peers, or use it to track your own progress over time.
+
+See [`.github/extensions/ai-assessment/README.md`](.github/extensions/ai-assessment/README.md) for full details.
 
 ---
 
