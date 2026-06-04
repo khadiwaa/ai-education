@@ -1,0 +1,87 @@
+.main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.hero {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.hero h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  font-size: 1rem;
+  color: var(--ifm-color-secondary-darkest);
+  max-width: 600px;
+}
+
+.cliBox {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 1rem;
+  padding: 14px 20px;
+  background: var(--ifm-code-background);
+  border-radius: 8px;
+  border: 1px solid var(--ifm-toc-border-color);
+}
+
+.cliLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--ifm-color-secondary-darkest);
+}
+
+.cliBox code {
+  font-size: 0.95rem;
+  background: none;
+  padding: 0;
+  color: var(--ifm-font-color-base);
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.moduleSection {
+  /* each section stands on its own */
+}
+
+.moduleHeader {
+  margin-bottom: 0.25rem;
+}
+
+.moduleTag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  margin-bottom: 4px;
+}
+
+.moduleTitle {
+  font-size: 1.35rem;
+  margin: 0 0 6px;
+}
+
+.moduleDesc {
+  font-size: 0.9rem;
+  color: var(--ifm-color-secondary-darkest);
+  margin: 0 0 6px;
+}
+
+.moduleLink {
+  font-size: 0.85rem;
+  font-weight: 600;
+}

@@ -1,5 +1,5 @@
 # Assessment reports (personal — not committed to the repo)
-assessments/
+/assessments/
 
 # Dependencies
 node_modules/
@@ -26,3 +26,6 @@ Thumbs.db
 # Environment
 .env
 .env.local
+
+# Module assessment JSON results (personal — not committed)
+docs/static/assessments/*.json

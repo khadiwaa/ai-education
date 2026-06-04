@@ -2,14 +2,14 @@
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'AI Education',
+  title: 'Herbalife AI Education',
   tagline: 'Building AI fluency across engineering teams',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/herbalife-favicon.ico',
 
   url: 'https://your-org.github.io',
   baseUrl: '/', // Change to '/ai-education-hl/' when deploying to GitHub Pages
 
-  organizationName: 'your-org',
+  organizationName: 'herbalife',
   projectName: 'ai-education-hl',
 
   onBrokenLinks: 'throw',
@@ -63,13 +63,22 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'AI Education',
+        title: 'Herbalife AI Education',
+        logo: {
+          alt: 'Herbalife logo',
+          src: 'img/herbalife-icon.png',
+        },
         items: [
           {
             type: 'docSidebar',
             sidebarId: 'curriculum',
             position: 'left',
             label: 'Curriculum',
+          },
+          {
+            to: '/assessments',
+            label: 'Assessments',
+            position: 'left',
           },
           {
             href: 'https://github.com/your-org/ai-education-hl',
@@ -121,7 +130,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Built by engineers, for engineers.`,
+        copyright: `© ${new Date().getFullYear()} Herbalife. Built by engineers, for engineers.`,
       },
       prism: {
         additionalLanguages: ['bash', 'typescript', 'python'],

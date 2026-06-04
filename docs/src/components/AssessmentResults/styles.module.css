@@ -1,0 +1,174 @@
+.card {
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-top: 2.5rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.label {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ifm-heading-color);
+}
+
+.name {
+  font-size: 0.82rem;
+  color: var(--ifm-color-secondary-darkest);
+  margin-top: 2px;
+}
+
+.scoreBlock {
+  border: 2px solid;
+  border-radius: 8px;
+  padding: 6px 14px;
+  text-align: center;
+  flex-shrink: 0;
+  min-width: 68px;
+}
+
+.scorePct {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.scoreLevel {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.questionList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.questionRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pips {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.pipFilled,
+.pipEmpty {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.pipFilled {
+  background: #2e7d32;
+}
+
+.pipEmpty {
+  background: var(--ifm-toc-border-color);
+}
+
+.qLabel {
+  font-size: 0.88rem;
+  color: var(--ifm-font-color-base);
+}
+
+.qLabelWeak {
+  font-size: 0.88rem;
+  color: #e65100;
+}
+
+.section {
+  margin-bottom: 0.75rem;
+}
+
+.sectionTitle {
+  font-weight: 700;
+  font-size: 0.88rem;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-secondary-darkest);
+}
+
+.sectionText {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.focusList {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+}
+
+.focusList li {
+  margin-bottom: 4px;
+}
+
+.sectionLink {
+  font-size: 0.85rem;
+}
+
+.retake {
+  font-size: 0.8rem;
+  color: var(--ifm-color-secondary-darkest);
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--ifm-toc-border-color);
+}
+
+/* Prompt (no results yet) */
+.prompt {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 2px dashed var(--ifm-toc-border-color);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-top: 2.5rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.promptIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.prompt p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: var(--ifm-font-color-base);
+}
+
+.cliCommand {
+  display: inline-block;
+  margin: 4px 0;
+  padding: 4px 10px;
+  background: var(--ifm-code-background);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-family: var(--ifm-font-family-monospace);
+}
+
+.hint {
+  color: var(--ifm-color-secondary-darkest);
+  font-size: 0.82rem !important;
+}

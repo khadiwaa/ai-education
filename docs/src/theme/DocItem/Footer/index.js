@@ -35,7 +35,8 @@ export default function DocItemFooterWrapper(props) {
             onClick={toggle}
             aria-pressed={complete}
           >
-            {complete ? '✓ Completed' : 'Mark as complete'}
+            <span className={styles.checkbox}>{complete ? '✓' : ''}</span>
+            {complete ? 'Completed' : 'Mark as complete'}
           </button>
           {complete && (
             <button className={styles.btnUndo} onClick={toggle}>

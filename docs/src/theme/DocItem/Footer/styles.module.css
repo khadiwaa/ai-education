@@ -1,38 +1,64 @@
 .completeRow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin-top: 2rem;
   padding-top: 1.25rem;
   border-top: 1px solid var(--ifm-toc-border-color);
 }
 
 .btnMark {
-  padding: 8px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
   border-radius: 6px;
-  border: 2px solid var(--ifm-color-primary);
+  border: 2px solid #2e7d32;
   background: transparent;
-  color: var(--ifm-color-primary);
+  color: #2e7d32;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
 }
 
 .btnMark:hover {
-  background: var(--ifm-color-primary);
-  color: #fff;
+  background: rgba(46, 125, 50, 0.08);
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.25);
+}
+
+.checkbox {
+  width: 17px;
+  height: 17px;
+  border: 2px solid currentColor;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 900;
 }
 
 .btnComplete {
-  padding: 8px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
   border-radius: 6px;
-  border: 2px solid var(--ifm-color-success);
-  background: var(--ifm-color-success);
+  border: 2px solid #2e7d32;
+  background: #2e7d32;
   color: #fff;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btnComplete:hover {
+  background: #1b5e20;
+  border-color: #1b5e20;
 }
 
 .btnUndo {
