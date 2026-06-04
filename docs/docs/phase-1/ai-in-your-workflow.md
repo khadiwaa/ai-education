@@ -237,6 +237,59 @@ As agents get more capable, knowing when to keep humans involved is critical eng
 
 ---
 
+## Session context and memory
+
+When you work with Copilot in an interactive session, context exists at three levels. Understanding the difference helps you use each one appropriately.
+
+### Three levels of context
+
+| Level | Scope | How to set it | What to put here |
+|-------|-------|--------------|-----------------|
+| **Session context** | Current conversation only | Just say it, or reference files with `@path/to/file` | Task-specific information: what you're working on, the current bug, this PR |
+| **Custom instructions** | All sessions in this repo, for everyone | `.github/copilot-instructions.md` in the repo | Team conventions, preferred libraries, project architecture |
+| **Persistent memory** | All your sessions, personal | Say "Remember that..." or use `/memory` | Personal preferences, cross-project facts you want Copilot to always know |
+
+### Session context
+
+Within a conversation, Copilot remembers earlier turns. You can build context progressively:
+
+```text
+> Explain @src/auth/session.ts
+> Now focus on how refresh tokens are handled.
+> Write a test for the case where the refresh token has expired.
+```
+
+You don't need to re-paste the file on turn 3 — the session already has it.
+
+**Key habit:** reference files explicitly with `@path/to/file` rather than assuming Copilot has found the right files. Explicit beats implicit.
+
+### Persistent memory
+
+Persistent memory lets Copilot carry facts about your project and preferences **across sessions** — so you don't re-explain project context every time you start a new conversation.
+
+```text
+> Remember that this project uses pnpm, not npm.
+> Remember that our User type lives in @src/types/user.ts.
+> Remember that we never add dependencies without a team discussion.
+```
+
+On future sessions, Copilot uses these facts automatically. You can view and manage memory entries with `/memory`.
+
+Think of memory like briefing a permanent pairing partner. What would you tell a smart engineer on day one that would make every future session with them more efficient?
+
+:::tip Memory vs. custom instructions
+`/memory` is personal — it follows you. `.github/copilot-instructions.md` is shared — it applies to everyone on the team in that repo. Use custom instructions for team conventions. Use memory for personal preferences and reminders. More on custom instructions in [Phase 2, Module 3](/docs/phase-2/skills-and-customization).
+:::
+
+### Managing long sessions
+
+As sessions run long, the context window fills up. Two commands help:
+
+- **`/compact`** — compresses conversation history into a summary, freeing space while preserving important context. Use before a long generation task or when a session starts feeling slow.
+- **`/clear`** — clears history completely. Use at task boundaries: finished one thing, starting something unrelated.
+
+---
+
 ## Hands-on exercise
 
 Open your terminal in a project you know well and try Copilot CLI on something real:
@@ -262,8 +315,10 @@ Notice: What context does it use? Where does it do well? Where does it need more
 | **Prompt injection** | Attacker-crafted input that hijacks model instructions |
 | **Indirect injection** | Injected instructions hidden in retrieved content |
 | **Human-in-the-loop** | Requiring human approval before high-stakes agent actions |
-| **ReAct** | Reason + Act — the agent loop pattern |
-| **Least privilege** | Agents should only have the minimum permissions they need |
+| **Session context** | Conversation history within a single Copilot session |
+| **Persistent memory** | Facts Copilot carries across sessions via `/memory` |
+| **Custom instructions** | Repo-level instructions applied to every Copilot session in that repo |
+| **`/compact`** | Compresses session history to free context window space |
 
 ---
 
@@ -277,15 +332,14 @@ Notice: What context does it use? Where does it do well? Where does it need more
 
 ---
 
-## What's next: Phase 2 deep dives
+## What's next: Phase 2
 
-| Module | Take this if... |
+Phase 2 is about putting this foundation to work with the actual tools — Copilot CLI and VS Code.
+
+| Module | What you'll learn |
 |--------|---------------|
-| [T2: Advanced Prompting & Eval](../phase-3/t2-advanced-prompting) | You want to reliably improve AI feature quality |
-| [T3: Embeddings, RAG & Retrieval](../phase-3/t3-embeddings-rag) | You're building or evaluating AI features with search/docs |
-| [T4: Agents & Multi-Agent Systems](../phase-3/t4-agents-multi-agent) | You're building or working with agentic systems |
-| [T1: Transformer Architecture](../phase-3/t1-transformer-architecture) | You want the deep technical foundation |
-| [S3: AI Product Strategy](../phase-3/s3-ai-product-strategy) | You're making product decisions about AI features |
-| [S2: Cost Modeling](../phase-3/s2-cost-modeling) | You need to estimate or control AI infrastructure costs |
-
-*Phase 2 modules can be taken in any order — start with whatever's most relevant to your work right now.*
+| [1: Copilot CLI Essentials](../phase-2/copilot-cli-essentials) | The interactive session, slash commands, memory, session management |
+| [2: Copilot in VS Code](../phase-2/copilot-in-vscode) | Inline completions, Chat, Edits, slash commands, context variables |
+| [3: Skills & Customization](../phase-2/skills-and-customization) | Custom instructions, skills, workspace configuration |
+| [4: MCP & Integrations](../phase-2/mcp-and-integrations) | Connecting tools and services to Copilot |
+| [5: Real-World Workflows](../phase-2/real-world-workflows) | Code review, testing, debugging, docs, refactoring |

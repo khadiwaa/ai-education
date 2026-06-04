@@ -8,779 +8,553 @@ title: "Module 1: Copilot CLI Essentials"
 
 *Phase 2 · ~60–75 minutes · Practical*
 
-This module is about using Copilot effectively **from the terminal**. The goal is not to memorize commands. The goal is to build a fast, reliable interaction loop: give Copilot the right context, get a useful answer quickly, verify it, and move on.
-
-:::info Two terminal experiences you will see in practice
-This module uses the familiar `gh copilot explain` and `gh copilot suggest` commands because they are still widely used and easy to teach. GitHub has deprecated the old `gh-copilot` extension in favor of the newer interactive `copilot` CLI.
-
-In practice, learn both mental models:
-
-- **`gh copilot ...`** → lightweight, one-shot terminal help
-- **`copilot`** → interactive, agentic terminal assistant with session memory, tools, and MCP integrations
-
-The prompt habits in this module transfer cleanly to both.
-:::
+This module is about using Copilot from the terminal — starting a session, driving it with slash commands, managing memory, and building the interaction habits that make you fast.
 
 ---
 
 ## What Copilot CLI is
 
-Copilot CLI is **Copilot in a terminal-first workflow**.
+Copilot CLI is an **interactive, agentic terminal assistant**. You start a session, have a conversation, and Copilot can read files, run commands, inspect your repo, and take multi-step actions — all without leaving the terminal.
 
-You use it when you want help without switching to your editor, for example:
+```shell
+copilot
+```
 
-- explaining a command you found in a README
-- generating a shell command you do not quite remember
-- debugging an error from a build or test run
-- asking the agent to inspect code from the current directory
-- summarizing a diff before you commit
+That one command starts a persistent session. From there you work conversationally, just as you would with a senior engineer sitting next to you.
 
-At a high level, **Copilot CLI and Copilot in your IDE are different interfaces over the same class of model capabilities**. The model is not magically “smarter” in one place than another. What changes is the workflow surface and the context available.
+### How it differs from Copilot in VS Code
 
-### CLI vs. IDE: when to use which
+| Surface | Best for | Key characteristic |
+|---|---|---|
+| **Copilot CLI (interactive)** | Terminal-centric workflows, multi-step tasks, agentic tasks | Persistent session, slash commands, tools, MCP |
+| **Copilot Chat in VS Code** | Editor-centric Q&A and code changes | Rich editor context, reviewable diffs |
+| **Copilot inline (VS Code)** | Fast in-place completions as you type | Lowest friction, very narrow scope |
 
-| Surface | Best for | Typical interaction | Strengths | Weaknesses |
-|---|---|---|---|---|
-| **`gh copilot explain`** | Explaining commands or pasted code | One-shot | Fast, low friction | Limited memory, not multi-step |
-| **`gh copilot suggest`** | Suggesting shell commands | One-shot | Great for “how do I…” terminal tasks | You still need to inspect before running |
-| **Interactive `copilot` CLI** | Multi-step terminal work | Conversational session | Can carry context, use tools, inspect repo | Slightly more overhead |
-| **Copilot inline in VS Code** | Writing or editing code in-place | Accept/dismiss suggestions | Extremely fast for local code completion | Weak for big ambiguous tasks |
-| **Copilot Chat / Edits in VS Code** | Questions, refactors, tests, docs | Chat or edit session | Rich editor context, reviewable diffs | Easier to over-scope a request |
+The underlying model is the same across all surfaces. What differs is the **context** Copilot has access to and the **tools** it can use. In the interactive CLI session, Copilot has the full run of your terminal: it can list files, run shell commands, read outputs, open PRs, and use any MCP servers you have configured.
 
-### A practical rule
-
-- If you are already **in the terminal** and your question is narrow, start with Copilot CLI.
-- If you are already **inside a file** and want code inserted at the cursor, start with inline completions.
-- If the task spans **multiple files** or needs discussion, use interactive CLI or VS Code Chat/Edits.
+:::tip Start here
+If you only do one thing from this module, start using `copilot` as your default terminal session for any non-trivial task. The slash commands in the next section make the session far more powerful than typing single-shot commands.
+:::
 
 ---
 
 ## Installation and setup
 
-For many engineers, the fastest path is still the GitHub CLI extension flow.
-
 ### Prerequisites
 
-You need:
+- GitHub account with Copilot access
+- GitHub CLI (`gh`) installed — [cli.github.com](https://cli.github.com)
+- Terminal on macOS, Linux, or Windows (WSL recommended on Windows)
 
-- a GitHub account with Copilot access
-- GitHub CLI (`gh`) installed
-- terminal access on your machine
-- permission to authenticate in a browser
-
-### Install the GitHub CLI extension
+### Install
 
 ```shell
+# Authenticate the GitHub CLI
 gh auth login --web
+
+# Install the Copilot CLI extension
 gh extension install github/gh-copilot --force
-gh copilot auth login
+
+# Verify
+copilot --version
 ```
 
-### Sanity-check the install
+### Start your first session
 
 ```shell
-gh copilot --help
-gh copilot suggest "list the ten largest files in this directory"
-gh copilot explain 'find . -type f | xargs wc -l | sort -n'
-```
-
-If authentication fails, first verify that `gh auth status` works. If you use multiple GitHub hosts, use `--hostname` or `GH_HOST` explicitly.
-
-:::tip Optional quality-of-life setup
-The old `gh-copilot` extension can generate shell aliases:
-
-```shell
-gh copilot alias -- bash
-gh copilot alias -- zsh
-gh copilot alias -- pwsh
-```
-
-The common helpers are:
-
-- **`ghcs`** → shorthand for `gh copilot suggest`
-- **`ghce`** → shorthand for `gh copilot explain`
-
-If you use Copilot from the terminal every day, these are worth setting up.
-:::
-
-### The newer interactive CLI
-
-The newer standalone CLI starts as:
-
-```shell
+cd /path/to/your-repo
 copilot
 ```
 
-Once inside, you authenticate with `/login` if needed and work in a persistent session. This is the terminal experience that supports slash commands like `/help`, `/resume`, `/memory`, `/mcp`, and `/instructions`.
+Always start from your **repo root**. Copilot uses your working directory as its primary filesystem anchor. If you start from a subdirectory, it may make incorrect assumptions about your project layout.
 
-:::note Why this matters
-Even if your team still uses `gh copilot suggest` and `gh copilot explain`, it is worth knowing the interactive CLI exists. It is the direction of travel for more advanced terminal workflows.
+---
+
+## The interactive session
+
+Once you run `copilot`, you enter a persistent session. You type messages and Copilot responds — but it is not just a chat window. It can:
+
+- read and write files in your project
+- run shell commands and observe the output
+- iterate across multiple steps before giving you a final answer
+- maintain context from earlier in the conversation
+- connect to external services via MCP
+
+### Your first few messages
+
+```text
+> Summarize the structure of this repo.
+
+> Now look at @src/auth/session.ts and explain what it does.
+
+> This is throwing: TypeError: Cannot read properties of undefined (reading 'userId')
+  Here is the stack trace: [paste stack trace]
+  What is the most likely root cause?
+```
+
+Notice: you do not need to re-paste the file on the third message because Copilot already read it. **The session remembers earlier turns.**
+
+### How context builds in a session
+
+The key habit is to **start narrow and build outward**:
+
+```text
+Turn 1: Explain @src/billing/invoiceService.ts
+Turn 2: Now look at how createInvoice handles tax calculations.
+Turn 3: Write a test for the edge case where taxRate is null.
+```
+
+Each turn builds on the last. You do not restate everything — you extend.
+
+:::warning Start from the right directory
+Engineers often say "Copilot hallucinated the repo structure" when the real problem is simpler: they started the session in the wrong directory or never referenced the relevant files. Run `copilot` from your repo root.
 :::
 
 ---
 
-## The basic interaction loop
+## Slash commands — the complete reference
 
-Good Copilot usage is usually a four-step loop.
+Slash commands are how you control the session. Type them at any point in a conversation.
 
-### 1. State the task clearly
+### `/help`
 
-Bad:
-
-```text
-fix this
-```
-
-Better:
+Show all available slash commands and their descriptions.
 
 ```text
-This TypeScript function should deduplicate users by email, preserve original order, and ignore null emails. What is wrong with it?
+> /help
 ```
 
-### 2. Give just enough context
-
-Context usually means one of:
-
-- the exact error message
-- the relevant code
-- the command you are trying to understand
-- the file path
-- the language, framework, or test runner
-
-### 3. Inspect the output before acting on it
-
-Accepting a Copilot answer in the terminal means one of two things:
-
-- you **use** the explanation and move on, or
-- you **run/adapt** the suggested command
-
-Either way, **you own the judgment**. Copilot is accelerating the first draft, not taking responsibility.
-
-### 4. Tighten and iterate
-
-If the first answer is weak, do not ask the same vague question louder. Add missing context.
-
-Examples:
-
-- “Use Python 3.11 and pytest.”
-- “Assume this runs on macOS.”
-- “The failure only happens in CI.”
-- “Preserve the existing API shape.”
-- “Do not use a new dependency.”
-
-### A realistic loop in the terminal
-
-```shell
-npm test 2>&1 | tail -50
-gh copilot explain "Why is this test failing?" < failing-output.txt
-```
-
-Or, without an intermediate file:
-
-```shell
-npm test 2>&1 | gh copilot explain "Summarize this failure and suggest the most likely root cause"
-```
-
-Then refine:
-
-```shell
-gh copilot explain "Given this stack trace, what should I inspect first in src/auth/session.ts?"
-```
+Run this first in any session if you are unsure what is available. The output is always current for your installed version.
 
 ---
 
-## How context works
+### `/clear`
 
-Copilot is only as grounded as the context you give it.
-
-### In `gh copilot explain` and `gh copilot suggest`
-
-The old GitHub CLI extension is mostly **prompt-in, answer-out**. It does not roam your repository intelligently. You usually give it context by:
-
-- pasting text directly in the prompt
-- redirecting a file with `< file.ts`
-- piping command output into it
-
-Example:
-
-```shell
-gh copilot explain "what does this do" < src/lib/rateLimiter.ts
-```
-
-### In the interactive `copilot` CLI
-
-Context is richer.
-
-The CLI session knows:
-
-- your **current working directory**
-- files you explicitly reference with `@path/to/file`
-- conversation history in the current session
-- any repository-level instructions such as `.github/copilot-instructions.md`
-- available tools and MCP integrations configured for that environment
-
-Example:
+**Clear the current conversation history.**
 
 ```text
-Explain @src/api/handlers/users.py and tell me where validation happens.
+> /clear
 ```
 
-### Current working directory matters
+Use `/clear` when:
+- You have finished one task and are starting a completely different one
+- The conversation has drifted into a bad state and you want a clean slate
+- You want to reduce context window pressure without compacting
 
-If you start the CLI at the repo root, Copilot can reason about the repo root.
+After `/clear`, Copilot has no memory of the previous turns in the session. Persistent `/memory` entries (see below) are unaffected.
 
-If you start it inside a random subdirectory, it may only see part of the codebase clearly. That often produces:
-
-- wrong assumptions about project layout
-- suggestions that invent files in the wrong place
-- commands that run from the wrong directory
-
-:::warning Common mistake
-Engineers often say “Copilot hallucinated the repo structure” when the real problem is simpler: they started in the wrong directory or never referenced the relevant files.
+:::tip Task boundary habit
+At the end of each task, type `/clear` before starting the next one. This prevents old context from bleeding into unrelated requests and reduces the chance of the model getting confused by irrelevant history.
 :::
 
-### What Copilot sees vs. what it does not
+---
 
-| If you provide… | Copilot can usually do well | If you omit it… | Typical failure mode |
+### `/compact`
+
+**Summarize and compress the current conversation history.**
+
+```text
+> /compact
+```
+
+This is one of the most important session management commands. When a long session accumulates many turns, the context window fills up. `/compact` asks the model to summarize what has happened so far and replaces the full history with a compact summary — preserving the important decisions and context while freeing up space.
+
+**When to use `/compact`:**
+- After a long exploration phase before switching to implementation
+- When Copilot starts forgetting things from earlier in the session
+- Before a task that will generate a lot of output (like writing multiple files)
+- When the session feels like it is running slow or degrading in quality
+
+**What `/compact` does NOT do:**
+- It does not clear the session (you keep the context, just compressed)
+- It does not affect persistent `/memory`
+- It is not permanent — the original history is gone once compacted
+
+:::note Think of it like squashing git commits
+`/compact` is like `git squash` for your conversation: the full history of small steps becomes a clean summary, and you continue from there.
+:::
+
+---
+
+### `/model`
+
+**Switch the AI model used in the current session.**
+
+```text
+> /model
+```
+
+Running `/model` opens a model picker. Use this when:
+- You want a faster/cheaper model for simple tasks
+- You want a more capable model for a complex task
+- You are experimenting with different models to compare outputs
+
+Different models have different strengths:
+- Faster, smaller models: great for quick explanations, generating boilerplate, simple rewrites
+- More capable models: better for multi-step reasoning, architecture decisions, complex debugging
+
+The model you select applies to subsequent turns in the session. You can switch again at any point.
+
+:::tip Match model to task
+Do not use your most powerful (and slowest) model for every task. For "write a docstring for this function," a fast model is fine. For "review this architecture and identify risks," use the best available model.
+:::
+
+---
+
+### `/memory`
+
+**View and manage persistent memory across sessions.**
+
+```text
+> /memory
+```
+
+Memory is how Copilot remembers things about you **between sessions** — not just within a single conversation. When Copilot learns something about your project, team, or preferences that it should always know, you can tell it to remember it.
+
+**Adding something to memory:**
+
+```text
+> Remember that we use pnpm, not npm or yarn, for this project.
+
+> Remember that our User type is defined in @src/types/user.ts and should always be imported from there.
+
+> Remember that we never add dependencies without a team discussion first.
+```
+
+Copilot stores these as persistent facts and references them in future sessions.
+
+**Viewing what is in memory:**
+
+```text
+> /memory
+```
+
+This shows you everything Copilot currently has in persistent memory for this context.
+
+**Removing a memory entry:**
+
+```text
+> Forget that [X].
+```
+
+**What is worth storing in memory:**
+- Your stack: languages, frameworks, test runners
+- Team conventions: naming, preferred libraries, forbidden patterns
+- Important type definitions and where they live
+- Constraints: "we do not add dependencies lightly," "we follow conventional commits"
+- Project-specific vocabulary
+
+**What is NOT worth storing in memory:**
+- Task-specific context ("we are currently debugging the billing service") — use session context for that
+- Things that change frequently
+- Things already documented in `.github/copilot-instructions.md` (prefer that for team-shared context)
+
+:::info Memory vs. custom instructions
+`/memory` is personal — it is tied to your session environment, not the repo.
+`.github/copilot-instructions.md` is shared — it applies to everyone on the team when they use Copilot in that repo.
+
+Use custom instructions for team conventions. Use `/memory` for personal preferences and reminders.
+
+See [Module 3: Skills & Customization](/docs/phase-2/skills-and-customization) for custom instructions.
+:::
+
+---
+
+### `/resume`
+
+**Resume a previous session.**
+
+```text
+> /resume
+```
+
+Copilot stores recent sessions. `/resume` shows you a list and lets you pick one to continue. Useful when:
+- You had a productive debugging session yesterday and want to continue today
+- You need to reference what was decided in an earlier session
+- You want to revisit a task you were partway through
+
+Alternatively, from outside the session:
+
+```shell
+copilot --continue
+```
+
+This resumes the most recent session immediately without the picker.
+
+---
+
+### `/context`
+
+**Inspect current context window usage.**
+
+```text
+> /context
+```
+
+Shows how much of the context window is currently occupied. Useful for understanding when you are approaching limits and whether a `/compact` is warranted.
+
+---
+
+### `/instructions`
+
+**View the custom instructions currently applied to this session.**
+
+```text
+> /instructions
+```
+
+Shows the combined instructions from:
+- your global Copilot configuration
+- `.github/copilot-instructions.md` in the current repo
+- any path-specific instruction files
+
+Use this when Copilot is behaving unexpectedly to check whether an instruction is causing it.
+
+---
+
+### `/mcp`
+
+**Manage MCP (Model Context Protocol) server connections.**
+
+```text
+> /mcp
+```
+
+Lists connected MCP servers and their available tools. See [Module 4: MCP & Integrations](/docs/phase-2/mcp-and-integrations) for a full guide.
+
+---
+
+### Quick reference
+
+| Command | What it does | When to use |
+|---|---|---|
+| `/help` | Show all available commands | When you are unsure what is available |
+| `/clear` | Clear conversation history | Between tasks, or when session has drifted |
+| `/compact` | Compress history into a summary | Long sessions before context window fills |
+| `/model` | Switch the AI model | Matching model to task complexity |
+| `/memory` | View or manage persistent memory | Checking or updating what Copilot always knows |
+| `/resume` | Resume a previous session | Continuing yesterday's work |
+| `/context` | Check context window usage | Before long tasks to gauge remaining headroom |
+| `/instructions` | View active custom instructions | Debugging unexpected behavior |
+| `/mcp` | Manage MCP connections | Adding or checking tool integrations |
+
+---
+
+## Memory in depth
+
+Memory is one of the most underused features of Copilot CLI. Here is how to think about it.
+
+### The three levels of context
+
+| Level | Scope | How to set | When to use |
 |---|---|---|---|
-| Exact file content | Explain, refactor, summarize | File content | Hand-wavy guesses |
-| Full error message | Debug faster | The actual stack trace | Generic troubleshooting |
-| Language + framework | Use correct APIs and conventions | Runtime details | Wrong syntax or wrong library |
-| Current directory / relevant paths | Follow repo structure | Project layout | Invented filenames |
-| Clear constraints | Respect your boundaries | Constraints | Overengineered answers |
+| **Persistent memory** | All sessions, personal | `/memory` or "Remember that…" | Personal preferences, cross-project facts |
+| **Custom instructions** | All sessions in this repo, shared | `.github/copilot-instructions.md` | Team conventions, project context |
+| **Session context** | Current session only | Just say it or reference files | Task-specific information |
 
-### Strong context patterns
+### Building a useful memory
 
-**Use stdin when you want code explained quickly**
+Think of `/memory` like briefing a new teammate. What would you tell a smart engineer who joined your team today and was about to pair with you?
 
-```shell
-gh copilot explain "Summarize the control flow and call out risky edge cases" < src/service.py
-```
-
-**Pipe diffs when you want change-aware feedback**
-
-```shell
-git diff --staged | gh copilot explain "Explain what this change does and what regressions to look for"
-```
-
-**Reference files explicitly in interactive CLI**
+Good memory entries:
 
 ```text
-Compare @pkg/http/client.go and @pkg/http/retry.go. Where does timeout handling actually happen?
+Remember that this project uses TypeScript strict mode.
+Remember that tests live in __tests__ next to the source file they test.
+Remember that we use React Query for data fetching, not Redux.
+Remember that our main API client is in @src/lib/api.ts.
+Remember that we prefer explicit error handling over try/catch with generic catch blocks.
 ```
 
----
-
-## Session notes and memory
-
-There are two kinds of memory to understand.
-
-### 1. Conversation memory inside a session
-
-In the interactive `copilot` CLI, the session remembers earlier turns. That means you can build context over time:
+Poor memory entries (too vague or too specific):
 
 ```text
-First, summarize @src/worker.py.
-Now focus only on retry behavior.
-Now propose tests for the timeout path.
+Remember that we are working on a big refactor.    ← task-specific, will be stale
+Remember to be helpful.                            ← already true
+Remember the bug in billing.                       ← too vague to act on
 ```
 
-This is the right way to work on a multi-step task. You do **not** need to re-paste everything every turn if the current session already has the important context.
+### Seeding memory at project start
 
-Useful commands:
-
-| Command | Why you would use it |
-|---|---|
-| `/resume` | Reopen an earlier session |
-| `copilot --continue` | Fast way to continue the last session |
-| `/compact` | Summarize history to keep the session focused and reduce context bloat |
-| `/memory` | Enable or inspect memory across sessions if your environment supports it |
-| `/share` | Save or export the conversation when it is useful to keep |
-| `/instructions` | Inspect custom instruction files affecting the session |
-
-### 2. Persistent repo context
-
-For things Copilot should know **every time**, do not rely on chat history. Put them in a durable place:
-
-- `.github/copilot-instructions.md`
-- path-specific instruction files in `.github/instructions/`
-- stable README sections
-- useful comments around tricky code
-
-### How to keep a session useful
-
-Good session note pattern:
+A good habit when you start working in a new repo:
 
 ```text
-We are debugging a flaky integration test in the billing service.
-Hypothesis so far: the queue consumer retries on timeout but the idempotency key is regenerated.
-Constraints: do not add a new dependency, preserve the current public API.
+> Look at this project structure and suggest what I should add to your memory 
+  to make our sessions more productive.
 ```
 
-That short note is often enough to keep a long session on the rails.
+Copilot will scan the repo and suggest useful memory entries. Review them, accept the ones that are accurate, and skip the ones that are wrong.
 
-:::tip Practical habit
-When a session starts to drift, do not keep arguing with the model. Reset the frame:
+### Keeping memory current
 
-- summarize what is true
-- summarize what is not true
-- restate the exact goal
-- restate the constraints
-:::
-
-### Important limitation
-
-`gh copilot explain` and `gh copilot suggest` are effectively one-shot commands. They do **not** give you durable multi-turn memory the way the interactive CLI does.
+Memory entries can go stale. Review `/memory` occasionally and remove outdated entries. When a major change happens (migrating from npm to pnpm, moving from REST to GraphQL), update the relevant memory entries.
 
 ---
 
 ## Core task patterns
 
-The fastest way to become effective is to reuse a small set of prompt patterns.
+These patterns work in the interactive session for the most common engineering tasks.
 
-### Pattern 1: Explain code
-
-Use this when you want a quick understanding of unfamiliar code.
-
-```shell
-gh copilot explain "what does this do" < file.ts
-```
-
-Better versions are usually more specific:
-
-```shell
-gh copilot explain "Summarize this file in plain English, then list the three most important side effects" < src/worker/processJobs.ts
-```
-
-```shell
-gh copilot explain "Explain this Python module to a new teammate. Focus on control flow and failure modes." < app/tasks/reconcile.py
-```
-
-#### What to ask for
-
-- “Summarize the control flow.”
-- “What are the inputs, outputs, and side effects?”
-- “Where could this throw?”
-- “What would I need to change to add X?”
-- “What assumptions does this code make?”
-
-#### Strong follow-up questions
+### Explain unfamiliar code
 
 ```text
-Which parts are business logic vs. plumbing?
-What edge cases are not handled?
-If this fails in production, what would the symptoms look like?
+Explain @src/worker/processJobs.ts. Focus on:
+- what triggers execution
+- what side effects it has
+- where it could fail silently
 ```
 
-### Pattern 2: Fix errors
+### Debug an error
 
-Copilot is much better at debugging when the prompt is **information-complete**.
-
-Weak prompt:
+Give Copilot everything it needs to find the root cause:
 
 ```text
-why is this broken
+This is failing in CI but not locally.
+Error: AssertionError: expected 201 but got 400
+Stack trace: [paste]
+Relevant code: @src/api/users/create.ts
+What I've already checked: auth headers look correct, the body is valid JSON.
+What is the most likely root cause?
 ```
 
-Strong prompt:
+### Generate code
+
+Specify the contract before asking for the implementation:
 
 ```text
-Here is the error, the stack trace, and the relevant function. Explain the most likely root cause first, then suggest the smallest safe fix.
-```
+Write a TypeScript function:
+  normalizeEmails(emails: (string | null)[]): string[]
 
-Example:
-
-```shell
-gh copilot explain "Fix this error. Use the stack trace and point to the likeliest root cause first." < build-error.txt
-```
-
-Even better if you include both the error and the code:
-
-```text
-This function should accept ISO timestamps and return a UTC datetime.
-Current error: ValueError: Invalid isoformat string.
-Here is the code:
-...
-```
-
-#### Debugging checklist to include
-
-- exact error message
-- relevant stack trace
-- relevant code, not the whole service
-- what you expected to happen
-- what actually happened
-- what you already tried
-
-### Pattern 3: Generate code
-
-Copilot generates better code when you specify:
-
-- language
-- inputs and outputs
-- type information
-- edge cases
-- constraints
-
-Weak prompt:
-
-```text
-write a parser
-```
-
-Better prompt:
-
-```text
-Write a Go function parseConfig(input []byte) (Config, error).
-The input is YAML.
-Missing values should use defaults.
-Unknown keys should return an error.
-Do not add new dependencies.
-```
-
-Another example:
-
-```text
-Write a Python function normalize_emails(emails: list[str | None]) -> list[str].
 Requirements:
-- lowercase everything
-- trim whitespace
-- drop None and empty strings
-- preserve original order
-- return unique values only
+- lowercase, trim whitespace
+- drop nulls and empty strings
+- deduplicate, preserve first-seen order
+- no new dependencies
 ```
 
-### Pattern 4: Suggest commands
+### Multi-step task
 
-This is the classic `suggest` use case.
-
-```shell
-gh copilot suggest "how do I list all files larger than 50MB under the current directory"
-```
-
-```shell
-gh copilot suggest "how do I find which process is listening on port 3000 on macOS"
-```
-
-```shell
-gh copilot suggest "how do I see commits on this branch that are not on main"
-```
-
-### Pattern 5: Summarize a diff
-
-Very useful before code review or commit time.
-
-```shell
-git diff --staged | gh copilot explain "Summarize this diff for a reviewer. What changed, why, and what risks should I double-check?"
-```
-
-### Pattern 6: Generate a commit message draft
-
-```shell
-git diff --staged | gh copilot explain "Write a concise commit message for these changes. Prefer imperative mood."
-```
-
-If you use Conventional Commits, say so explicitly:
-
-```shell
-git diff --staged | gh copilot explain "Write a conventional commit message for these changes. Use feat/fix/chore style."
-```
-
----
-
-## `gh copilot explain` vs. `gh copilot suggest`
-
-Treat these as different tools, not interchangeable synonyms.
-
-### `explain`
-
-Use `explain` when the input is **already concrete** and you want understanding.
-
-Typical inputs:
-
-- a shell command
-- source code
-- a stack trace
-- a diff
-- log output
-
-Example:
-
-```shell
-gh copilot explain 'tar -czf backup.tgz ./data --exclude="*.tmp"'
-```
-
-What you are really asking:
-
-- what does this do?
-- what are the flags?
-- what are the risks?
-- why might this fail?
-
-### `suggest`
-
-Use `suggest` when the input is **an intent**, and you want Copilot to propose a command.
-
-Example:
-
-```shell
-gh copilot suggest "how do I recursively replace foo with bar in all .py files"
-```
-
-What you are really asking:
-
-- given my goal, what command should I run?
-- what is the safest version of that command?
-- what options do I need for my OS or toolchain?
-
-### Quick decision rule
-
-| If you have… | Use |
-|---|---|
-| A command and you want to understand it | `gh copilot explain` |
-| A goal and you want a command | `gh copilot suggest` |
-| A multi-step task in a repo | interactive `copilot` |
-
----
-
-## Using Copilot CLI for shell commands
-
-One of the most valuable terminal use cases is **command generation with human review**.
-
-### Safe workflow for `suggest`
-
-1. Describe the goal precisely.
-2. Ask for the command.
-3. Read it carefully.
-4. Check destructive flags like `rm`, `mv`, `git push --force`, or `sed -i`.
-5. Adapt it for your shell and OS if needed.
-6. Only then run it.
-
-Example:
-
-```shell
-gh copilot suggest "how do I delete all local git branches already merged into main except main and develop"
-```
-
-Then inspect for safety before pasting anything into your shell.
-
-:::warning Never outsource destructive judgment
-Copilot can suggest the right command and still apply it in the wrong directory, to the wrong branch, or with the wrong glob.
-
-This is especially true for:
-
-- file deletion
-- history rewriting
-- permission changes
-- bulk text replacement
-- database or production commands
-:::
-
-### Good terminal prompt patterns
-
-```shell
-gh copilot suggest "on macOS, how do I recursively find broken symlinks under the current directory"
-```
-
-```shell
-gh copilot suggest "with ripgrep, how do I search for TODO or FIXME in src and tests only"
-```
-
-```shell
-gh copilot suggest "write a curl command to POST this JSON body with a bearer token"
-```
-
-```shell
-gh copilot suggest "how do I pretty-print a JSON file from the shell without jq installed"
-```
-
-### Ask for explanation after suggestion
-
-A strong pattern is two-step:
-
-```shell
-gh copilot suggest "how do I find the five largest directories under the current directory"
-gh copilot explain 'du -sh ./* | sort -hr | head -5'
-```
-
-First get the candidate command. Then make sure you understand it.
-
----
-
-## Keyboard shortcuts and workflow tips
-
-The interactive CLI is where shortcuts matter most.
-
-### Useful interactive CLI shortcuts
-
-| Shortcut | What it does |
-|---|---|
-| <kbd>Shift</kbd>+<kbd>Tab</kbd> | Toggle plan mode |
-| <kbd>Esc</kbd> | Cancel current thinking / current action |
-| <kbd>Ctrl</kbd>+<kbd>S</kbd> | Run command while preserving input |
-| <kbd>Ctrl</kbd>+<kbd>G</kbd> | Edit prompt in `$EDITOR` |
-| <kbd>Ctrl</kbd>+<kbd>L</kbd> | Clear screen |
-| <kbd>Ctrl</kbd>+<kbd>T</kbd> | Toggle reasoning display |
-| `@file` | Add a file to prompt context |
-| `!command` | Run a shell command directly without calling the model |
-| `/help` | Show interactive command help |
-| `/context` | Inspect context window usage |
-| `/resume` | Resume an old session |
-
-### Fast workflow tips
-
-#### Tip 1: Start from the right directory
-
-The terminal equivalent of “open the right workspace” is “start from the repo root.”
-
-```shell
-cd /path/to/repo
-copilot
-```
-
-#### Tip 2: Keep prompts task-shaped
-
-Good:
+Let Copilot run a full task rather than asking one question at a time:
 
 ```text
-Explain why @src/cache.py can return stale values after invalidation.
+Find all the places in @src that call UserService.getById with a hardcoded user ID.
+List them. Then for each one, explain what the correct variable or lookup should be.
 ```
 
-Weak:
+### Review a diff
 
 ```text
-read the repo and tell me stuff
+!git diff --staged
+Summarize this change for a code reviewer. What changed, what are the risks, 
+and what edge cases should the reviewer verify?
 ```
 
-#### Tip 3: Use shell tools to create context quickly
-
-```shell
-git diff --staged | gh copilot explain "Write reviewer notes"
-pytest 2>&1 | gh copilot explain "Summarize this failure"
-```
-
-#### Tip 4: Ask for the format you want
-
-- “Give me the answer in bullets.”
-- “Return only the command.”
-- “List likely root causes in priority order.”
-- “Show the smallest safe change first.”
-
-#### Tip 5: Prefer smallest-safe-change prompts
-
-This reduces overengineering.
-
-```text
-Suggest the smallest safe fix that preserves the current API and does not add dependencies.
-```
+The `!` prefix runs a shell command inside the session and feeds the output as context for your next message.
 
 ---
 
-## Common pitfalls and how to avoid them
+## Session hygiene habits
 
-### Pitfall 1: Asking without enough context
+These habits make sessions stay productive longer.
 
-Symptom: generic or obviously wrong answer.
+**Start every session from the repo root:**
+```shell
+cd /path/to/your-repo && copilot
+```
 
-Fix: include the error, the code, the OS, the language, or the exact file.
+**Use `/clear` at task boundaries.**
+Finished one thing, starting another? Clear. Old context is rarely helpful for new tasks and often confusing.
 
-### Pitfall 2: Dumping too much irrelevant context
+**Use `/compact` before long generation tasks.**
+If you have been exploring for a while and are about to ask Copilot to write something substantial, compact first. You want the context window to have room for the output.
 
-Symptom: answer misses the real issue.
+**Reference files explicitly:**
+```text
+Look at @src/billing/invoiceService.ts and @src/types/invoice.ts
+```
+Do not assume Copilot has found the right files just because they are in the repo.
 
-Fix: include the **relevant** 30–150 lines, not the whole service, unless you truly need codebase-wide reasoning.
+**State constraints upfront:**
+```text
+Do not add dependencies. Preserve the existing public API. Use the test patterns in @src/__tests__/exampleService.test.ts.
+```
+Constraints are easier to honor when stated at the beginning than corrected at the end.
 
-### Pitfall 3: Trusting shell suggestions blindly
+---
 
-Symptom: you run the command and regret it.
+## Common pitfalls
 
-Fix: read every destructive command as if it came from a stranger in a chat room.
+**Pitfall: Starting in the wrong directory**
+Copilot invents file paths because it cannot see the actual structure. Fix: always start from the repo root.
 
-### Pitfall 4: Not specifying constraints
+**Pitfall: Vague first message**
+"Fix this" with no context. Fix: include the error, the relevant file, and the expected behavior.
 
-Symptom: Copilot suggests a rewrite when you wanted a patch.
+**Pitfall: Not clearing between tasks**
+Old context bleeds into new tasks. Fix: `/clear` at task boundaries.
 
-Fix: say things like:
+**Pitfall: Not using /compact in long sessions**
+Session quality degrades as history fills the context window. Fix: use `/compact` when sessions run long.
 
-- “Do not add dependencies.”
-- “Preserve public API.”
-- “Keep this as a shell one-liner.”
-- “Use pytest, not unittest.”
+**Pitfall: Trusting generated commands without review**
+Copilot can suggest the right command applied to the wrong path. Fix: read every shell command before running it, especially destructive ones.
 
-### Pitfall 5: Using the wrong tool mode
-
-Symptom: you are forcing `gh copilot suggest` to do multi-step repo reasoning.
-
-Fix: use interactive `copilot` or VS Code Chat for broader tasks.
-
-### Pitfall 6: Treating one bad answer as proof the tool is useless
-
-Often the issue is not the model. It is the prompt or the missing context. Before giving up, try one more turn with:
-
-- clearer scope
-- concrete constraints
-- better grounding
-- the actual file or error text
-
-:::note Calibration matters
-Copilot is very strong at:
-
-- syntax recall
-- command scaffolding
-- summarization
-- first-draft explanations
-- generating obvious tests and docs
-
-It is much weaker at:
-
-- hidden product assumptions
-- ambiguous requirements
-- risky judgment calls
-- deciding tradeoffs without context
-:::
+**Pitfall: Ignoring memory**
+Starting every session from scratch, re-explaining project context repeatedly. Fix: invest 5 minutes seeding `/memory` once; save that context on every future session.
 
 ---
 
 ## Quick-start checklist
 
-Use this the first week you try Copilot CLI seriously.
+### First time
 
-### Setup
+- [ ] Install: `gh extension install github/gh-copilot --force`
+- [ ] Verify: `copilot --version`
+- [ ] Start your first session from a repo root: `cd your-repo && copilot`
+- [ ] Run `/help` to see available commands
+- [ ] Ask Copilot to explain a file you know well — calibrate how it handles your codebase
 
-- [ ] Run `gh auth login --web`
-- [ ] Install the extension: `gh extension install github/gh-copilot --force`
-- [ ] Authenticate Copilot: `gh copilot auth login`
-- [ ] Verify `gh copilot suggest` and `gh copilot explain` work
-- [ ] If available, try the newer `copilot` interactive CLI too
+### First week habits
 
-### Habits
+- [ ] Use `/clear` at every task boundary
+- [ ] Try `/compact` after a long session
+- [ ] Seed memory: ask Copilot to suggest useful `/memory` entries for your project
+- [ ] Try `/model` to see what models are available
+- [ ] Try `/resume` to see how session history works
 
-- [ ] Start from the repo root
-- [ ] Use `explain` for concrete inputs
-- [ ] Use `suggest` for shell goals
-- [ ] Include exact errors and relevant code
-- [ ] State language/framework/constraints explicitly
-- [ ] Inspect commands before running them
+### Ongoing
 
-### Upgrade path
+- [ ] Review `/memory` when something changes in your project
+- [ ] Explore `/mcp` once you want to connect external services (see Module 4)
+- [ ] Set up `.github/copilot-instructions.md` for team-wide context (see Module 3)
 
-- [ ] Learn `@file` references in interactive CLI
-- [ ] Learn `/resume`, `/compact`, and `/memory`
-- [ ] Learn how repo instructions shape answers
-- [ ] Learn how MCP servers extend the CLI
+---
+
+## Legacy CLI commands
+
+:::note For reference only
+`gh copilot suggest` and `gh copilot explain` are older one-shot commands that predate the interactive session. They do not support multi-turn memory, slash commands, tools, or MCP. Use the interactive `copilot` session for real work.
+
+You may encounter these commands in older documentation or scripts. They are still functional but limited:
+
+- `gh copilot suggest "how do I..."` — generates a shell command from an intent
+- `gh copilot explain 'some-command'` — explains a specific shell command
+
+If your team is scripting terminal workflows or needs quick one-off command lookups, these still work fine for that narrow use case. For everything else, use the interactive session.
+:::
 
 ---
 
 ## Key Takeaways
 
-1. **Copilot CLI is a workflow surface, not a different brain.** The model quality matters, but context and interface matter just as much.
-2. **Use `explain` and `suggest` differently.** `explain` is for understanding something concrete. `suggest` is for generating a command from intent.
-3. **Context quality drives answer quality.** Exact files, errors, diffs, and constraints beat vague requests every time.
-4. **Interactive CLI is where session memory lives.** Use it for multi-step tasks, and use durable instructions for repo-level context.
-5. **You still own the judgment.** Especially in the shell, inspect before you run.
+1. **The interactive session is the primary tool.** Start with `copilot` and work conversationally.
+2. **Slash commands are how you manage the session.** `/clear`, `/compact`, `/model`, and `/memory` are the four you will use most.
+3. **`/compact` is critical.** Long sessions degrade without it. Use it before generation-heavy tasks.
+4. **Memory persists across sessions.** Invest in seeding it once; it pays off every future session.
+5. **Context quality drives output quality.** Reference the right files, state constraints upfront, and give exact errors.
 
 ---
 
 ## Next Steps
 
-Next, learn how the same Copilot patterns show up inside the editor in [Module 2: Copilot in VS Code](/docs/phase-2/copilot-in-vscode).
+Learn how these same interaction patterns translate to VS Code in [Module 2: Copilot in VS Code](/docs/phase-2/copilot-in-vscode).
