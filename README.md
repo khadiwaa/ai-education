@@ -82,14 +82,14 @@ npm run export -- decks/phase-1/01-how-ai-works.md
 cd docs
 npm install
 
-# Fast dev server — live reload, no search index
+# Full experience — builds index, then serves with ⌘K search (recommended)
 npm run start
 
-# Full preview with ⌘K search — builds first, then serves
-npm run preview
+# Hot-reload dev server — instant on, live reload, no search (for content authors)
+npm run dev
 ```
 
-> **Search requires a build.** `npm run start` is fast for writing content. Use `npm run preview` when you want the full experience including ⌘K search.
+> `npm run start` takes ~5 seconds to build the search index, then serves at `localhost:3000`. Use `npm run dev` only when you're actively editing content and want live reload.
 
 ---
 
