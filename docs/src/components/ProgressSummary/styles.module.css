@@ -1,0 +1,184 @@
+.card {
+  background: var(--ifm-card-background-color);
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.pct {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+}
+
+.continueRow {
+  background: var(--ifm-color-primary-lightest);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.continueLabel {
+  color: var(--ifm-color-content-secondary);
+}
+
+.continueLink {
+  font-weight: 600;
+  color: var(--ifm-color-primary) !important;
+  text-decoration: none !important;
+}
+
+.continueLink:hover {
+  text-decoration: underline !important;
+}
+
+.phaseRow {
+  margin-bottom: 0.75rem;
+}
+
+.phaseLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+  color: var(--ifm-color-content-secondary);
+}
+
+.phaseFraction {
+  font-weight: 600;
+}
+
+.barTrack {
+  height: 6px;
+  background: var(--ifm-toc-border-color);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  background: var(--ifm-color-primary);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.moduleList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 1rem 0 0.75rem;
+}
+
+.moduleItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  text-decoration: none !important;
+  color: var(--ifm-color-content) !important;
+  padding: 2px 0;
+}
+
+.moduleItem:hover {
+  color: var(--ifm-color-primary) !important;
+}
+
+.dotComplete {
+  color: var(--ifm-color-success);
+  font-weight: 700;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.dotVisited {
+  color: var(--ifm-color-primary);
+  font-weight: 700;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.dotEmpty {
+  color: var(--ifm-color-secondary-darkest);
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.moduleLabel {
+  color: var(--ifm-color-content-secondary);
+}
+
+.moduleLabelComplete {
+  color: var(--ifm-color-content);
+  font-weight: 500;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: var(--ifm-color-content-secondary);
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--ifm-toc-border-color);
+  flex-wrap: wrap;
+}
+
+.resetBtn {
+  background: none;
+  border: none;
+  color: var(--ifm-color-secondary-darkest);
+  font-size: 0.75rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  margin-left: auto;
+}
+
+.resetBtn:hover {
+  color: var(--ifm-color-danger);
+}
+
+.resetConfirm {
+  background: none;
+  border: 1px solid var(--ifm-color-danger);
+  color: var(--ifm-color-danger);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.resetCancel {
+  background: none;
+  border: none;
+  color: var(--ifm-color-secondary-darkest);
+  font-size: 0.75rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}

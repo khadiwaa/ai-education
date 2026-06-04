@@ -1,0 +1,50 @@
+.completeRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--ifm-toc-border-color);
+}
+
+.btnMark {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: 2px solid var(--ifm-color-primary);
+  background: transparent;
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btnMark:hover {
+  background: var(--ifm-color-primary);
+  color: #fff;
+}
+
+.btnComplete {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: 2px solid var(--ifm-color-success);
+  background: var(--ifm-color-success);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.btnUndo {
+  background: none;
+  border: none;
+  color: var(--ifm-color-secondary-darkest);
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.btnUndo:hover {
+  color: var(--ifm-color-danger);
+}
