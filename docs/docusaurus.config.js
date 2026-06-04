@@ -13,7 +13,6 @@ const config = {
   projectName: 'ai-education-hl',
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
   markdown: {
     hooks: {
       onBrokenMarkdownLinks: 'warn',

@@ -81,8 +81,15 @@ npm run export -- decks/phase-1/01-how-ai-works.md
 ```bash
 cd docs
 npm install
-npm run start      # opens at localhost:3000
+
+# Fast dev server — live reload, no search index
+npm run start
+
+# Full preview with ⌘K search — builds first, then serves
+npm run preview
 ```
+
+> **Search requires a build.** `npm run start` is fast for writing content. Use `npm run preview` when you want the full experience including ⌘K search.
 
 ---
 
