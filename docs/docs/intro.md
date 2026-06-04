@@ -53,6 +53,7 @@ Phase 2 modules can be taken in any order, but Module 1 (CLI Essentials) is the 
 | [T3](./phase-3/t3-embeddings-rag) | Embeddings, RAG & Retrieval Systems |
 | [T4](./phase-3/t4-agents-multi-agent) | Agents & Multi-Agent Systems |
 | [T5](./phase-3/t5-fine-tuning) | Fine-Tuning & Model Customization |
+| [T6](./phase-3/t6-local-open-source-models) | Open-Source & Local Models |
 
 ### Strategic Track
 
