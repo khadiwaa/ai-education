@@ -40,17 +40,23 @@ A good review workflow uses Copilot **before**, **during**, and **after** human 
 
 Before you comment on a diff, use Copilot to compress the change into something you can reason about.
 
-Terminal pattern:
+Terminal pattern (interactive session):
 
-```shell
-git diff origin/main...HEAD | gh copilot explain "Explain what this diff does in plain English. Focus on behavior changes, not line-by-line detail."
+```text
+> !git diff origin/main...HEAD
+Explain what this diff does in plain English. Focus on behavior changes, not line-by-line detail.
 ```
+
+The `!` prefix runs a shell command and feeds its output directly into your message. Copilot sees both the command and its output as context.
 
 Better version:
 
-```shell
-git diff origin/main...HEAD | gh copilot explain "Summarize this diff for a reviewer. What changed, why might it have been done, and what risks should I inspect?"
+```text
+> !git diff origin/main...HEAD
+Summarize this diff for a reviewer. What changed, why might it have been done, and what risks should I inspect?
 ```
+
+If your version of Copilot CLI shows a **diff tab** in the TUI (the terminal UI), you can view and navigate the changeset there before asking questions. Use the diff tab as a visual anchor while you craft your review questions.
 
 VS Code Chat pattern:
 
@@ -330,21 +336,21 @@ Include setup, run, test, and troubleshooting sections.
 
 This is a very strong use case.
 
-Terminal pattern:
+Interactive session pattern:
 
-```shell
-git diff --staged | gh copilot explain "Write a PR description with summary, testing, and reviewer notes."
+```text
+> !git diff --staged
+Write a PR description with summary, testing, and reviewer notes.
 ```
 
 ### Commit message generation
 
-Example:
-
-```shell
-git diff --staged | gh copilot suggest "write a commit message for these changes"
+```text
+> !git diff --staged
+Write a concise conventional commit message for these changes.
 ```
 
-In practice, `explain` may work better when you want prose based on a diff, but the key pattern is the same: give Copilot the actual change, not a vague description.
+Give Copilot the actual diff — not a vague description of what you think you changed. The diff is ground truth.
 
 ### Keep docs in sync as part of the change
 
@@ -601,16 +607,18 @@ You review the diff before accepting.
 
 ### 11:00 AM — prepare the PR
 
-You ask Copilot to summarize the change.
+You ask Copilot to summarize the change from the interactive session:
 
-```shell
-git diff --staged | gh copilot explain "Write a PR description with summary, testing, and reviewer notes."
+```text
+> !git diff --staged
+Write a PR description with summary, testing steps, and reviewer notes.
 ```
 
 You also draft a commit message:
 
-```shell
-git diff --staged | gh copilot explain "Write a concise conventional commit message for these changes."
+```text
+> !git diff --staged
+Write a concise conventional commit message for these changes.
 ```
 
 ### 11:10 AM — final human pass

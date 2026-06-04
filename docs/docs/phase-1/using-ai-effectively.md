@@ -19,9 +19,13 @@ The context window includes everything: your message, system instructions, conve
 | Model | Context window | ~Words |
 |-------|---------------|--------|
 | GPT-4o | 128K tokens | ~96K words |
-| Claude 3.5 Sonnet | 200K tokens | ~150K words |
-| Gemini 1.5 Pro | 1M tokens | ~750K words |
-| Smaller / local models | 4K–32K tokens | — |
+| Claude Sonnet 4.6 | 200K tokens | ~150K words |
+| Gemini 2.5 Pro | 1M tokens | ~750K words |
+| Smaller / local models | 4K–128K tokens | — |
+
+:::note Models change fast
+These figures were current as of mid-2025 — context windows and model generations update frequently. Check the provider's current docs for the latest numbers. The relative ordering (local < GPT-4o/Sonnet < Gemini) is the stable mental model; the exact numbers shift.
+:::
 
 **What this means in practice:**
 

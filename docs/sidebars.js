@@ -43,6 +43,7 @@ const sidebars = {
             'phase-3/t3-embeddings-rag',
             'phase-3/t4-agents-multi-agent',
             'phase-3/t5-fine-tuning',
+            'phase-3/t6-local-open-source-models',
           ],
         },
         {

@@ -38,6 +38,100 @@ If you only do one thing from this module, start using `copilot` as your default
 
 ---
 
+## Copilot CLI vs. Copilot in VS Code: when to use which
+
+Both tools use the same underlying model. The difference is your **working surface** and **available context**.
+
+| You want to… | Use |
+|---|---|
+| Work without leaving the terminal | **Copilot CLI** |
+| Execute multi-step tasks autonomously (search, edit, run tests) | **Copilot CLI** |
+| Stay focused in your editor while coding | **VS Code Copilot** |
+| Get completions as you type | **VS Code inline completions** |
+| Refactor code across multiple files with a visual diff | **VS Code Copilot Edits** |
+| Ask a question about the open file without switching context | **VS Code Copilot Chat** |
+| Run a task that involves shell commands or CI | **Copilot CLI** |
+| Onboard to an unfamiliar codebase by exploring files | **Either** — CLI if terminal-first, VS Code Chat with `@workspace` if editor-first |
+
+**A practical default:**
+- If your hands are on the keyboard in a file → VS Code Copilot
+- If your hands are on the keyboard in a terminal → Copilot CLI
+- If the task spans both (write code + run tests + check git) → Copilot CLI
+
+Many engineers use both in the same workflow: VS Code Copilot for writing code, Copilot CLI for the surrounding tasks (generating PR descriptions, running test suites, reviewing diffs, scripting).
+
+---
+
+## Getting comfortable with the terminal *(optional primer)*
+
+:::note Who this section is for
+If you are already comfortable with a terminal, skip ahead to [Installation and setup](#installation-and-setup). This section is for engineers (and non-engineers) who are less familiar with terminal basics.
+:::
+
+Copilot CLI runs in a **terminal** — a text-based interface where you type commands and get text responses. You do not need to be a terminal power user to use Copilot CLI effectively, but you do need to be able to open one and navigate to a folder.
+
+### Opening a terminal
+
+**On macOS:**
+1. Press `⌘ + Space` to open Spotlight Search
+2. Type `Terminal` and press Enter
+
+The built-in Terminal app works fine. For a better experience, many macOS developers use **iTerm2** ([iterm2.com](https://iterm2.com)) — it supports split panes, better search, profiles, and more. Download it free and use it as a drop-in replacement.
+
+**On Windows:**
+1. Press `Windows + X` and choose **Windows Terminal** (recommended) or PowerShell
+2. Alternatively, search for "Windows Terminal" in the Start menu
+
+:::tip Windows: use WSL for the best experience
+Windows Subsystem for Linux (WSL) gives you a full Linux environment on Windows. Most developer tools — including GitHub CLI — work more smoothly in WSL than in native Windows PowerShell. Install it from the Microsoft Store or with `wsl --install` in an administrator PowerShell prompt.
+:::
+
+### Navigating to your project
+
+Once the terminal is open:
+
+```shell
+# Go to a specific directory
+cd ~/Code/my-project
+
+# List files in the current directory
+ls         # macOS/Linux
+dir        # Windows (PowerShell)
+
+# Go up one level
+cd ..
+
+# See where you are
+pwd
+```
+
+**The key habit:** always `cd` to your project folder before running `copilot`. That directory becomes Copilot's context.
+
+### Using the VS Code integrated terminal
+
+You do not have to use an external terminal app. VS Code has a built-in terminal that opens directly in your project folder.
+
+Open it with:
+- **macOS:** `` Ctrl+` `` (backtick) or `Terminal → New Terminal` in the menu
+- **Windows:** Same shortcut, or `View → Terminal`
+
+The VS Code terminal opens in your current workspace folder — which means if you have a repo open in VS Code, running `copilot` from the VS Code terminal puts you in the right place automatically. Many engineers find this the most convenient setup: Copilot CLI in the bottom pane, editor in the main window.
+
+### Basic navigation cheat sheet
+
+| Goal | Command |
+|---|---|
+| Go to a directory | `cd path/to/folder` |
+| Go home | `cd ~` |
+| List files | `ls` (mac/Linux) · `dir` (Windows) |
+| Print current path | `pwd` |
+| Clear the screen | `clear` (mac/Linux) · `cls` (Windows) |
+| Cancel a running command | `Ctrl + C` |
+| Previous command | Up arrow |
+| Search command history | `Ctrl + R` (mac/Linux) |
+
+---
+
 ## Installation and setup
 
 ### Prerequisites
