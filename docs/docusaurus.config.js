@@ -44,6 +44,22 @@ const config = {
     ],
   ],
 
+  themes: [
+    [
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      /** @type {import('@easyops-cn/docusaurus-search-local').PluginOptions} */
+      ({
+        hashed: true,
+        indexBlog: false,
+        docsRouteBasePath: '/docs',
+        highlightSearchTermsOnTargetPage: true,
+        searchResultLimits: 10,
+        searchResultContextMaxLength: 60,
+        searchBarShortcutHint: true,
+      }),
+    ],
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -67,7 +83,7 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Phase 1',
+            title: 'Phase 1 — AI Essentials',
             items: [
               { label: 'How AI Actually Works', to: '/docs/phase-1/how-ai-works' },
               { label: 'Using AI Effectively', to: '/docs/phase-1/using-ai-effectively' },
@@ -75,9 +91,21 @@ const config = {
             ],
           },
           {
-            title: 'Phase 2',
+            title: 'Phase 2 — Copilot in Practice',
             items: [
-              { label: 'Deep Dives', to: '/docs/phase-3/overview' },
+              { label: 'Copilot CLI Essentials', to: '/docs/phase-2/copilot-cli-essentials' },
+              { label: 'Copilot in VS Code', to: '/docs/phase-2/copilot-in-vscode' },
+              { label: 'Skills & Customization', to: '/docs/phase-2/skills-and-customization' },
+              { label: 'MCP & Integrations', to: '/docs/phase-2/mcp-and-integrations' },
+              { label: 'Real-World Workflows', to: '/docs/phase-2/real-world-workflows' },
+            ],
+          },
+          {
+            title: 'Phase 3 — Deep Dives',
+            items: [
+              { label: 'Overview & Learning Paths', to: '/docs/phase-3/overview' },
+              { label: 'Technical Track', to: '/docs/phase-3/t1-transformer-architecture' },
+              { label: 'Strategic Track', to: '/docs/phase-3/s1-platform-strategy' },
             ],
           },
           {
