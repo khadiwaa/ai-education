@@ -70,6 +70,80 @@ Always start from your **repo root**. Copilot uses your working directory as its
 
 ---
 
+## Working directory: why it matters
+
+When you run `copilot` in a directory, that directory becomes Copilot's world for the session. It is where Copilot looks for files, runs shell commands, reads project structure, and applies any repo-level instructions you have configured.
+
+This is intentional design: **Copilot's context is anchored to your working directory.** The same way a developer opens a project folder in their editor before writing code, you open the right directory before starting a Copilot session.
+
+For most engineers, that directory is a code repository — and that is the primary use case this curriculum assumes. But the same pattern applies to any directory: a folder of infrastructure configs, a notes repo, a documentation project. Whatever is in the directory shapes how Copilot reasons and responds.
+
+**Practical implications:**
+
+- Open your terminal at the **repo root** before running `copilot`
+- If your project is a monorepo, start at the root unless you intentionally want to scope Copilot to a specific package
+- Switching projects means exiting the session, `cd`-ing to the new project, and starting fresh
+
+---
+
+## Your first session in a new directory
+
+The first time you run `copilot` in a directory, a few things happen that are worth understanding.
+
+### The trust prompt
+
+When you run `copilot` in a directory for the first time, Copilot asks whether you trust it:
+
+```
+Do you trust the files in this directory?
+```
+
+**What this is asking:** Copilot can read files in your working directory, execute shell commands, and take actions on your behalf. The trust prompt is a safety gate that prevents Copilot from operating in a directory you did not deliberately open.
+
+**How to think about it:**
+- If you opened this directory intentionally and it is your code (or a project you are authorized to work with) → trust it
+- If you ended up in a directory by accident, or it belongs to someone else, or you are not sure → do not trust it until you have verified
+
+Trusting a directory does not grant permanent elevated permissions — it simply unlocks Copilot to operate in that location for this session. You can revoke trust and reconfigure at any time.
+
+:::warning Untrusted directories
+If you open a directory that someone else gave you — a downloaded project, a vendor archive, a shared folder — review its contents before trusting it. A `.github/copilot-instructions.md` file in that directory could contain instructions that change how Copilot behaves in your session. This is the same logic as reviewing a `Makefile` or a CI config before running it.
+:::
+
+### Permissions Copilot requests
+
+Copilot CLI may ask for permission to:
+
+- **Read files** in your working directory — needed to understand your code
+- **Run shell commands** — needed for agentic tasks (searching, running tests, checking git status)
+- **Write files** — needed when you ask it to create or edit files
+
+These permissions are scoped to the session. Review them and only grant what you are comfortable with for the task at hand. If you are just asking questions and not expecting file writes, you can decline write permissions without losing core functionality.
+
+### Initializing a directory with `/init`
+
+Once you are inside a session in a new project, run:
+
+```text
+> /init
+```
+
+`/init` walks through setting up Copilot for this repository. It may:
+
+- Create a `.github/copilot-instructions.md` file with an initial template
+- Suggest memory entries based on what it sees in the project
+- Detect your language, framework, and test runner and configure sensible defaults
+
+You do not have to use `/init` — you can configure everything manually — but it is a fast way to get started in a project where Copilot has no prior context.
+
+:::tip What `/init` creates
+The most important output of `/init` is `.github/copilot-instructions.md`. This file contains instructions that apply to every Copilot session in this repo, for everyone on the team. Think of it as a team brief for Copilot — your coding conventions, preferred libraries, project context, things to always or never do.
+
+Module 3 (Skills & Customization) covers this file in detail, including good templates and what to put in it.
+:::
+
+---
+
 ## The interactive session
 
 Once you run `copilot`, you enter a persistent session. You type messages and Copilot responds — but it is not just a chat window. It can:
@@ -511,7 +585,9 @@ Starting every session from scratch, re-explaining project context repeatedly. F
 - [ ] Install: `gh extension install github/gh-copilot --force`
 - [ ] Verify: `copilot --version`
 - [ ] Start your first session from a repo root: `cd your-repo && copilot`
-- [ ] Run `/help` to see available commands
+- [ ] When prompted to trust the directory: confirm you are in the right project
+- [ ] Run `/init` to set up the repo (creates `.github/copilot-instructions.md`)
+- [ ] Run `/help` to see all available commands
 - [ ] Ask Copilot to explain a file you know well — calibrate how it handles your codebase
 
 ### First week habits

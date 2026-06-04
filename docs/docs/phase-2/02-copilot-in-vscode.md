@@ -101,16 +101,19 @@ Often Copilot gets the first 60% right and the last 40% wrong. If you always acc
 
 Poor setup:
 
-```python
-def handle(data):
+```typescript
+function handle(data: any) {
     
+}
 ```
 
 Better setup:
 
-```python
-def normalize_customer_emails(records: list[dict]) -> list[str]:
-    """Return unique, lowercased emails in original order. Ignore missing values."""
+```typescript
+/**
+ * Returns unique, lowercased emails in original order. Ignores null and empty values.
+ */
+function normalizeCustomerEmails(records: CustomerRecord[]): string[] {
 ```
 
 The second version gives Copilot:
@@ -278,7 +281,7 @@ Best for:
 Use when the terminal output matters.
 
 ```text
-#terminal Explain this pytest failure and tell me the most likely root cause.
+#terminal Explain this test failure and tell me the most likely root cause.
 ```
 
 ```text
@@ -330,7 +333,7 @@ Slash commands give you structured shortcuts for common requests.
 |---|---|---|
 | `/explain` | Explain code in plain English | `/explain #selection` |
 | `/fix` | Suggest fixes for a problem area | `/fix #selection handle nil input safely` |
-| `/tests` | Generate tests | `/tests #selection use pytest` |
+| `/tests` | Generate tests | `/tests #selection use Jest` |
 | `/docs` | Generate or improve docs/comments | `/docs #selection` |
 | `/new` | Create a new file from an instruction | `/new Create a migration script for archiving stale sessions` |
 | `/newNotebook` | Create a notebook | `/newNotebook Explore these CSV metrics` |
@@ -357,7 +360,7 @@ Weak:
 Better:
 
 ```text
-/tests #selection Use pytest. Include empty input, duplicate values, and invalid timestamp cases.
+/tests #selection Use Jest. Include empty input, duplicate values, and invalid timestamp cases.
 ```
 
 Weak:
@@ -536,27 +539,27 @@ If you are implementing a new endpoint and there is already a similar one elsewh
 
 Names are cheap context and high leverage.
 
-```python
-def retry_with_exponential_backoff(...)
+```typescript
+function retryWithExponentialBackoff(...)
 ```
 
 is better than:
 
-```python
-def helper(...)
+```typescript
+function helper(...)
 ```
 
 ### Use comments to specify behavior, not implementation trivia
 
 Good:
 
-```go
+```typescript
 // Return cached data when still fresh; otherwise fetch and refresh the cache.
 ```
 
 Weak:
 
-```go
+```typescript
 // do cache stuff
 ```
 
@@ -598,7 +601,7 @@ Copilot reads it as repo-level guidance. It is the right place for stable instru
 
 - Prefer small, reviewable patches.
 - Do not add new dependencies unless explicitly asked.
-- Use pytest for Python tests and keep fixtures local unless shared.
+- Use Jest for unit tests; keep test files next to the source files they cover.
 - Reuse existing validation helpers before creating new ones.
 - Preserve API response shapes unless the prompt explicitly asks for a breaking change.
 ```
@@ -632,7 +635,7 @@ Here is a realistic pattern that works well.
 ```text
 1. Write a strong function signature.
 2. Accept a small inline suggestion.
-3. Ask Chat: /tests #selection use pytest and include empty input + duplicate values.
+3. Ask Chat: /tests #selection use Jest and include empty input + duplicate values.
 4. Ask Chat: /docs #selection.
 5. Review the diff, run tests, then edit manually.
 ```

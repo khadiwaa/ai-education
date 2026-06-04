@@ -284,7 +284,7 @@ Example:
 
 ## Testing
 - Add or update tests when behavior changes.
-- Use pytest for Python and keep fixtures close to the tests unless shared.
+- Use Jest for unit tests and keep test files co-located with the source they cover.
 
 ## Validation
 - Run the relevant test suite before proposing completion.

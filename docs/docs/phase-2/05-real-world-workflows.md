@@ -139,19 +139,20 @@ Example:
 
 ```text
 /tests #selection
-Use pytest.
-Function signature: normalize_emails(emails: list[str | None]) -> list[str]
+Use Jest.
+Function signature: normalizeEmails(emails: (string | null)[]): string[]
 Known edge cases:
-- None values
+- null values
 - empty strings
 - duplicate emails with different casing
 - original order should be preserved
 ```
 
-Terminal equivalent:
+Terminal equivalent (interactive session):
 
-```shell
-gh copilot explain "Generate pytest test cases for this function. Include None, empty input, duplicate values, and invalid data." < src/normalization.py
+```text
+Generate Jest test cases for @src/normalization.ts. Cover null input, empty strings,
+duplicate emails with different casing, and whitespace trimming.
 ```
 
 ### Review generated tests carefully
@@ -187,10 +188,9 @@ Do not assume Copilot will infer the right framework correctly.
 
 Say:
 
-- “Use pytest.”
-- “Use JUnit 5.”
-- “Use Go’s `testing` package.”
-- “Use Jest with table-driven cases.”
+- "Use Jest."
+- "Use JUnit 5."
+- "Use Jest with `describe`/`it` blocks."
 
 ### Opinionated rule
 
@@ -303,7 +303,7 @@ Write a concise docstring that explains inputs, outputs, side effects, and failu
 In the terminal:
 
 ```shell
-gh copilot explain "Write a docstring for this function. Mention inputs, outputs, and exceptions." < src/parser.py
+copilot "Write a JSDoc comment for this function — inputs, outputs, side effects, and failure behavior." < src/parser.ts
 ```
 
 ### README generation
@@ -463,7 +463,7 @@ Exploration is one of the most underrated Copilot workflows, especially when you
 Strong Copilot CLI prompts:
 
 ```text
-Explain @src/main.py and tell me what starts the application.
+Explain @src/index.ts and tell me what starts the application.
 ```
 
 ```text
@@ -550,11 +550,13 @@ Then on a specific file:
 
 ### 9:40 AM — write the implementation
 
-You write a good function signature and comment, then let inline completions help with the obvious body.
+You write a good function signature and JSDoc comment, then let inline completions help with the obvious body.
 
-```python
-def normalize_customer_email(raw_email: str | None) -> str | None:
-    """Return a canonical email string or None when the input is missing or empty."""
+```typescript
+/**
+ * Returns a canonical email string, or null when the input is missing or empty.
+ */
+function normalizeCustomerEmail(rawEmail: string | null): string | null {
 ```
 
 You accept only the parts that look correct and adjust the rest manually.
@@ -577,8 +579,8 @@ You select the normalization function and ask:
 
 ```text
 /tests #selection
-Use pytest.
-Include None, empty string, duplicate casing, and whitespace trimming.
+Use Jest.
+Include null, empty string, duplicate casing, and whitespace trimming.
 ```
 
 You keep the generated scaffolding and then add one business-specific case manually.
