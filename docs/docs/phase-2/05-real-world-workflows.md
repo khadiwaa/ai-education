@@ -1,0 +1,654 @@
+---
+id: real-world-workflows
+sidebar_position: 5
+title: "Module 5: Real-World Workflows"
+---
+
+# Module 5: Real-World Workflows
+
+*Phase 2 · ~90 minutes · Applied practice*
+
+This module is where the earlier modules become everyday engineering behavior.
+
+The theme is intentionally opinionated:
+
+> **Make Copilot do the tedious part. You do the judgment part.**
+
+Copilot is strongest when you use it to accelerate:
+
+- first drafts
+- summaries
+- scaffolding
+- test boilerplate
+- exploration
+- repetitive edits
+
+It is weakest when you ask it to replace:
+
+- product judgment
+- risk judgment
+- architectural tradeoffs
+- team-specific conventions you never told it about
+
+---
+
+## Code Review Workflow
+
+A good review workflow uses Copilot **before**, **during**, and **after** human review.
+
+### Before review: understand the change quickly
+
+Before you comment on a diff, use Copilot to compress the change into something you can reason about.
+
+Terminal pattern:
+
+```shell
+git diff origin/main...HEAD | gh copilot explain "Explain what this diff does in plain English. Focus on behavior changes, not line-by-line detail."
+```
+
+Better version:
+
+```shell
+git diff origin/main...HEAD | gh copilot explain "Summarize this diff for a reviewer. What changed, why might it have been done, and what risks should I inspect?"
+```
+
+VS Code Chat pattern:
+
+```text
+@workspace Summarize the current branch diff and tell me which files are central vs. peripheral.
+```
+
+### During review: ask for edge cases and failure modes
+
+This is the high-value part.
+
+Good review questions:
+
+```text
+What edge cases could break this change?
+```
+
+```text
+Where is the error handling weak or inconsistent?
+```
+
+```text
+What assumptions is this change making about ordering, retries, null values, or network behavior?
+```
+
+```text
+If this passed happy-path tests, what would still worry you?
+```
+
+### After review: generate comment drafts consistently
+
+Once you have decided on the review point, Copilot can help draft clean comments.
+
+Example prompt:
+
+```text
+Draft a review comment in this format:
+- Observation
+- Why it matters
+- Suggested next step
+
+Concern: this code assumes the queue payload always includes a non-empty retry key.
+```
+
+### Review limitations
+
+Copilot does **not** know your team’s coding standards unless you tell it.
+
+That means:
+
+- use `.github/copilot-instructions.md`
+- mention the relevant standard in the prompt if it matters
+- do not confuse “different than I would write it” with “actually wrong”
+
+:::warning A review anti-pattern
+Do not ask Copilot to “find bugs” and accept every speculative concern as valid. Use it to broaden your search space, then apply engineering judgment.
+:::
+
+---
+
+## Test Generation Workflow
+
+This is one of the most reliable Copilot workflows when used correctly.
+
+### Best approach: write the function first
+
+Copilot generates much better tests when the production code already exists.
+
+Why?
+
+- the real behavior is visible
+- names and types are grounded
+- the prompt can focus on edge cases instead of inventing requirements
+
+### Prompt pattern for good tests
+
+Include:
+
+- the function or selected code
+- the type signature
+- the framework
+- known edge cases
+- any mocking constraints
+
+Example:
+
+```text
+/tests #selection
+Use pytest.
+Function signature: normalize_emails(emails: list[str | None]) -> list[str]
+Known edge cases:
+- None values
+- empty strings
+- duplicate emails with different casing
+- original order should be preserved
+```
+
+Terminal equivalent:
+
+```shell
+gh copilot explain "Generate pytest test cases for this function. Include None, empty input, duplicate values, and invalid data." < src/normalization.py
+```
+
+### Review generated tests carefully
+
+Copilot often gets the “obvious middle” right and misses the edge boundary.
+
+Common misses:
+
+- `null` / `undefined` / `None`
+- empty arrays or empty strings
+- zero values
+- duplicate inputs
+- invalid enum values
+- error conditions
+- time zone issues
+- ordering assumptions
+
+### Use `/tests` in VS Code Chat
+
+`/tests` is often the fastest path because it works naturally with `#selection` and visible local context.
+
+Better prompt:
+
+```text
+/tests #selection
+Use Jest.
+Include the unauthorized case, malformed input, and upstream timeout behavior.
+```
+
+### Specify the framework explicitly
+
+Do not assume Copilot will infer the right framework correctly.
+
+Say:
+
+- “Use pytest.”
+- “Use JUnit 5.”
+- “Use Go’s `testing` package.”
+- “Use Jest with table-driven cases.”
+
+### Opinionated rule
+
+Let Copilot generate the **test scaffolding and obvious cases**.
+
+You, the engineer, add the non-obvious cases tied to business risk.
+
+---
+
+## Debugging Workflow
+
+Debugging is where prompt quality matters most.
+
+### The information-complete debug prompt
+
+The most useful debug prompt includes:
+
+- the exact error message
+- stack trace or terminal output
+- relevant code
+- what you expected
+- what actually happened
+- what you already tried
+
+Example:
+
+```text
+#terminal
+This request should return cached data when the upstream times out.
+Instead it raises a 500.
+I already confirmed the cache contains a value.
+Explain the most likely root cause first, then tell me which function to inspect next.
+```
+
+### For complex bugs, explain your mental model
+
+Good engineers have a model of what *should* happen. Give that to Copilot.
+
+Example:
+
+```text
+My expectation:
+- request hits handler
+- handler checks cache
+- if stale, service fetches upstream
+- on timeout, stale cache should still be returned
+
+Actual behavior:
+- timeout raises an exception before fallback logic runs
+```
+
+That contrast helps Copilot reason much better than a raw stack trace alone.
+
+### Use `#terminal` in VS Code Chat
+
+This is one of the cleanest debugging workflows in VS Code.
+
+Example:
+
+```text
+#terminal Explain the first real failure here, not the downstream noise.
+```
+
+```text
+#terminal Given this stack trace, what are the top three likely root causes in priority order?
+```
+
+### When to give up on AI debugging
+
+If 2–3 rounds have not converged, stop.
+
+That usually means one of these is true:
+
+- the prompt is still missing key information
+- the bug depends on runtime state Copilot cannot see
+- the real issue needs step-through debugging or instrumentation
+
+At that point:
+
+- reproduce manually
+- add logs or breakpoints
+- inspect the state directly
+- return to Copilot once you have better evidence
+
+:::tip Good debugging cadence
+Use Copilot to form hypotheses quickly. Use the debugger, logs, and tests to validate them.
+:::
+
+---
+
+## Documentation Workflow
+
+Documentation is an ideal AI-assisted workflow because the structure is repetitive but the human still knows what matters.
+
+### Docstring generation
+
+In VS Code Chat:
+
+```text
+/docs #selection
+```
+
+Or with more guidance:
+
+```text
+/docs #selection
+Write a concise docstring that explains inputs, outputs, side effects, and failure behavior.
+```
+
+In the terminal:
+
+```shell
+gh copilot explain "Write a docstring for this function. Mention inputs, outputs, and exceptions." < src/parser.py
+```
+
+### README generation
+
+Copilot is good at turning structure plus intent into a first README draft.
+
+Good input pattern:
+
+- project structure
+- what the service does
+- how to run it
+- key commands
+- important constraints
+
+Example:
+
+```text
+Draft a README for this service.
+It ingests billing events, normalizes them, and writes them to Postgres.
+Include setup, run, test, and troubleshooting sections.
+```
+
+### PR description generation
+
+This is a very strong use case.
+
+Terminal pattern:
+
+```shell
+git diff --staged | gh copilot explain "Write a PR description with summary, testing, and reviewer notes."
+```
+
+### Commit message generation
+
+Example:
+
+```shell
+git diff --staged | gh copilot suggest "write a commit message for these changes"
+```
+
+In practice, `explain` may work better when you want prose based on a diff, but the key pattern is the same: give Copilot the actual change, not a vague description.
+
+### Keep docs in sync as part of the change
+
+When behavior changes, explicitly ask Copilot to update docs too.
+
+Example:
+
+```text
+I changed the function behavior so empty input now returns an empty map instead of nil.
+Update the docstring and any nearby comments to match.
+```
+
+Opinionated rule:
+
+- if you touched a function signature, review the docstring
+- if you changed behavior, review the README or usage examples
+- if you changed workflow, review contributing/setup docs
+
+---
+
+## Refactoring Workflow
+
+Refactoring is a spectrum. Match the tool to the scope.
+
+### Small refactors
+
+Examples:
+
+- rename a local variable
+- extract a small helper
+- simplify an if/else
+- remove obvious duplication in one function
+
+Best tools:
+
+- inline completion
+- Chat with `/fix`
+- native editor refactors where available
+
+Example prompt:
+
+```text
+/fix #selection Extract the retry-delay calculation into a helper without changing behavior.
+```
+
+### Medium refactors
+
+Examples:
+
+- normalize a pattern across one file
+- update a module to a shared helper
+- restructure tests plus production code together
+
+Best tool:
+
+- Copilot Edits in VS Code
+
+Example prompt:
+
+```text
+Replace repeated timestamp parsing in this file with the shared parseTimestamp helper.
+Preserve existing error messages and update tests in the same file.
+```
+
+### Large refactors
+
+Examples:
+
+- migrate a pattern across many files
+- replace a cross-cutting API
+- split a package or subsystem
+
+Best approach:
+
+- break the work into steps
+- use Copilot CLI agent or Edits for one bounded step at a time
+- validate between steps
+
+### The review imperative
+
+Always review multi-file refactors carefully.
+
+Common failure modes:
+
+- one file still uses the old helper
+- naming is inconsistent across files
+- tests were updated mechanically but not thoughtfully
+- edge-case handling changed unintentionally
+
+### The core pattern
+
+> **Make Copilot do the tedious part, you do the judgment part.**
+
+Let Copilot help with:
+
+- repeated call-site updates
+- boilerplate edits
+- test scaffolding
+- finding likely impacted files
+
+You keep control of:
+
+- the decomposition of the work
+- the architecture
+- the correctness review
+- the final merge decision
+
+---
+
+## Exploration Workflow (bonus)
+
+Exploration is one of the most underrated Copilot workflows, especially when you inherit an unfamiliar codebase.
+
+### Onboarding to an unfamiliar codebase
+
+Strong Copilot CLI prompts:
+
+```text
+Explain @src/main.py and tell me what starts the application.
+```
+
+```text
+Compare @services/payments and @services/invoicing. What responsibilities belong to each?
+```
+
+```text
+Summarize the architecture of this repo in five bullets for a new engineer.
+```
+
+### Use `@workspace` for codebase-wide questions
+
+In VS Code Chat:
+
+```text
+@workspace Where in this codebase is request authentication enforced?
+```
+
+```text
+@workspace Trace the flow from HTTP request to database write for invoice creation.
+```
+
+### Finding where something is handled
+
+This is a high-frequency workflow.
+
+Examples:
+
+```text
+@workspace Where is rate limiting handled?
+```
+
+```text
+@workspace Where do we convert upstream API errors into user-facing errors?
+```
+
+```text
+@workspace Which files define retry behavior for background jobs?
+```
+
+A strong follow-up is:
+
+```text
+What file should I read first, second, and third if I need to change that behavior?
+```
+
+---
+
+## A day in the life
+
+This narrative shows how a typical engineer might use Copilot across a normal workday.
+
+### 9:05 AM — morning standup ends, you pick up a ticket
+
+You grab a bug ticket about duplicate customer emails entering the system.
+
+First move:
+
+```text
+@github Summarize this issue and tell me the likely code areas involved.
+```
+
+If you are in the CLI with GitHub MCP available:
+
+```text
+Read issue #184 and draft implementation notes.
+```
+
+### 9:20 AM — explore the relevant code
+
+You open the likely handler and service files.
+
+In VS Code Chat:
+
+```text
+@workspace Where is email normalization currently handled?
+```
+
+Then on a specific file:
+
+```text
+@file Explain this module and point out where duplicates could slip through.
+```
+
+### 9:40 AM — write the implementation
+
+You write a good function signature and comment, then let inline completions help with the obvious body.
+
+```python
+def normalize_customer_email(raw_email: str | None) -> str | None:
+    """Return a canonical email string or None when the input is missing or empty."""
+```
+
+You accept only the parts that look correct and adjust the rest manually.
+
+### 10:00 AM — debug the first failure
+
+A test fails.
+
+In Chat:
+
+```text
+#terminal Explain the first actionable failure and tell me what assumption I just broke.
+```
+
+You realize duplicate casing was not covered.
+
+### 10:15 AM — generate tests
+
+You select the normalization function and ask:
+
+```text
+/tests #selection
+Use pytest.
+Include None, empty string, duplicate casing, and whitespace trimming.
+```
+
+You keep the generated scaffolding and then add one business-specific case manually.
+
+### 10:35 AM — perform a small refactor
+
+You notice the same normalization logic exists in two places.
+
+In Edits:
+
+```text
+Consolidate email normalization to the shared helper.
+Scope only the two service files and their tests.
+Preserve current behavior.
+```
+
+You review the diff before accepting.
+
+### 11:00 AM — prepare the PR
+
+You ask Copilot to summarize the change.
+
+```shell
+git diff --staged | gh copilot explain "Write a PR description with summary, testing, and reviewer notes."
+```
+
+You also draft a commit message:
+
+```shell
+git diff --staged | gh copilot explain "Write a concise conventional commit message for these changes."
+```
+
+### 11:10 AM — final human pass
+
+You run tests, re-read the changed files, and make sure:
+
+- the behavior is correct
+- the generated tests are meaningful
+- the docs match the behavior
+- the PR description is accurate
+
+That is the mature workflow.
+
+Copilot accelerated the work, but the engineer stayed in control at every meaningful decision point.
+
+---
+
+## A compact workflow cheat sheet
+
+| Task | Best starting tool | Good prompt shape |
+|---|---|---|
+| Understand a diff | `gh copilot explain` or Chat | “Explain what this diff does and what risks to inspect” |
+| Generate tests | VS Code Chat `/tests` | function + framework + edge cases |
+| Debug a failure | Chat with `#terminal` | error + stack trace + expectation + what changed |
+| Write docs | `/docs` or CLI explain | selected function + desired doc style |
+| Refactor across files | Copilot Edits or interactive CLI | scope + constraints + files + review diff |
+| Explore unfamiliar code | `@workspace`, `@file`, interactive CLI | “Where is X handled?” / “Explain this flow” |
+
+---
+
+## Key Takeaways
+
+1. **Copilot works best inside concrete workflows.** Code review, tests, debugging, docs, refactors, and exploration each have different best practices.
+2. **Prompt completeness matters most in debugging and test generation.** Give the actual evidence and the actual constraints.
+3. **Use the right surface for the job.** Inline for local code, Chat for questions, Edits or CLI agent for reviewable multi-file work.
+4. **Generated output is a draft, not a decision.** Review comments, tests, refactors, and docs all still need human judgment.
+5. **The mature pattern is consistent:** let Copilot accelerate the repetitive part and keep human control over risk, correctness, and tradeoffs.
+
+---
+
+## Next Steps
+
+You now have the practical foundation for Phase 2. From here, continue into the deeper technical material in [Phase 3 — Deep Dives](/docs/phase-3/overview).

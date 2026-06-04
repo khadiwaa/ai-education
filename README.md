@@ -21,11 +21,23 @@ Three modules covering the foundations every engineer needs to work effectively 
 
 | Module | Topic | Deck | Reference |
 |--------|-------|------|-----------|
-| 1 | How AI Actually Works | `slides/decks/phase-1/01-how-ai-works.md` | `docs/docs/phase-1/01-how-ai-works.md` |
-| 2 | Using AI Effectively | `slides/decks/phase-1/02-using-ai-effectively.md` | `docs/docs/phase-1/02-using-ai-effectively.md` |
-| 3 | AI in Your Engineering Workflow | `slides/decks/phase-1/03-ai-in-your-workflow.md` | `docs/docs/phase-1/03-ai-in-your-workflow.md` |
+| 1 | How AI Actually Works | `slides/decks/phase-1/01-how-ai-works.md` | `docs/docs/phase-1/how-ai-works.md` |
+| 2 | Using AI Effectively | `slides/decks/phase-1/02-using-ai-effectively.md` | `docs/docs/phase-1/using-ai-effectively.md` |
+| 3 | AI in Your Engineering Workflow | `slides/decks/phase-1/03-ai-in-your-workflow.md` | `docs/docs/phase-1/ai-in-your-workflow.md` |
 
-### Phase 2 — Deep Dives (self-select)
+### Phase 2 — GitHub Copilot in Practice
+
+Practical modules on using GitHub Copilot CLI and VS Code in your daily engineering work.
+
+| Module | Topic | Reference |
+|--------|-------|-----------|
+| 1 | Copilot CLI Essentials | `docs/docs/phase-2/copilot-cli-essentials.md` |
+| 2 | Copilot in VS Code | `docs/docs/phase-2/copilot-in-vscode.md` |
+| 3 | Skills & Customization | `docs/docs/phase-2/skills-and-customization.md` |
+| 4 | MCP & Integrations | `docs/docs/phase-2/mcp-and-integrations.md` |
+| 5 | Real-World Workflows | `docs/docs/phase-2/real-world-workflows.md` |
+
+### Phase 3 — Deep Dives (self-select)
 
 Advanced modules you can take in any order based on what's most relevant to your work.
 

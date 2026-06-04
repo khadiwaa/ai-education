@@ -1,0 +1,487 @@
+---
+id: mcp-and-integrations
+sidebar_position: 4
+title: "Module 4: MCP & Tool Integrations"
+---
+
+# Module 4: MCP & Tool Integrations
+
+*Phase 2 · ~75–90 minutes · Practical*
+
+This module turns MCP from an abstract Phase 1 concept into a practical engineering tool.
+
+The high-level idea of MCP is simple:
+
+> **MCP lets AI tools use external tools and data sources through a standard protocol.**
+
+In practice, that means Copilot can do more than chat about code. With the right MCP servers connected, it can access systems like GitHub, web search, databases, and team tools from inside the same session.
+
+---
+
+## MCP revisited, now in practical terms
+
+In Phase 1, MCP was mostly a concept: a way for tools to share context with an LLM.
+
+In real engineering workflows, MCP means:
+
+- the agent can read context from systems you already use
+- the agent can call well-defined tools instead of only generating text
+- the same internal tool can be made available to multiple MCP-compatible clients
+
+### Why engineers should care
+
+Without MCP, a typical flow looks like this:
+
+1. read an issue in GitHub
+2. copy details into chat
+3. search the codebase manually
+4. paste logs or snippets back into chat
+5. manually stitch together a plan
+
+With MCP, the flow can look more like this:
+
+1. ask Copilot to read the issue directly
+2. let it inspect the relevant repo context
+3. let it search related code or documentation
+4. have it draft implementation notes or even prepare the change
+
+That is a major productivity shift.
+
+:::info Important distinction
+The older `gh copilot suggest` / `gh copilot explain` flow is mostly one-shot text generation.
+
+MCP matters primarily for the newer interactive Copilot CLI and compatible editor agent workflows.
+:::
+
+---
+
+## How to configure MCP in Copilot CLI
+
+The newer interactive Copilot CLI supports MCP server configuration directly.
+
+There are two main ways to add servers:
+
+- use the interactive `/mcp add` command
+- edit the config file manually
+
+### Where the config lives
+
+Copilot CLI uses:
+
+```text
+~/.copilot/mcp-config.json
+```
+
+### Fast path: use `/mcp add`
+
+Inside an interactive `copilot` session:
+
+```text
+/mcp add
+```
+
+You will be prompted for:
+
+- **server name**
+- **server type** (`stdio`/local or `http`)
+- **command + args** for local servers, or **URL** for remote servers
+- optional **environment variables** or **headers**
+- which **tools** to expose (`*` for all, or a named subset)
+
+Save the form and the server becomes available immediately.
+
+### Manual config example
+
+```json
+{
+  "mcpServers": {
+    "playwright": {
+      "type": "local",
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"],
+      "env": {},
+      "tools": ["*"]
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "YOUR-API-KEY"
+      },
+      "tools": ["*"]
+    }
+  }
+}
+```
+
+### Useful MCP management commands
+
+| Command | What it does |
+|---|---|
+| `/mcp show` | List configured servers and status |
+| `/mcp show SERVER-NAME` | Show one server and its tools |
+| `/mcp edit SERVER-NAME` | Edit an existing server |
+| `/mcp disable SERVER-NAME` | Temporarily disable a server |
+| `/mcp enable SERVER-NAME` | Re-enable a disabled server |
+| `/mcp delete SERVER-NAME` | Remove the server config |
+
+:::tip Start with read-heavy tools
+When your team is learning MCP, begin with servers that read context rather than mutate systems. It keeps the blast radius low while everyone develops good prompting and approval habits.
+:::
+
+---
+
+## Popular MCP servers
+
+A good place to browse current MCP servers is the **GitHub MCP Registry**:
+
+```text
+https://github.com/mcp
+```
+
+Think in terms of categories and use cases.
+
+### 1. GitHub MCP (official)
+
+**What it gives you:**
+
+- repository access
+- issues and pull requests
+- code search
+- repo metadata
+
+**Why it matters:**
+
+This is the most immediately useful MCP server for software engineers because it connects task context and code context.
+
+**Where to find it:**
+
+- GitHub MCP Registry
+- the official `github/github-mcp-server` repository
+
+### 2. Filesystem MCP
+
+**What it gives you:**
+
+- explicit file access outside the current working directory or outside default repo context
+- controlled access to additional directories or resources
+
+**Why it matters:**
+
+Useful when work spans multiple repos, generated files, or docs stored elsewhere.
+
+**Where to find it:**
+
+- GitHub MCP Registry
+- community/server repos in the Model Context Protocol ecosystem
+
+### 3. Web search / fetch MCP
+
+**What it gives you:**
+
+- real-time lookup of web pages, docs, and external references during an agent session
+
+**Why it matters:**
+
+Good for current docs, API references, vendor examples, release notes, and up-to-date troubleshooting.
+
+**Where to find it:**
+
+- GitHub MCP Registry
+- common “fetch” or web-search MCP server repos
+
+### 4. Database MCP servers
+
+**What they give you:**
+
+- query access to databases from inside the AI workflow
+- schema inspection and safe read-only exploration
+
+**Why they matter:**
+
+Useful for debugging data issues, understanding schemas, or validating assumptions against real data.
+
+**Where to find them:**
+
+- GitHub MCP Registry
+- vendor/community servers for Postgres, MySQL, SQLite, and other systems
+
+### 5. Slack / Linear / Jira MCP servers
+
+**What they give you:**
+
+- access to team coordination systems
+- issues, tickets, discussions, and operational context
+
+**Why they matter:**
+
+They connect implementation work to the conversation and planning systems around it.
+
+**Where to find them:**
+
+- GitHub MCP Registry
+- vendor-supported or community-maintained MCP servers
+
+### Quick comparison table
+
+| Server type | Typical use | Main risk |
+|---|---|---|
+| GitHub | Issues, PRs, code search | Too much write scope if misconfigured |
+| Filesystem | Cross-directory file access | Accidental exposure of sensitive files |
+| Web search / fetch | Current docs and references | Trusting low-quality sources |
+| Database | Inspect data and schemas | Over-broad access to sensitive data |
+| Slack / Linear / Jira | Ticket and discussion context | Pulling in noisy or sensitive context |
+
+---
+
+## Connecting the GitHub MCP server
+
+For many engineers, GitHub MCP is the best first integration.
+
+### Good news first
+
+In Copilot CLI, the **GitHub MCP server is built in** and available without additional configuration.
+
+That means for many teams, “connecting it” is mostly about:
+
+- being logged into GitHub
+- confirming it is available
+- learning how to prompt against it
+
+### Step-by-step in Copilot CLI
+
+1. Start the interactive CLI:
+
+```shell
+copilot
+```
+
+2. If needed, authenticate:
+
+```text
+/login
+```
+
+3. Inspect configured MCP servers:
+
+```text
+/mcp show
+```
+
+4. Verify the GitHub server is available.
+
+5. Start using it with concrete prompts.
+
+Example prompts:
+
+```text
+Read GitHub issue #123 in this repo and summarize the requested change.
+```
+
+```text
+Search the repo for where this endpoint is implemented, then explain which files I should inspect first.
+```
+
+```text
+Summarize the open PR discussion related to authentication retries.
+```
+
+### If you are using VS Code instead
+
+In VS Code, the GitHub MCP server can be installed from the MCP registry/gallery and then trusted in the editor. The key ideas are the same:
+
+- install or enable the server
+- verify it is running
+- let Copilot Chat use its tools when relevant
+
+---
+
+## The value proposition in one sentence
+
+With MCP connected, your agent can **read the ticket, inspect the code, gather external context, and help draft or implement the fix without you manually shuttling information between tools**.
+
+### A concrete before/after
+
+#### Without MCP
+
+- open GitHub issue in browser
+- copy summary into chat
+- search code manually
+- paste snippets into AI tool
+- draft implementation notes manually
+
+#### With MCP
+
+- ask Copilot to read the issue directly
+- ask it to search the relevant code
+- ask it to summarize the likely implementation points
+- optionally have it draft the PR plan or code changes
+
+That is not magic. It is better context plumbing.
+
+---
+
+## Team MCP strategy
+
+This matters beyond Copilot CLI.
+
+If your organization exposes internal services through MCP, then **any MCP-compatible client** can use them, not just one vendor’s tool.
+
+That is strategically important because it means you can build internal context once and reuse it across:
+
+- Copilot CLI
+- VS Code agent workflows
+- Claude Code
+- other MCP-compatible tools
+
+### Good candidates for internal MCP servers
+
+- internal service catalog
+- feature flag metadata
+- deployment status
+- architecture decision records
+- runbook search
+- internal API schema lookup
+- incident/ticket correlation tools
+
+### Why teams like this approach
+
+It avoids building the same brittle integration for every AI product separately.
+
+---
+
+## Security considerations for MCP
+
+MCP is powerful precisely because it connects the model to real tools. That means security and permission design matter a lot.
+
+### 1. Only connect servers you trust
+
+An MCP server is software with capabilities. Treat it like any other third-party tool you would install in your environment.
+
+Review:
+
+- who maintains it
+- what it can access
+- how authentication works
+- whether it is read-only or write-capable
+
+### 2. Review the tools a server exposes
+
+Do not stop at “we installed server X.” Ask: **what tools did that actually make available?**
+
+A server exposing “read issue” is very different from a server exposing “delete branch” or “write production data.”
+
+### 3. Use least privilege
+
+If you only need read access, configure read access.
+
+If a database integration is only for schema inspection, do not give it write permissions.
+
+If a ticket integration is only for reading status, do not allow mutation.
+
+### 4. Remember that Copilot can use MCP tools autonomously when relevant
+
+This is the most important operational point.
+
+Once a server is connected and a tool is available, Copilot may decide to use it to complete the task. That is the whole point of MCP.
+
+So your risk posture must assume:
+
+- the model can discover and call the tool
+- the model may do so without you spelling out each tool call manually
+- permissions and approval boundaries are part of the system design
+
+### 5. Be careful with sensitive context
+
+Even a read-only server may expose sensitive data.
+
+Examples:
+
+- incident channels in Slack
+- customer data in databases
+- security tickets in Jira
+- unpublished roadmap items in Linear
+
+Scope access thoughtfully.
+
+:::warning “Read-only” is not the same as “safe by default”
+Read-only access can still expose confidential or regulated information. Least privilege still applies.
+:::
+
+---
+
+## Practical example: using GitHub MCP to read an issue and draft implementation notes
+
+Suppose you pick up a bug ticket and want a fast, structured start.
+
+### Example prompt
+
+```text
+Read GitHub issue #248 in this repository.
+Then search the codebase for the implementation areas most likely involved.
+Draft implementation notes with:
+- likely files to inspect
+- current behavior
+- likely root cause candidates
+- smallest safe fix options
+- tests I should expect to update
+```
+
+### Why this is a strong prompt
+
+It is concrete about both the **external context** and the **output shape**.
+
+You are not just saying “look at the issue.” You are saying what useful engineering artifact you want back.
+
+### What good output looks like
+
+Good implementation notes should include:
+
+- issue summary in one paragraph
+- a short list of code entry points
+- assumptions and open questions
+- possible fix approaches, ordered from smallest to broadest
+- likely tests or docs to update
+
+### Follow-up prompts
+
+```text
+Now compare the two smallest fix options and recommend one.
+```
+
+```text
+Based on those notes, draft a small implementation plan I can execute in one PR.
+```
+
+```text
+Draft a PR description template for the eventual change.
+```
+
+---
+
+## Adoption advice for this team
+
+For a broad engineering audience, the best rollout pattern is usually:
+
+1. teach GitHub MCP first
+2. add one read-only web/fetch server
+3. add a safe internal data source if genuinely useful
+4. expand only after the team has good review and security habits
+
+This sequence keeps the initial value high and the risk surface manageable.
+
+---
+
+## Key Takeaways
+
+1. **MCP makes Copilot tool-aware, not just text-generating.** That is the practical shift.
+2. **Copilot CLI can configure and manage MCP servers directly.** Use `/mcp add`, `/mcp show`, and the config file when needed.
+3. **GitHub MCP is the best first integration for most engineers.** It connects issues, PRs, and code search to the same workflow.
+4. **A good MCP strategy is reusable across tools.** Internal MCP servers can serve multiple AI clients, not just Copilot.
+5. **Security is part of the design.** Trust, tool review, least privilege, and careful scope are non-negotiable.
+
+---
+
+## Next Steps
+
+Next, put everything together into day-to-day engineering patterns in [Module 5: Real-World Workflows](/docs/phase-2/real-world-workflows).

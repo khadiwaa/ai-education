@@ -281,11 +281,11 @@ Notice: What context does it use? Where does it do well? Where does it need more
 
 | Module | Take this if... |
 |--------|---------------|
-| [T2: Advanced Prompting & Eval](../phase-2/t2-advanced-prompting) | You want to reliably improve AI feature quality |
-| [T3: Embeddings, RAG & Retrieval](../phase-2/t3-embeddings-rag) | You're building or evaluating AI features with search/docs |
-| [T4: Agents & Multi-Agent Systems](../phase-2/t4-agents-multi-agent) | You're building or working with agentic systems |
-| [T1: Transformer Architecture](../phase-2/t1-transformer-architecture) | You want the deep technical foundation |
-| [S3: AI Product Strategy](../phase-2/s3-ai-product-strategy) | You're making product decisions about AI features |
-| [S2: Cost Modeling](../phase-2/s2-cost-modeling) | You need to estimate or control AI infrastructure costs |
+| [T2: Advanced Prompting & Eval](../phase-3/t2-advanced-prompting) | You want to reliably improve AI feature quality |
+| [T3: Embeddings, RAG & Retrieval](../phase-3/t3-embeddings-rag) | You're building or evaluating AI features with search/docs |
+| [T4: Agents & Multi-Agent Systems](../phase-3/t4-agents-multi-agent) | You're building or working with agentic systems |
+| [T1: Transformer Architecture](../phase-3/t1-transformer-architecture) | You want the deep technical foundation |
+| [S3: AI Product Strategy](../phase-3/s3-ai-product-strategy) | You're making product decisions about AI features |
+| [S2: Cost Modeling](../phase-3/s2-cost-modeling) | You need to estimate or control AI infrastructure costs |
 
 *Phase 2 modules can be taken in any order — start with whatever's most relevant to your work right now.*

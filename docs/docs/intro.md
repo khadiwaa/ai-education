@@ -6,13 +6,13 @@ title: Overview
 
 # AI Education — Engineering Curriculum
 
-A living curriculum for building AI fluency across the engineering team. Start with Phase 1 if you're new to AI. Jump into Phase 2 deep dives when you're ready to go deeper on specific topics.
+A living curriculum for building AI fluency across the engineering team. The curriculum is designed in three progressive phases — each builds on the last, and each is immediately practical.
 
 ---
 
-## Phase 1 — AI Essentials (start here)
+## Phase 1 — AI Essentials
 
-Three focused modules covering the foundation every engineer needs to work effectively with AI tools. Each module is ~45 minutes and includes hands-on exercises.
+**Start here.** Three focused modules covering the foundation every engineer needs to work effectively with AI tools. Each module is ~45 minutes and includes hands-on exercises.
 
 | Module | What you'll learn |
 |--------|------------------|
@@ -20,33 +20,62 @@ Three focused modules covering the foundation every engineer needs to work effec
 | [**2. Using AI Effectively**](./phase-1/using-ai-effectively) | Context windows, prompting techniques, hallucination, RAG |
 | [**3. AI in Your Engineering Workflow**](./phase-1/ai-in-your-workflow) | Coding assistants, agents, tools, security, practical patterns |
 
-Complete these in order — each module builds on the last.
+Complete Phase 1 in order — each module builds on the last.
 
 ---
 
-## Phase 2 — Deep Dives
+## Phase 2 — GitHub Copilot in Practice
 
-Optional advanced modules. Take them in any order based on what's most relevant to your work right now.
+**Do this after Phase 1.** Five practical modules on using GitHub Copilot CLI and VS Code effectively in your daily engineering work. Hands-on, opinionated, immediately applicable.
+
+| Module | What you'll learn |
+|--------|------------------|
+| [**1. Copilot CLI Essentials**](./phase-2/copilot-cli-essentials) | Setup, sessions, context, core commands, and interaction patterns |
+| [**2. Copilot in VS Code**](./phase-2/copilot-in-vscode) | Inline completions, Copilot Chat, Copilot Edits, slash commands, context variables |
+| [**3. Skills & Customization**](./phase-2/skills-and-customization) | Using skills (including this repo's assessment skill), custom instructions, workspace config |
+| [**4. MCP & Integrations**](./phase-2/mcp-and-integrations) | Connecting MCP servers, GitHub MCP, team integrations, security |
+| [**5. Real-World Workflows**](./phase-2/real-world-workflows) | Code review, test generation, debugging, docs, refactoring — practical patterns |
+
+Phase 2 modules can be taken in any order, but Module 1 (CLI Essentials) is the best starting point.
+
+---
+
+## Phase 3 — Deep Dives
+
+**Optional advanced modules.** Take them in any order based on what's most relevant to your work. These go deeper on specific technical and strategic topics that build on Phase 1 and 2 foundations.
 
 ### Technical Track
 
 | Module | Topic |
 |--------|-------|
-| [T1](./phase-2/t1-transformer-architecture) | Transformer Architecture Deep Dive |
-| [T2](./phase-2/t2-advanced-prompting) | Advanced Prompt Engineering & Evaluation |
-| [T3](./phase-2/t3-embeddings-rag) | Embeddings, RAG & Retrieval Systems |
-| [T4](./phase-2/t4-agents-multi-agent) | Agents & Multi-Agent Systems |
-| [T5](./phase-2/t5-fine-tuning) | Fine-Tuning & Model Customization |
+| [T1](./phase-3/t1-transformer-architecture) | Transformer Architecture Deep Dive |
+| [T2](./phase-3/t2-advanced-prompting) | Advanced Prompt Engineering & Evaluation |
+| [T3](./phase-3/t3-embeddings-rag) | Embeddings, RAG & Retrieval Systems |
+| [T4](./phase-3/t4-agents-multi-agent) | Agents & Multi-Agent Systems |
+| [T5](./phase-3/t5-fine-tuning) | Fine-Tuning & Model Customization |
 
 ### Strategic Track
 
 | Module | Topic |
 |--------|-------|
-| [S1](./phase-2/s1-platform-strategy) | Platform Strategy & Vendor Evaluation |
-| [S2](./phase-2/s2-cost-modeling) | Cost Modeling & Optimization |
-| [S3](./phase-2/s3-ai-product-strategy) | AI Product Strategy |
-| [S4](./phase-2/s4-team-education) | Team Education & Org Design |
-| [S5](./phase-2/s5-staying-current) | Staying Current |
+| [S1](./phase-3/s1-platform-strategy) | Platform Strategy & Vendor Evaluation |
+| [S2](./phase-3/s2-cost-modeling) | Cost Modeling & Optimization |
+| [S3](./phase-3/s3-ai-product-strategy) | AI Product Strategy |
+| [S4](./phase-3/s4-team-education) | Team Education & Org Design |
+| [S5](./phase-3/s5-staying-current) | Staying Current |
+
+---
+
+## Self-Assessment
+
+Use the built-in self-assessment skill to test your Phase 1 knowledge and get a personalized report:
+
+```bash
+# In your terminal, from this repo:
+# Say "assess me" to Copilot CLI
+```
+
+The assessment covers all three Phase 1 modules, scores your responses, and produces a shareable report with recommended next steps.
 
 ---
 

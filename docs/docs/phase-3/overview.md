@@ -1,16 +1,16 @@
 ---
 id: overview
 sidebar_position: 1
-title: Phase 2 Overview
+title: Phase 3 Overview
 ---
 
-# Phase 2 — Deep Dives
+# Phase 3 — Deep Dives
 
-*Self-paced · Take in any order · Build on Phase 1 foundations*
+*Self-paced · Take in any order · Build on Phase 1 & 2 foundations*
 
 ---
 
-Phase 2 modules go deeper on specific topics. Take them in any order based on what's most relevant to your current work. Each module builds on the Phase 1 foundations.
+Phase 3 modules go deeper on specific topics. Take them in any order based on what's most relevant to your current work. Each module builds on the Phase 1 foundations.
 
 ---
 

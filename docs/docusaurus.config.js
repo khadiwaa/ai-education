@@ -77,7 +77,7 @@ const config = {
           {
             title: 'Phase 2',
             items: [
-              { label: 'Deep Dives', to: '/docs/phase-2/overview' },
+              { label: 'Deep Dives', to: '/docs/phase-3/overview' },
             ],
           },
           {
