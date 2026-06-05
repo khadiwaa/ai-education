@@ -1,0 +1,229 @@
+.main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.hero {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.hero h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  font-size: 1rem;
+  color: var(--ifm-color-secondary-darkest);
+  max-width: 620px;
+}
+
+.cliBox {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 1rem;
+  padding: 14px 20px;
+  background: var(--ifm-code-background);
+  border-radius: 8px;
+  border: 1px solid var(--ifm-toc-border-color);
+}
+
+.cliLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--ifm-color-secondary-darkest);
+}
+
+.cliBox code {
+  font-size: 0.95rem;
+  background: none;
+  padding: 0;
+  color: var(--ifm-font-color-base);
+}
+
+/* Phase section */
+.phaseSection {
+  margin-bottom: 3rem;
+}
+
+.phaseTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ifm-color-primary);
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--ifm-color-primary);
+  margin-bottom: 1.5rem;
+}
+
+/* Module block */
+.moduleBlock {
+  margin-bottom: 2rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.moduleHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: var(--ifm-background-surface-color);
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  gap: 1rem;
+}
+
+.moduleTag {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--ifm-color-secondary-darkest);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.moduleTitle {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.moduleTitle a {
+  color: var(--ifm-heading-color);
+  text-decoration: none;
+}
+
+.moduleTitle a:hover {
+  text-decoration: underline;
+}
+
+.moduleActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.qCount {
+  font-size: 0.8rem;
+  color: var(--ifm-color-secondary-darkest);
+}
+
+.toggleBtn {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--ifm-toc-border-color);
+  background: none;
+  cursor: pointer;
+  color: var(--ifm-font-color-base);
+}
+
+.toggleBtn:hover {
+  background: var(--ifm-toc-border-color);
+}
+
+/* Question card */
+.qCard {
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.qCard:last-child {
+  border-bottom: none;
+}
+
+.qHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+}
+
+.qHeader:hover {
+  background: var(--ifm-hover-overlay);
+}
+
+.qId {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  color: var(--ifm-color-secondary-darkest);
+  background: var(--ifm-code-background);
+  padding: 2px 6px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.qTitle {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ifm-font-color-base);
+}
+
+.qChevron {
+  font-size: 0.65rem;
+  color: var(--ifm-color-secondary-darkest);
+  flex-shrink: 0;
+}
+
+.qBody {
+  padding: 12px 18px 16px;
+  background: var(--ifm-background-color);
+  border-top: 1px solid var(--ifm-toc-border-color);
+}
+
+.qText {
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.qMeta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.metaLabel {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--ifm-color-secondary-darkest);
+  margin-bottom: 6px;
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.topic {
+  font-size: 0.78rem;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: var(--ifm-code-background);
+  color: var(--ifm-font-color-base);
+  border: 1px solid var(--ifm-toc-border-color);
+}
+
+.sectionLink {
+  font-size: 0.88rem;
+  font-weight: 600;
+}

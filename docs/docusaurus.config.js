@@ -81,6 +81,11 @@ const config = {
             position: 'left',
           },
           {
+            to: '/question-bank',
+            label: 'Question Bank',
+            position: 'left',
+          },
+          {
             href: 'https://github.com/your-org/ai-education-hl',
             label: 'GitHub',
             position: 'right',
