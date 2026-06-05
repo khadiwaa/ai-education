@@ -8,9 +8,51 @@ const SCORE_SIGNAL = {
   3: "Strong",
 };
 
+const PHASES = {
+  1: {
+    number: 1,
+    label: "Phase 1",
+    selectionLabel: "full Phase 1",
+    fullScope: "Full Phase 1 Assessment (all three modules)",
+    moduleNumbers: [1, 2, 3],
+    nextStepLabel: "one recommended Phase 2 module",
+    nextStepDescription: "Recommend one Phase 2 module that best fits the engineer's current gaps.",
+    nextRecommendations: [
+      "Module 4 — Copilot CLI Essentials",
+      "Module 5 — Copilot in VS Code",
+      "Module 6 — Skills & Customization",
+      "Module 7 — MCP & Integrations",
+      "Module 8 — Real-World Workflows",
+    ],
+  },
+  2: {
+    number: 2,
+    label: "Phase 2",
+    selectionLabel: "full Phase 2",
+    fullScope: "Full Phase 2 Assessment (all five modules)",
+    moduleNumbers: [4, 5, 6, 7, 8],
+    nextStepLabel: "one recommended Phase 3 deep dive",
+    nextStepDescription: "Recommend one Phase 3 deep dive that best fits the engineer's current gaps or interests.",
+    nextRecommendations: [
+      "T1 — Transformer Architecture",
+      "T2 — Advanced Prompt Engineering & Evaluation",
+      "T3 — Embeddings, RAG & Retrieval Systems",
+      "T4 — Agents & Multi-Agent Systems",
+      "T5 — Fine-Tuning & Model Customization",
+      "T6 — Open-Source & Local Models",
+      "S1 — Platform Strategy & Vendor Evaluation",
+      "S2 — Cost Modeling & Optimization",
+      "S3 — AI Product Strategy",
+      "S4 — Team AI Adoption & Education",
+      "S5 — Staying Current in AI",
+    ],
+  },
+};
+
 const MODULES = {
   1: {
     number: 1,
+    phase: 1,
     name: "How AI Actually Works",
     label: "Module 1 — How AI Actually Works",
     questions: [
@@ -75,6 +117,7 @@ const MODULES = {
   },
   2: {
     number: 2,
+    phase: 1,
     name: "Using AI Effectively",
     label: "Module 2 — Using AI Effectively",
     questions: [
@@ -139,6 +182,7 @@ const MODULES = {
   },
   3: {
     number: 3,
+    phase: 1,
     name: "AI in Your Engineering Workflow",
     label: "Module 3 — AI in Your Engineering Workflow",
     questions: [
@@ -201,6 +245,331 @@ const MODULES = {
       },
     ],
   },
+  4: {
+    number: 4,
+    phase: 2,
+    name: "Copilot CLI Essentials",
+    label: "Module 4 — Copilot CLI Essentials",
+    questions: [
+      {
+        id: "4-1",
+        shortTitle: "First session setup",
+        question:
+          "You open your terminal, navigate to a repo, and run `copilot` there for the first time. Walk me through what happens, why the trust and setup prompts matter, and what you should do next.",
+        evaluationGuidance: {
+          strong:
+            "Explains that the working directory anchors Copilot's context, covers the trust prompt as a safety boundary for file/tool access, mentions session permissions, and describes using `/init` to seed repo instructions or defaults.",
+          solid:
+            "Knows there is a trust/setup flow and that the current directory matters, but is fuzzy on the security or configuration rationale.",
+          developing:
+            "Treats first-run prompts as something to click through without understanding what they control.",
+        },
+        learningTopics: ["first-use experience", "trust prompt", "/init", "working directory context"],
+        sectionLink: "/docs/phase-2/copilot-cli-essentials#your-first-session-in-a-new-directory",
+        focusAreaTopic: "First-run setup",
+        focusAreaDetail:
+          "Review how trust, session permissions, `/init`, and the repo root shape a new Copilot CLI session.",
+      },
+      {
+        id: "4-2",
+        shortTitle: "Context drift recovery",
+        question:
+          "Your Copilot CLI session has been running for a long time and the answers are getting less relevant. What's likely happening, and what are two slash-command-based ways to recover?",
+        evaluationGuidance: {
+          strong:
+            "Explains context-window pressure or long-session drift, and recommends `/compact` to preserve compressed context plus `/clear` when a clean slate is better. May also mention `/context` to inspect usage or `/model` for task fit.",
+          solid:
+            "Knows `/compact` or `/clear` exist, but cannot clearly explain why session quality degraded or when to use each one.",
+          developing:
+            "Assumes the model is just broken or only suggests restarting the terminal without understanding session management.",
+        },
+        learningTopics: ["/compact", "/clear", "context window management", "session hygiene"],
+        sectionLink: "/docs/phase-2/copilot-cli-essentials#slash-commands--the-complete-reference",
+        focusAreaTopic: "Session hygiene",
+        focusAreaDetail:
+          "Review how `/compact`, `/clear`, and `/context` help you recover from long-session context drift.",
+      },
+      {
+        id: "4-3",
+        shortTitle: "Three context layers",
+        question:
+          "What are the three levels of context or memory in Copilot CLI, and when would you use each one?",
+        evaluationGuidance: {
+          strong:
+            "Names persistent memory (`/memory`), repo-level custom instructions (`.github/copilot-instructions.md`), and session context, then explains the right use for each.",
+          solid:
+            "Recognizes there is session context versus something persistent, but cannot clearly name all three layers or describe when each fits best.",
+          developing:
+            "Treats memory as only the current conversation or confuses personal memory with repo instructions.",
+        },
+        learningTopics: ["persistent memory", "custom instructions", "session context", "/memory"],
+        sectionLink: "/docs/phase-2/copilot-cli-essentials#memory-in-depth",
+        focusAreaTopic: "Memory layers",
+        focusAreaDetail:
+          "Review the difference between persistent `/memory`, repo-level instructions, and task-specific session context.",
+      },
+    ],
+  },
+  5: {
+    number: 5,
+    phase: 2,
+    name: "Copilot in VS Code",
+    label: "Module 5 — Copilot in VS Code",
+    questions: [
+      {
+        id: "5-1",
+        shortTitle: "Three VS Code modes",
+        question:
+          "What's the difference between Copilot inline completions, Copilot Chat, and Copilot Edits in VS Code? Give a concrete example of when you'd use each.",
+        evaluationGuidance: {
+          strong:
+            "Explains inline completions as in-editor continuation while typing, Chat as conversational Q&A or scoped generation, and Edits as reviewable multi-file patch generation, with concrete examples for each.",
+          solid:
+            "Knows the three surfaces exist, but is fuzzy on when to switch between Chat and Edits or lacks good examples.",
+          developing:
+            "Treats Copilot as only autocomplete or cannot distinguish the three workflows.",
+        },
+        learningTopics: ["inline completions", "Copilot Chat", "Copilot Edits", "mode selection"],
+        sectionLink: "/docs/phase-2/copilot-in-vscode#inline-vs-chat-vs-edits",
+        focusAreaTopic: "VS Code mode selection",
+        focusAreaDetail:
+          "Review the decision rule for choosing inline completions, Chat, or Edits based on task shape.",
+      },
+      {
+        id: "5-2",
+        shortTitle: "Chat context variables",
+        question:
+          "What are context variables in VS Code Copilot Chat, and name three you use to make prompts more relevant.",
+        evaluationGuidance: {
+          strong:
+            "Explains that context variables ground prompts with repo, file, selection, terminal, or GitHub context, and names useful examples such as `@workspace`, `@file`, `#selection`, `#terminal`, or `@github`.",
+          solid:
+            "Knows one or two context variables, but is fuzzy on what they actually do or cannot name three strong day-to-day examples.",
+          developing:
+            "Does not know context variables exist or cannot explain why they improve prompt quality.",
+        },
+        learningTopics: ["context variables", "@workspace", "@file", "#selection", "#terminal"],
+        sectionLink: "/docs/phase-2/copilot-in-vscode#context-variables-in-chat",
+        focusAreaTopic: "Prompt grounding",
+        focusAreaDetail:
+          "Review how VS Code context variables reduce copy-paste and improve prompt grounding.",
+      },
+      {
+        id: "5-3",
+        shortTitle: "Edits review workflow",
+        question:
+          "You want Copilot to make a coordinated change across several files in VS Code. What does a strong Copilot Edits workflow look like, and what should you review in the diff before accepting it?",
+        evaluationGuidance: {
+          strong:
+            "Describes tightly scoping the change, referencing the right files, asking for the smallest coherent patch, then reviewing the diff for scope creep, consistency, test coverage, and incomplete updates before accepting.",
+          solid:
+            "Understands Edits is for reviewable multi-file changes, but misses key review checks or how to scope the prompt well.",
+          developing:
+            "Treats Edits like blind code generation and does not emphasize reviewing the diff before acceptance.",
+        },
+        learningTopics: ["Copilot Edits", "multi-file changes", "diff review", "scoping prompts"],
+        sectionLink: "/docs/phase-2/copilot-in-vscode#copilot-edits",
+        focusAreaTopic: "Reviewing Edits output",
+        focusAreaDetail:
+          "Review how to scope Edits requests and inspect the resulting diff for consistency and unintended changes.",
+      },
+    ],
+  },
+  6: {
+    number: 6,
+    phase: 2,
+    name: "Skills & Customization",
+    label: "Module 6 — Skills & Customization",
+    questions: [
+      {
+        id: "6-1",
+        shortTitle: "Instructions file basics",
+        question:
+          "What is a `.github/copilot-instructions.md` file, where does it live, and what are two examples of guidance you'd put in it for a TypeScript or Java project?",
+        evaluationGuidance: {
+          strong:
+            "Explains that it is repo-level Markdown guidance loaded into Copilot interactions, gives the correct path, and offers concrete examples such as test framework expectations, architecture boundaries, coding conventions, or validation commands.",
+          solid:
+            "Knows the file exists and roughly what it is for, but gives only vague examples or misses why it improves team consistency.",
+          developing:
+            "Has not heard of the file or cannot explain what belongs in it.",
+        },
+        learningTopics: ["copilot-instructions.md", "repo-level instructions", "team conventions"],
+        sectionLink: "/docs/phase-2/skills-and-customization#custom-instructions-githubcopilot-instructionsmd",
+        focusAreaTopic: "Repo instructions",
+        focusAreaDetail:
+          "Review what belongs in `.github/copilot-instructions.md` and how it improves consistency across the repo.",
+      },
+      {
+        id: "6-2",
+        shortTitle: "Repo-local skills",
+        question:
+          "What is a Copilot CLI skill or extension, why would a team package one inside `.github/extensions/`, and what kinds of workflows are good candidates?",
+        evaluationGuidance: {
+          strong:
+            "Explains that skills/extensions package reusable Copilot behavior or tools, that repo-local extensions are versioned and shared with the repo, and names strong use cases like assessments, onboarding, release checklists, or internal lookups.",
+          solid:
+            "Knows skills add custom behavior, but is fuzzy on why repo-local packaging matters or cannot name good workflow candidates.",
+          developing:
+            "Confuses skills with slash commands or cannot explain why a team would build one.",
+        },
+        learningTopics: ["Copilot extensions", ".github/extensions", "repo-local workflows", "custom skills"],
+        sectionLink: "/docs/phase-2/skills-and-customization#the-githubextensions-directory",
+        focusAreaTopic: "Repo-local extensions",
+        focusAreaDetail:
+          "Review why teams keep shared skills under `.github/extensions/` and which repeated workflows are worth packaging there.",
+      },
+      {
+        id: "6-3",
+        shortTitle: "Context quality setup",
+        question:
+          "Without writing any extension code, what can you do in the workspace or repo to help Copilot get better context and produce stronger suggestions?",
+        evaluationGuidance: {
+          strong:
+            "Names practical moves like opening the right related files, keeping clear naming conventions, maintaining READMEs/comments, surfacing canonical examples, and organizing the repo around stable patterns.",
+          solid:
+            "Understands that repo quality affects Copilot, but gives only one or two generic ideas without much operational detail.",
+          developing:
+            "Assumes Copilot quality is independent of repo structure or documentation quality.",
+        },
+        learningTopics: ["workspace configuration", "context quality", "open files", "canonical patterns"],
+        sectionLink: "/docs/phase-2/skills-and-customization#workspace-configuration-helping-copilot-get-good-context",
+        focusAreaTopic: "Workspace context quality",
+        focusAreaDetail:
+          "Review how open files, naming, documentation, and stable repo structure improve Copilot's local context.",
+      },
+    ],
+  },
+  7: {
+    number: 7,
+    phase: 2,
+    name: "MCP & Integrations",
+    label: "Module 7 — MCP & Integrations",
+    questions: [
+      {
+        id: "7-1",
+        shortTitle: "MCP in practice",
+        question:
+          "What is the Model Context Protocol (MCP), and how does it change what Copilot can do compared to a plain chat session?",
+        evaluationGuidance: {
+          strong:
+            "Explains MCP as a standard protocol for exposing external tools and data to AI clients, notes the client/server model, and describes how it lets Copilot read issues, search docs, query systems, or use other tools beyond local chat context.",
+          solid:
+            "Knows MCP connects tools to the model, but is fuzzy on the protocol idea or on how it changes real workflows.",
+          developing:
+            "Treats MCP as a Copilot-only buzzword or cannot explain how it expands capability.",
+        },
+        learningTopics: ["MCP protocol", "tool integration", "external context"],
+        sectionLink: "/docs/phase-2/mcp-and-integrations#mcp-revisited-now-in-practical-terms",
+        focusAreaTopic: "MCP fundamentals",
+        focusAreaDetail:
+          "Review how MCP exposes external tools and data sources to Copilot through a standard protocol.",
+      },
+      {
+        id: "7-2",
+        shortTitle: "Connect an MCP server",
+        question:
+          "How do you connect an MCP server to Copilot CLI? Walk through the basic setup and verification steps.",
+        evaluationGuidance: {
+          strong:
+            "Mentions using `/mcp add` or editing `~/.copilot/mcp-config.json`, choosing local vs HTTP server details, configuring command/args or URL plus env/headers/tools, and verifying with `/mcp show`.",
+          solid:
+            "Knows there is a config flow and maybe a command, but cannot describe the file path, setup fields, or how to verify the server is available.",
+          developing:
+            "Has not set one up and cannot describe where configuration lives or how to inspect connected servers.",
+        },
+        learningTopics: ["/mcp add", "mcp-config.json", "/mcp show", "server configuration"],
+        sectionLink: "/docs/phase-2/mcp-and-integrations#how-to-configure-mcp-in-copilot-cli",
+        focusAreaTopic: "MCP setup flow",
+        focusAreaDetail:
+          "Review the `/mcp add` flow, the `~/.copilot/mcp-config.json` file, and how to verify configured servers with `/mcp show`.",
+      },
+      {
+        id: "7-3",
+        shortTitle: "Safe first integrations",
+        question:
+          "If you were rolling out MCP to a software engineering team, what three integrations would you start with first, and what security principles would guide that rollout?",
+        evaluationGuidance: {
+          strong:
+            "Names practical integrations like GitHub, web/fetch, filesystem, database, or ticketing tools, explains the workflow value of each, and includes security principles such as trust, read-heavy first, least privilege, and reviewing tool scope.",
+          solid:
+            "Can name a few useful integrations, but is weak on why they matter or how to think about permissions and rollout safety.",
+          developing:
+            "Offers generic examples without clear workflow benefits or ignores the security implications of connecting real tools.",
+        },
+        learningTopics: ["GitHub MCP", "practical integrations", "least privilege", "read-heavy rollout"],
+        sectionLink: "/docs/phase-2/mcp-and-integrations#popular-mcp-servers",
+        focusAreaTopic: "MCP rollout strategy",
+        focusAreaDetail:
+          "Review which MCP integrations deliver immediate engineering value and why least privilege matters when you add them.",
+      },
+    ],
+  },
+  8: {
+    number: 8,
+    phase: 2,
+    name: "Real-World Workflows",
+    label: "Module 8 — Real-World Workflows",
+    questions: [
+      {
+        id: "8-1",
+        shortTitle: "Diff review workflow",
+        question:
+          "Walk me through how you'd use Copilot CLI to help with a code review — from getting the diff to producing useful feedback.",
+        evaluationGuidance: {
+          strong:
+            "Uses the interactive `!git diff` pattern to feed the diff into the session, asks Copilot for behavior/risk summaries, probes edge cases or weak error handling, and uses Copilot to draft clean review comments after forming a human judgment.",
+          solid:
+            "Knows Copilot can help summarize diffs or draft comments, but misses the interactive command pattern or the best review questions to ask.",
+          developing:
+            "Does code review separately and cannot describe a concrete Copilot-assisted review workflow.",
+        },
+        learningTopics: ["code review workflow", "!git diff", "risk-focused review", "review comments"],
+        sectionLink: "/docs/phase-2/real-world-workflows#code-review-workflow",
+        focusAreaTopic: "Copilot-assisted code review",
+        focusAreaDetail:
+          "Review the interactive `!git diff` pattern and the kinds of risk-oriented questions that make Copilot useful in review.",
+      },
+      {
+        id: "8-2",
+        shortTitle: "Generate useful tests",
+        question:
+          "You have a function with no tests. How would you use Copilot to generate a strong test suite, and what would you verify before committing those tests?",
+        evaluationGuidance: {
+          strong:
+            "Explains giving Copilot the real function or selection, specifying the framework explicitly, naming important edge cases, then reviewing the generated tests for correctness, missing boundaries, and whether they actually exercise real behavior rather than tautologies.",
+          solid:
+            "Uses Copilot to generate tests and may mention edge cases, but does not emphasize framework choice or careful review of what the tests truly prove.",
+          developing:
+            "Accepts generated tests at face value without specifying constraints or checking whether they would catch real bugs.",
+        },
+        learningTopics: ["test generation", "edge cases", "framework specification", "test review"],
+        sectionLink: "/docs/phase-2/real-world-workflows#test-generation-workflow",
+        focusAreaTopic: "Test generation quality",
+        focusAreaDetail:
+          "Review how to specify the framework, enumerate important edge cases, and critically review AI-generated tests before committing them.",
+      },
+      {
+        id: "8-3",
+        shortTitle: "Hypothesis-driven debugging",
+        question:
+          "Describe a debugging workflow using Copilot when you have an error message but don't yet know the root cause.",
+        evaluationGuidance: {
+          strong:
+            "Starts with the exact error, stack trace or terminal output, expected vs actual behavior, and what was already tried; asks Copilot for prioritized hypotheses and next files to inspect; then validates with logs, debugger steps, or tests and knows when to stop after a few non-converging rounds.",
+          solid:
+            "Pastes errors into Copilot and asks for fixes, but lacks a clear hypothesis-driven loop or does not distinguish AI help from runtime validation.",
+          developing:
+            "Uses Copilot only after finding the bug manually or expects a single pasted error to produce a reliable root cause.",
+        },
+        learningTopics: ["debugging workflow", "#terminal", "hypothesis-driven debugging", "validation loop"],
+        sectionLink: "/docs/phase-2/real-world-workflows#debugging-workflow",
+        focusAreaTopic: "Debugging with evidence",
+        focusAreaDetail:
+          "Review the information-complete debugging prompt and the habit of validating Copilot's hypotheses with logs, tests, or a debugger.",
+      },
+    ],
+  },
 };
 
 function slugify(value) {
@@ -216,6 +585,10 @@ function normalizeWhitespace(value) {
 
 function getModule(moduleNumber) {
   return MODULES[moduleNumber];
+}
+
+function getPhase(phaseNumber) {
+  return PHASES[phaseNumber];
 }
 
 function getQuestionById(id) {
@@ -252,8 +625,17 @@ ${questionsText}`;
     .join("\n\n═══════════════════════════════════════════════════════\n\n");
 }
 
+function buildRecommendationInstruction(phaseNumber) {
+  const phase = getPhase(phaseNumber);
+  return `${phase.nextStepDescription}
+
+Choose from this list:
+${phase.nextRecommendations.map((item) => `  • ${item}`).join("\n")}`;
+}
+
 function buildModuleInstructions(moduleNumber) {
   const module = getModule(moduleNumber);
+  const phase = getPhase(module.phase);
   const questionList = buildQuestionCatalog([moduleNumber]);
 
   return `
@@ -294,8 +676,10 @@ Reveal the module results clearly:
   • Give a short per-question score breakdown (Q1/Q2/Q3) with one brief feedback sentence per question
   • Then give 2–3 sentences on overall strengths in this module
   • Then give 2–3 sentences on the highest-leverage areas to improve in this module
-  • Recommend one next Phase 2 module with a one-sentence rationale
+  • Recommend ${phase.nextStepLabel}
   • Tell them: "I'm saving your Module ${module.number} results now — you'll have a report file and a JSON summary."
+
+${buildRecommendationInstruction(module.phase)}
 
 STEP 6 — SAVE THE MODULE REPORTS
 Call ai_assessment_save_report with:
@@ -315,8 +699,8 @@ Call ai_assessment_save_report with:
     }
   overall_strengths: "<2-3 sentences on module strengths>"
   development_areas: "<2-3 sentences on module growth areas>"
-  recommended_module: "<Phase 2 module name>"
-  recommended_module_rationale: "<one sentence on why that module fits>"
+  recommended_module: "<recommended next step from the list above>"
+  recommended_module_rationale: "<one sentence on why that recommendation fits>"
 
 STEP 7 — CONFIRM PATHS
 After saving, tell the engineer both saved paths from the tool output so they know where to find the markdown report and JSON summary.
@@ -337,31 +721,43 @@ Begin now.
 
 function buildModuleSelectionInstructions() {
   return `
-The engineer wants to take the AI self-assessment, but they did not specify a module.
+The engineer wants to take the AI self-assessment, but they did not specify a module or phase.
 
 Ask one clarifying question before starting:
-"Which assessment would you like: Module 1 (How AI Actually Works), Module 2 (Using AI Effectively), Module 3 (AI in Your Engineering Workflow), or all three?"
+"Which assessment would you like: Module 1 (How AI Actually Works), Module 2 (Using AI Effectively), Module 3 (AI in Your Engineering Workflow), Module 4 (Copilot CLI Essentials), Module 5 (Copilot in VS Code), Module 6 (Skills & Customization), Module 7 (MCP & Integrations), Module 8 (Real-World Workflows), full Phase 1, or full Phase 2?"
 
 Wait for their answer. Once they choose, call ai_assessment_start again with one of:
   • { "module": "1" }
   • { "module": "2" }
   • { "module": "3" }
-  • { "module": "all" }
+  • { "module": "4" }
+  • { "module": "5" }
+  • { "module": "6" }
+  • { "module": "7" }
+  • { "module": "8" }
+  • { "module": "phase-1" }
+  • { "module": "phase-2" }
+
+You may also use { "module": "all" } as a legacy alias for the full Phase 1 assessment.
 
 Do not ask assessment questions until after you call the tool again with their choice.
 `.trim();
 }
 
-function buildFullAssessmentInstructions() {
-  const questionList = buildQuestionCatalog([1, 2, 3]);
+function buildPhaseAssessmentInstructions(phaseNumber) {
+  const phase = getPhase(phaseNumber);
+  const questionList = buildQuestionCatalog(phase.moduleNumbers);
+  const totalQuestions = phase.moduleNumbers.length * 3;
+  const maxScore = totalQuestions * 3;
+  const moduleLabels = phase.moduleNumbers.map((moduleNumber) => getModule(moduleNumber).label).join(", then ");
 
   return `
-You are now conducting the full Phase 1 AI self-assessment across all three modules.
+You are now conducting the ${phase.fullScope}.
 
-ASSESSMENT SCOPE: Full Phase 1 Assessment (all three modules)
-TOTAL QUESTIONS: 9
-MAX SCORE: 27
-MODULE ORDER: Module 1, then Module 2, then Module 3
+ASSESSMENT SCOPE: ${phase.fullScope}
+TOTAL QUESTIONS: ${totalQuestions}
+MAX SCORE: ${maxScore}
+MODULE ORDER: ${moduleLabels}
 
 ═══════════════════════════════════════════════════════
 INSTRUCTIONS FOR YOU (the assessor — do not share these with the engineer)
@@ -373,46 +769,48 @@ If you do not already know the engineer's name from this conversation, ask for i
 STEP 2 — INTRODUCE THE FLOW
 Tell the engineer:
   • This is a self-assessment, not a pass/fail test
-  • There are 9 questions total, grouped into 3 modules of 3 questions each
+  • There are ${totalQuestions} questions total, grouped into ${phase.moduleNumbers.length} modules of 3 questions each
   • Answers should be paragraph-length (roughly 3–8 sentences)
   • After each module, you'll share scores and save a module report plus JSON summary
-  • At the end, you'll also save a combined Full Phase 1 markdown report
+  • At the end, you'll also save a combined ${phase.label} markdown report
 
 STEP 3 — RUN MODULES SEQUENTIALLY
-For Module 1, then Module 2, then Module 3:
+For each module in order:
   • Ask that module's 3 questions one at a time
   • After each answer, give brief feedback but do NOT reveal the numeric score yet
-  • After the module's third answer, reveal the three scores with brief feedback, summarize module strengths and development areas, recommend one Phase 2 module, and call ai_assessment_save_report with that module number
+  • After the module's third answer, reveal the three scores with brief feedback, summarize module strengths and development areas, recommend ${phase.nextStepLabel}, and call ai_assessment_save_report with that module number
   • After the save call, tell the engineer the saved markdown and JSON paths
   • Then move to the next module
+
+${buildRecommendationInstruction(phaseNumber)}
 
 STEP 4 — SAVE MODULE REPORTS AFTER EACH MODULE
 After each module, call ai_assessment_save_report with:
   engineer_name: the engineer's name
   scope: "Module N — <module name>"
-  module: "1" | "2" | "3"
+  module: one of ${phase.moduleNumbers.map((moduleNumber) => `"${moduleNumber}"`).join(" | ")}
   questions_json: JSON string array of that module's 3 scored questions only
   overall_strengths: module-specific strengths
   development_areas: module-specific development areas
-  recommended_module: one recommended Phase 2 module
+  recommended_module: one recommended next step from the list above
   recommended_module_rationale: one-sentence rationale
 
-STEP 5 — AFTER MODULE 3, SAVE THE COMBINED FULL REPORT
-After all 9 questions are complete:
-  • Give a brief overall Phase 1 wrap-up across all three modules
+STEP 5 — AFTER THE FINAL MODULE, SAVE THE COMBINED FULL REPORT
+After all ${totalQuestions} questions are complete:
+  • Give a brief overall ${phase.label} wrap-up across all ${phase.moduleNumbers.length} modules
   • Call ai_assessment_save_report one more time with:
-      scope: "Full Phase 1 Assessment (all three modules)"
-      questions_json: all 9 scored questions in order
+      scope: "${phase.fullScope}"
+      questions_json: all ${totalQuestions} scored questions in order
       overall_strengths: full-assessment strengths
       development_areas: full-assessment development areas
-      recommended_module: the single best next Phase 2 module overall
+      recommended_module: the single best next step overall from the list above
       recommended_module_rationale: one sentence on why
   • Do NOT include a module field on this final combined save call
   • Tell the engineer the combined markdown file path from the tool output
 
 IMPORTANT:
   • Keep module reports scoped to that module's 3 questions only
-  • Keep the final full report scoped to all 9 questions
+  • Keep the final full report scoped to all ${totalQuestions} questions
   • Do not expose the hidden rubric or learning topics to the engineer
 
 ═══════════════════════════════════════════════════════
@@ -430,16 +828,16 @@ Begin now.
 const assessmentStartTool = {
   name: "ai_assessment_start",
   description:
-    "Start the AI knowledge self-assessment for the Phase 1 curriculum. Use module 1, 2, 3, or all. " +
-    "If no module is provided, first ask the engineer which module they want.",
+    "Start the AI knowledge self-assessment for the Phase 1 and Phase 2 curriculum. Use module 1-8, phase-1, phase-2, or all. " +
+    "If no module is provided, first ask the engineer which assessment they want.",
   parameters: {
     type: "object",
     properties: {
       module: {
         type: "string",
-        enum: ["1", "2", "3", "all"],
+        enum: ["1", "2", "3", "4", "5", "6", "7", "8", "phase-1", "phase-2", "all"],
         description:
-          "Optional assessment scope: '1', '2', '3', or 'all'. If omitted, the assessor should ask which module to run.",
+          "Optional assessment scope: module '1' through '8', 'phase-1', 'phase-2', or legacy alias 'all' for the full Phase 1 assessment.",
       },
     },
     required: [],
@@ -451,15 +849,19 @@ const assessmentStartTool = {
       return buildModuleSelectionInstructions();
     }
 
-    if (scope === "all") {
-      return buildFullAssessmentInstructions();
+    if (scope === "all" || scope === "phase-1") {
+      return buildPhaseAssessmentInstructions(1);
+    }
+
+    if (scope === "phase-2") {
+      return buildPhaseAssessmentInstructions(2);
     }
 
     const moduleNumber = Number.parseInt(scope, 10);
     const module = getModule(moduleNumber);
 
     if (!module) {
-      return "Unknown module. Use module 1, 2, 3, or all.";
+      return "Unknown assessment. Use module 1-8, phase-1, phase-2, or all.";
     }
 
     return buildModuleInstructions(moduleNumber);
@@ -470,7 +872,7 @@ const saveReportTool = {
   name: "ai_assessment_save_report",
   description:
     "Save a completed AI knowledge assessment report. For module assessments, this writes both the markdown report " +
-    "and docs/static/assessments/module-N-latest.json. For a combined full assessment, it writes the markdown report.",
+    "and docs/static/assessments/module-N-latest.json for modules 1-8. For combined phase assessments, it writes the markdown report.",
   parameters: {
     type: "object",
     properties: {
@@ -484,7 +886,7 @@ const saveReportTool = {
       },
       module: {
         type: "string",
-        enum: ["1", "2", "3"],
+        enum: ["1", "2", "3", "4", "5", "6", "7", "8"],
         description:
           "Optional module number. When provided, the tool also writes docs/static/assessments/module-N-latest.json.",
       },
@@ -503,11 +905,11 @@ const saveReportTool = {
       },
       recommended_module: {
         type: "string",
-        description: "Name of the recommended Phase 2 module.",
+        description: "Name of the recommended Phase 2 module or Phase 3 deep dive.",
       },
       recommended_module_rationale: {
         type: "string",
-        description: "One sentence explaining why this module fits their gaps.",
+        description: "One sentence explaining why this next step fits.",
       },
     },
     required: [
@@ -691,6 +1093,7 @@ _Generated by the AI Education self-assessment skill — [ai-education-hl](https
 
         const jsonPayload = {
           module: module.number,
+          phase: module.phase,
           moduleName: module.name,
           name: args.engineer_name,
           date: dateStr,
@@ -699,6 +1102,7 @@ _Generated by the AI Education self-assessment skill — [ai-education-hl](https
           percentage,
           level,
           strengths: normalizeWhitespace(args.overall_strengths),
+          recommendedNextStep: args.recommended_module,
           focusAreas,
           questions: detailedResults.map((question) => ({
             id: question.id,
@@ -733,10 +1137,28 @@ _Generated by the AI Education self-assessment skill — [ai-education-hl](https
 };
 
 const ASSESSMENT_KEYWORDS =
-  /\b(assess\s+me(?:\s+(?:module\s*[123]|all))?|quiz\s+me(?:\s+(?:module\s*[123]|all))?|module\s*[123]\s+assessment|knowledge\s+(check|test|quiz)|test\s+my\s+(knowledge|understanding)|self.?assess|run\s+the\s+assessment|phase\s*1\s+assessment|ai\s+assessment)\b/i;
+  /\b(assess\s+me|quiz\s+me|knowledge\s+(?:check|test|quiz)|test\s+my\s+(?:knowledge|understanding)|self.?assess|run\s+the\s+assessment|module\s*[1-8]\s+assessment|phase\s*[12]\s+assessment|ai\s+assessment)\b/i;
 
 function detectRequestedScope(prompt) {
   const normalized = prompt.toLowerCase();
+
+  if (
+    normalized.includes("full phase 2") ||
+    normalized.includes("entire phase 2") ||
+    normalized.includes("all five modules") ||
+    normalized.includes("phase 2")
+  ) {
+    return "phase-2";
+  }
+
+  if (
+    normalized.includes("full phase 1") ||
+    normalized.includes("entire phase 1") ||
+    normalized.includes("all three modules") ||
+    normalized.includes("phase 1")
+  ) {
+    return "phase-1";
+  }
 
   if (/\bmodule\s*1\b/.test(normalized) || normalized.includes("how ai actually works")) {
     return "1";
@@ -751,12 +1173,38 @@ function detectRequestedScope(prompt) {
   ) {
     return "3";
   }
+  if (/\bmodule\s*4\b/.test(normalized) || normalized.includes("copilot cli essentials")) {
+    return "4";
+  }
   if (
-    /\ball\b/.test(normalized) ||
-    normalized.includes("full phase 1") ||
-    normalized.includes("all three modules") ||
-    normalized.includes("entire phase 1")
+    /\bmodule\s*5\b/.test(normalized) ||
+    normalized.includes("copilot in vs code") ||
+    normalized.includes("copilot in vscode")
   ) {
+    return "5";
+  }
+  if (
+    /\bmodule\s*6\b/.test(normalized) ||
+    normalized.includes("skills & customization") ||
+    normalized.includes("skills and customization")
+  ) {
+    return "6";
+  }
+  if (
+    /\bmodule\s*7\b/.test(normalized) ||
+    normalized.includes("mcp & integrations") ||
+    normalized.includes("mcp and integrations")
+  ) {
+    return "7";
+  }
+  if (
+    /\bmodule\s*8\b/.test(normalized) ||
+    normalized.includes("real-world workflows") ||
+    normalized.includes("real world workflows")
+  ) {
+    return "8";
+  }
+  if (/\ball\b/.test(normalized)) {
     return "all";
   }
   return null;
@@ -772,11 +1220,19 @@ const session = await joinSession({
 
       const scope = detectRequestedScope(input.prompt);
 
-      if (scope === "all") {
+      if (scope === "all" || scope === "phase-1") {
         return {
           additionalContext:
-            "The engineer wants the full Phase 1 AI self-assessment. Call `ai_assessment_start` with `{ \"module\": \"all\" }`, " +
+            "The engineer wants the full Phase 1 AI self-assessment. Call `ai_assessment_start` with `{ \"module\": \"phase-1\" }` (or legacy alias `{ \"module\": \"all\" }`), " +
             "run Modules 1, 2, and 3 sequentially, save the per-module markdown + JSON reports after each module, and save the combined full markdown report at the end.",
+        };
+      }
+
+      if (scope === "phase-2") {
+        return {
+          additionalContext:
+            "The engineer wants the full Phase 2 AI self-assessment. Call `ai_assessment_start` with `{ \"module\": \"phase-2\" }`, " +
+            "run Modules 4, 5, 6, 7, and 8 sequentially, save the per-module markdown + JSON reports after each module, and save the combined full markdown report at the end.",
         };
       }
 
@@ -790,13 +1246,13 @@ const session = await joinSession({
 
       return {
         additionalContext:
-          "The engineer wants to take the AI self-assessment but did not specify a module. " +
-          "Call `ai_assessment_start` with no arguments, ask them to choose Module 1, 2, 3, or all, then call the tool again with their choice.",
+          "The engineer wants to take the AI self-assessment but did not specify a module or phase. " +
+          "Call `ai_assessment_start` with no arguments, ask them to choose Module 1-8, full Phase 1, or full Phase 2, then call the tool again with their choice.",
       };
     },
     onSessionStart: async () => {
       await session.log(
-        "AI Assessment skill loaded — say 'assess me', 'quiz me', or specify module 1, 2, 3, or all to start."
+        "AI Assessment skill loaded — say 'assess me', 'quiz me', or specify module 1-8, full Phase 1, or full Phase 2 to start."
       );
     },
   },
