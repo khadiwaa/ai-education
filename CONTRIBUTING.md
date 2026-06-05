@@ -1,4 +1,4 @@
-# Contributing to the AI Education Curriculum
+# Contributing to the Herbalife AI Education Curriculum
 
 This is a living curriculum — it should evolve as AI tooling changes, as we learn what works with our teams, and as we deepen our own understanding. Contributions from everyone are welcome.
 
@@ -17,25 +17,24 @@ This is a living curriculum — it should evolve as AI tooling changes, as we le
 ## How content is organized
 
 ```
-slides/decks/phase-1/    ← Slidev presentation decks (markdown)
-docs/docs/phase-1/       ← Docusaurus reference docs (markdown)
+docs/docs/phase-1/    ← Phase 1: AI Essentials (3 modules)
+docs/docs/phase-2/    ← Phase 2: Copilot in Practice (5 modules)
+docs/docs/phase-3/    ← Phase 3: Deep Dives (technical + strategic tracks)
 ```
 
-Each module has two files with the same content in different formats:
-- A **slide deck** (`.md` with Slidev frontmatter) for live presentations
-- A **reference doc** (`.md` with standard markdown) for self-paced reading
-
-When you update content, update both files to keep them in sync.
+Module files use `.mdx` (Markdown + JSX) to support embedded assessment components. Standard markdown syntax works fine — you only need JSX if you're adding React components.
 
 ---
 
 ## Making a change
 
 1. Fork the repo (or create a branch if you have write access)
-2. Edit the relevant markdown file(s)
+2. Edit the relevant `.mdx` file(s) under `docs/docs/`
 3. Test locally:
-   - Slides: `cd slides && npm run dev`
-   - Docs: `cd docs && npm run start`
+   ```bash
+   cd docs && npm run dev   # hot-reload, instant preview
+   cd docs && npm run start # full build with search (use before submitting)
+   ```
 4. Open a pull request with a brief description of what you changed and why
 
 ---
@@ -47,6 +46,7 @@ When you update content, update both files to keep them in sync.
 - **If something changed, say what changed and when.** AI moves fast — a note like "as of mid-2025" helps readers calibrate.
 - **Hands-on exercises should use tools the team actually has.** Don't require paid APIs or proprietary access for exercises.
 - **Keep vocabulary sections current.** If a term gets added to a module, add it to the vocabulary table.
+- **Use TypeScript/JavaScript or Java for code examples.** These are the primary languages used across Herbalife engineering teams.
 
 ---
 
