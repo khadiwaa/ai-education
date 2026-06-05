@@ -77,7 +77,7 @@ export default function AssessmentsPage() {
           </p>
           <div className={styles.cliBox}>
             <span className={styles.cliLabel}>How to take an assessment</span>
-            <code>copilot  →  assess me module 1</code>
+            <code>copilot  →  assess me phase 1 module 1</code>
           </div>
         </div>
 

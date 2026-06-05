@@ -336,7 +336,7 @@ export default function QuestionBankPage() {
           </p>
           <div className={styles.cliBox}>
             <span className={styles.cliLabel}>Run an assessment</span>
-            <code>copilot  →  assess me module 1</code>
+            <code>copilot  →  assess me phase 1 module 1</code>
           </div>
         </div>
 

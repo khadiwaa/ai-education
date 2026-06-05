@@ -23,6 +23,11 @@ export default function AssessmentResults({ moduleNumber, phase, moduleInPhase }
   const displayLabel = (phase && moduleInPhase)
     ? `Phase ${phase} · Module ${moduleInPhase}`
     : `Module ${moduleNumber}`;
+
+  // CLI command uses "phase X module Y" if available, else falls back to global number
+  const cliCommand = (phase && moduleInPhase)
+    ? `assess me phase ${phase} module ${moduleInPhase}`
+    : `assess me module ${moduleNumber}`;
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -50,7 +55,7 @@ export default function AssessmentResults({ moduleNumber, phase, moduleInPhase }
         <div>
           <strong>Check your understanding</strong>
           <p>Run this in your terminal from the repo root:</p>
-          <code className={styles.cliCommand}>assess me module {moduleNumber}</code>
+          <code className={styles.cliCommand}>{cliCommand}</code>
           <p className={styles.hint}>Your results will appear here after your next <code>npm run start</code>.</p>
         </div>
       </div>
@@ -109,7 +114,7 @@ export default function AssessmentResults({ moduleNumber, phase, moduleInPhase }
       )}
 
       <div className={styles.retake}>
-        Want to retake? Run <code>assess me module {moduleNumber}</code> in your terminal,
+        Want to retake? Run <code>{cliCommand}</code> in your terminal,
         then refresh after the next <code>npm run start</code>.
       </div>
     </div>

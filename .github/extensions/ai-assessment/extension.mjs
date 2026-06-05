@@ -1142,6 +1142,16 @@ const ASSESSMENT_KEYWORDS =
 function detectRequestedScope(prompt) {
   const normalized = prompt.toLowerCase();
 
+  // "phase 2 module 1" style — must check BEFORE bare "phase 2" / "phase 1"
+  const phaseModuleMatch = normalized.match(/phase\s*([12])\s+module\s*([1-5])/);
+  if (phaseModuleMatch) {
+    const phase = Number.parseInt(phaseModuleMatch[1], 10);
+    const modInPhase = Number.parseInt(phaseModuleMatch[2], 10);
+    // Phase 1: modules 1-3, Phase 2: modules 4-8
+    const globalModule = phase === 1 ? modInPhase : modInPhase + 3;
+    if (globalModule >= 1 && globalModule <= 8) return String(globalModule);
+  }
+
   if (
     normalized.includes("full phase 2") ||
     normalized.includes("entire phase 2") ||
