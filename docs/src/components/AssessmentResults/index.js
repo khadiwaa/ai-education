@@ -18,7 +18,11 @@ function ScorePip({ score, max = 3 }) {
   );
 }
 
-export default function AssessmentResults({ moduleNumber }) {
+export default function AssessmentResults({ moduleNumber, phase, moduleInPhase }) {
+  // Display label: "Phase X · Module Y" if phase info provided, else "Module N"
+  const displayLabel = (phase && moduleInPhase)
+    ? `Phase ${phase} · Module ${moduleInPhase}`
+    : `Module ${moduleNumber}`;
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -60,7 +64,7 @@ export default function AssessmentResults({ moduleNumber }) {
     <div className={styles.card}>
       <div className={styles.header}>
         <div>
-          <div className={styles.label}>Self-Assessment — Module {data.module}</div>
+          <div className={styles.label}>Self-Assessment — {displayLabel}</div>
           <div className={styles.name}>Completed by {data.name} · {data.date}</div>
         </div>
         <div className={styles.scoreBlock} style={{ background: level.bg, borderColor: level.color }}>
