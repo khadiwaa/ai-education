@@ -11,10 +11,6 @@ build/
 .docusaurus/
 .cache/
 
-# Slidev exports
-slides/exports/
-slides/.slidev/
-
 # OS files
 .DS_Store
 Thumbs.db

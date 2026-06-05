@@ -1,6 +1,6 @@
 # Herbalife AI Education — Engineering Curriculum
 
-A living curriculum for building AI fluency across Herbalife's engineering teams. This repo contains a reference documentation site for self-paced learning, interactive self-assessments via Copilot CLI, and slide decks for live presentations.
+A living curriculum for building AI fluency across Herbalife's engineering teams. This repo contains a reference documentation site for self-paced learning and interactive self-assessments via Copilot CLI.
 
 ---
 
@@ -91,25 +91,11 @@ The skill asks **3 open-ended questions** per module. After your answers you get
 assessments/<your-name>-module-<N>-assessment-<YYYY-MM-DD>.md
 ```
 
-**Browser results** — after running `npm run start`, visit `/assessments` in the docs site to see your scores and focus areas for every completed module. The **Question Bank** page (`/question-bank`) lists every question so you can review what's covered before or after assessing.
+**Browser results** — after running `npm run start`, visit `/assessments` in the docs site to see your scores and focus areas for every completed module. The **Question Bank** page (`/question-bank`) lists every question so you can review what's covered.
 
 > Assessment JSON files in `docs/static/assessments/` are also gitignored — your results stay local.
 
 See [`.github/extensions/ai-assessment/README.md`](.github/extensions/ai-assessment/README.md) for full details.
-
----
-
-## Slide Decks
-
-Phase 1 slides include deep speaker notes for presenters.
-
-```bash
-cd slides
-npm install
-npm run dev                                          # opens at localhost:3030
-npm run dev -- decks/phase-1/01-how-ai-works.md    # specific deck
-npm run export -- decks/phase-1/01-how-ai-works.md # export to PDF
-```
 
 ---
 
