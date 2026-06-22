@@ -12,6 +12,10 @@ title: Phase 3 Overview
 
 Phase 3 modules go deep on specific topics. Complete Phase 1 and Phase 2 first — these modules assume that foundation. Take them in any order based on what's most relevant to your current work.
 
+:::info Who this is for
+Phase 3 is **optional continued education**. The **Technical Track** is for engineers who want to understand the systems under the hood or build AI features. The **Strategic Track** is for engineers and technical leads who influence product, platform, or org decisions around AI. Take only what's relevant to you — there's no need to complete all of it.
+:::
+
 ---
 
 ## Technical Track

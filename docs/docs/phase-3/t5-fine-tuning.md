@@ -30,6 +30,8 @@ RAG adds infrastructure, but keeps you flexible.
 Fine-tuning reduces prompt tax and can improve default behavior, but it introduces dataset management, training jobs, new regressions, and serving complexity.
 Training from scratch is not a "bigger fine-tune".
 It is an entirely different program, usually involving distributed training, curation pipelines, evaluation suites, and a substantial capital budget.
+
+This module focuses on the fine-tuning end of the spectrum; for the head-to-head of RAG vs fine-tuning vs long context as knowledge strategies, see [T3 §When to Use RAG vs Fine-Tuning vs Long Context](./t3-embeddings-rag#when-to-use-rag-vs-fine-tuning-vs-long-context).
 ### A practical selection heuristic
 Use the simplest mechanism that can plausibly solve the problem.
 Move rightward on the spectrum only when the cheaper mechanism fails for reasons you can articulate.
@@ -213,14 +215,14 @@ That is almost always a retrieval, search, or tool-use problem.
 Another anti-pattern is fine-tuning for "better reasoning" without a narrow task definition.
 The result is usually expensive disappointment.
 ### Decision matrix
+The full RAG vs fine-tuning vs long-context comparison lives in [T3 §When to Use RAG vs Fine-Tuning vs Long Context](./t3-embeddings-rag#when-to-use-rag-vs-fine-tuning-vs-long-context).
+This matrix keeps the fine-tuning lens: given a failure mode, should you fine-tune or reach for a cheaper lever first?
 | Situation | Prefer | Why |
 | --- | --- | --- |
-| Facts change daily or weekly | RAG or tools | External state is easier to update and audit |
 | Output must follow a strict schema | Prompting first, then fine-tune if needed | Start cheap, then compress stable patterns |
 | Tone must match internal expert expectations | Fine-tune can help | Examples often work better than prose instructions |
 | Model forgets long policies in prompts | Fine-tune or smaller policy prompt plus SFT | Learned defaults reduce prompt tax |
-| Task needs hidden proprietary docs | RAG | Better provenance and revocability |
-| You need broad capability jumps | Stronger base model | Fine-tuning rarely substitutes for model class |
+| Facts change daily or weekly | RAG or tools (not fine-tuning) | External state is easier to update and audit |
 | Team lacks eval infrastructure | Do not fine-tune yet | You cannot manage regressions blind |
 ### Questions to ask before starting
 Ask these in order.

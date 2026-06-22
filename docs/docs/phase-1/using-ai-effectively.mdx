@@ -36,6 +36,23 @@ These figures were current as of mid-2025 — context windows and model generati
 - More context ≠ better results: models are less reliable on content buried in the middle of very long contexts (the "lost in the middle" problem)
 - Bigger context = higher cost; be intentional about what you include
 
+Everything competes for the same fixed budget on every request:
+
+```mermaid
+flowchart TB
+    subgraph WIN["Context window — one fixed token budget per request"]
+        direction TB
+        SYS["System prompt\n(set by the tool)"]
+        INST["Instructions & memory"]
+        HIST["Conversation history\n(grows every turn)"]
+        DOCS["Files & docs you add"]
+        MSG["Your current message"]
+        FREE["Remaining headroom"]
+    end
+    WIN --> IN["Inside the window →\ninfluences the answer"]
+    WIN --> OUT["Doesn't fit →\ninvisible to the model"]
+```
+
 ---
 
 ## Anatomy of a prompt
@@ -163,16 +180,13 @@ When the model has the source material in its context window, it's summarizing a
 
 RAG is the dominant pattern for grounding AI in real, current, or private knowledge:
 
-```
-User question
-      ↓
-Search relevant documents
-      ↓
-Inject those documents into the prompt
-      ↓
-Model answers based on provided context
-      ↓
-Response
+```mermaid
+flowchart LR
+    Q["User question"] --> R["Retrieve\nSearch your docs/code\nfor relevant chunks"]
+    R --> A["Augment\nInject those chunks\ninto the prompt"]
+    A --> G["Generate\nModel answers using\nthe injected context"]
+    G --> RESP["Grounded response"]
+    KB[("Knowledge base\ndocs · code · wikis")] -.-> R
 ```
 
 The model reads the documents you inject — it's not recalling from training data. This makes it far more accurate for questions about your specific codebase, internal docs, or any data that changes.

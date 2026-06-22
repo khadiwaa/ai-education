@@ -368,6 +368,22 @@ async function executeToolCall(toolCall: {
 }
 ```
 
+### The Model Context Protocol (MCP)
+
+Everything above describes tool calling at the raw API level: you hand the model a list of tool schemas and dispatch the calls yourself.
+The Model Context Protocol (MCP) is the emerging open standard for doing this in a reusable, portable way.
+Instead of re-implementing tool definitions and dispatch logic inside every application, you expose capabilities once behind an MCP server, and any MCP-capable agent or client can discover and call them.
+
+Relative to the API-level mechanics in this section:
+
+- the model still selects a tool and emits arguments the same way,
+- but the tool catalog, schemas, and transport are standardized rather than bespoke per app,
+- which makes tools shareable across agents, IDEs, and hosted assistants,
+- and lets you swap or add capabilities without rewriting each client.
+
+Think of API-level tool calling as the underlying contract and MCP as a standard packaging and distribution layer on top of it.
+For practical setup — running and connecting MCP servers — see [Phase 2 · MCP & Integrations](/docs/phase-2/mcp-and-integrations).
+
 ## Planning Strategies
 
 Not every task needs explicit planning.
@@ -375,30 +391,16 @@ But once tasks involve multiple steps, planning strategy begins to shape both qu
 
 ### ReAct-style planning
 
-ReAct stands for reasoning plus acting.
-The idea is to interleave short reasoning steps with tool use.
+ReAct interleaves short reasoning steps with tool use: think about the next step, call a tool, inspect the result, think again, and stop when ready.
+As an agent planning strategy it shines when the path is unknown up front, because the agent adapts as new evidence arrives.
+The pattern itself is covered in depth in [T2 §ReAct](./t2-advanced-prompting#react); here we care about its planning characteristics.
 
-A ReAct-style trajectory looks like:
+As a planning strategy, ReAct-style control is:
 
-- think about the next step,
-- call a tool,
-- inspect the result,
-- think again,
-- call another tool,
-- stop when ready.
-
-Why it works:
-
-- flexible under uncertainty,
-- adapts well when new evidence appears,
-- good for search, debugging, and investigation tasks.
-
-Why it can fail:
-
-- easy to loop,
-- easy to over-explore,
-- hidden chain-of-thought requirements may clash with product constraints,
-- step-by-step latency can accumulate quickly.
+- flexible under uncertainty and good for search, debugging, and investigation tasks,
+- but prone to looping and over-exploration,
+- sometimes in tension with product constraints when hidden chain-of-thought is required,
+- and liable to accumulate step-by-step latency across a long trajectory.
 
 ### Plan-then-execute
 
@@ -490,11 +492,14 @@ The result is slower, harder to test, and less predictable than the system it re
 ## Memory Architecture
 
 Memory is one of the most overloaded words in agent discussions.
-In practice, it usually means one of three things.
+In practice, it usually means one of a few things.
 
 - in-context memory,
 - external memory,
-- episodic or learned memory about past interactions.
+- episodic or learned memory about past interactions,
+- summary memory that compacts long histories.
+
+This section is the canonical treatment of agent memory for this module; multi-agent systems reuse exactly these layers, with coordination raising the stakes on which one you pick.
 
 ### In-context memory
 
@@ -556,6 +561,19 @@ This is useful when the system repeatedly interacts with the same users or tasks
 However, it introduces privacy, drift, and correctness concerns.
 A stale user preference can be just as harmful as no memory at all.
 
+### Summary memory
+
+Summary memory compresses long trajectories into shorter representations rather than carrying the full transcript.
+That might include:
+
+- what the agent already tried,
+- what evidence was found,
+- what decisions were made,
+- what remains blocked.
+
+This helps manage context growth without losing task continuity, and it is especially useful in orchestrator patterns and long investigations.
+The tradeoff is that summaries can omit or distort details, so treat the summary as lossy and keep exact state elsewhere.
+
 ### What should not be memory
 
 Teams sometimes stuff everything into a vector database and call it memory.
@@ -578,8 +596,22 @@ Use databases for durable state.
 Use summaries for long histories.
 Use retrieval only where semantic lookup is actually appropriate.
 
+The right design is usually layered rather than a single choice:
+
+| Memory pattern | Best for | Risk |
+| --- | --- | --- |
+| In-context | Short tasks and prototypes | Overflow and drift |
+| External store | Durable workflows and shared state | More infrastructure complexity |
+| Episodic | Repeated users and recurring tasks | Privacy and stale preferences |
+| Summary memory | Long trajectories with bounded context | Summary omissions and distortion |
+
 :::tip Memory rule
 If a value must be exact, queryable, and auditable, it probably belongs in structured state rather than free-form memory text.
+:::
+
+:::note Practical pattern
+A very common production design is "state in a database, artifacts in storage, summary in prompt, recent tool outputs in context."
+That pattern is far easier to debug than treating the conversation transcript as the source of truth.
 :::
 
 ## Tool Design Principles
@@ -914,80 +946,16 @@ Fix tool and workflow design first.
 
 ## Agent Memory Patterns
 
-Memory appears again in multi-agent systems because memory design determines coordination quality.
-A useful classification is:
+Memory is the same problem in multi-agent systems as in single agents, so the layers and tradeoffs are covered once in [§Memory Architecture](#memory-architecture): in-context, external store, episodic, and summary memory.
+What changes with multiple agents is that memory design directly determines coordination quality.
 
-- in-context memory,
-- external store memory,
-- summary memory.
+In particular:
 
-### In-context memory in agent workflows
+- in-context transcripts are fast to prototype but break down once agents must share structured progress across long-running tasks,
+- an external store (task tables, document stores, vector indexes, object storage, event logs) gives peers a shared source of truth and makes the system observable and restartable,
+- summary memory keeps orchestrator context bounded as a long investigation accumulates steps.
 
-This is the fastest to prototype.
-Each agent receives a conversation transcript or compact state summary.
-
-It works well when:
-
-- trajectories are short,
-- the number of artifacts is small,
-- agents do not need durable state across sessions.
-
-It breaks down when:
-
-- tasks are long-running,
-- context grows too large,
-- agents need to share structured progress,
-- or partial failures require recovery later.
-
-### External store memory
-
-External memory gives agents a shared source of truth.
-Examples include:
-
-- task tables,
-- document stores,
-- vector indexes,
-- workflow engines,
-- object storage for artifacts,
-- event logs.
-
-This is the right answer when state matters beyond one prompt window.
-It also improves observability and restartability.
-
-### Summary memory
-
-Summary memory compresses long trajectories into shorter representations.
-That might include:
-
-- what the agent already tried,
-- what evidence was found,
-- what decisions were made,
-- what remains blocked.
-
-This helps manage context growth without losing task continuity.
-It is especially useful in orchestrator patterns and long investigations.
-
-### Choosing the right memory layer
-
-| Memory pattern | Best for | Risk |
-| --- | --- | --- |
-| In-context | Short tasks and prototypes | Overflow and drift |
-| External store | Durable workflows and shared state | More infrastructure complexity |
-| Summary memory | Long trajectories with bounded context | Summary omissions and distortion |
-
-### So what for engineers
-
-The right memory design is usually layered.
-Use:
-
-- in-context memory for the immediate working set,
-- external state for durable facts and workflow status,
-- summary memory to compress history.
-
-:::note Practical pattern
-A very common production design is “state in a database, artifacts in storage, summary in prompt, recent tool outputs in context.”
-That pattern is far easier to debug than treating the conversation transcript as the source of truth.
-:::
+When in doubt, push shared state into an external store so no single agent's prompt window becomes the system of record.
 
 ## Evaluating Agent Systems
 

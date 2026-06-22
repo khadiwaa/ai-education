@@ -290,6 +290,14 @@ As agents get more capable, knowing when to keep humans involved is critical eng
 
 **The key question:** *What's the blast radius if this agent makes a wrong decision?* Design approval gates proportionate to that risk.
 
+```mermaid
+flowchart TD
+    START["Agent wants to take an action"] --> Q{{"What's the blast radius\nif it's wrong?"}}
+    Q -- "Low / reversible\nwrite code, tests, drafts" --> AUTO["Automate freely"]
+    Q -- "Medium\nopen PR, send message, update DB" --> CHECK["Checkpoint for\nhuman review"]
+    Q -- "High / irreversible\ndeploy, delete, external comms" --> GATE["Require explicit\napproval every time"]
+```
+
 ---
 
 ## Session context and memory

@@ -579,12 +579,12 @@ You reduce post-processing hacks.
 And you make failures easier to detect automatically.
 
 ### Function calling as interface design
-Function calling is especially useful when the output should trigger application behavior.
+Function calling is the output-formatting case where the structured object is itself an action.
 Instead of returning prose like "I think you should send an email," the model returns a call like `sendEmail({ ... })`.
-That changes the model's job from narrative suggestion to typed action selection.
+That changes the model's job from narrative suggestion to typed action selection, which is effectively API design for model-driven control flow: clear function names and argument schemas produce more reliable behavior than long prose instructions.
 
-This is effectively API design for model-driven control flow.
-Clear function names and argument schemas produce more reliable behavior than long prose instructions.
+The full mechanics — how the runtime loop dispatches calls, validates arguments against JSON schema, and feeds results back (the model never executes the tool, your application does) — live in [T4 §Tool Calling at the API Level](./t4-agents-multi-agent#tool-calling-at-the-api-level).
+From a prompting standpoint, the takeaway here is that a function signature is a prompt: design it like one.
 
 ### Reliability tips that matter
 Structured output still needs careful design.
