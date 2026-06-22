@@ -18,7 +18,7 @@ demo and expensive in
 production. A few thousand
 tokens feel like nothing. A few
 million requests, long prompts,
-repeated re- embeddings, and
+repeated re-embeddings, and
 premium models later, finance
 wants answers and engineering
 has none. Cost modeling is how
@@ -124,8 +124,7 @@ the bill.
 
 :::warning Do not compare price tags without comparing units
 
-A twenty-dollar seat and a per-
-token API are not substitutes.
+A twenty-dollar seat and a per-token API are not substitutes.
 One is a productivity tool
 budget question. The other is an
 application architecture
@@ -221,7 +220,7 @@ exploit it.
 :::tip Prompt design for cost
 
 Separate stable instructions
-from volatile request- specific
+from volatile request-specific
 data. The stable block is easier
 to cache, easier to version, and
 easier to evaluate across model
@@ -451,7 +450,7 @@ every workflow.
 - Move large rubrics into
   reusable cached prefixes where
   supported instead of repeating
-  near- duplicates.
+  near-duplicates.
 - Prefer concise structured
   instructions over long
   conversational guidance when
@@ -461,13 +460,11 @@ every workflow.
 
 - Prompt caching reduces cost
   for repeated prefixes and is
-  often the fastest high-
-  leverage optimization
+  often the fastest high-leverage optimization
   available.
 - Semantic caching can avoid
   model calls entirely when
-  similar requests with known-
-  good outputs recur and the
+  similar requests with known-good outputs recur and the
   business context allows reuse.
 - Cache invalidation still
   matters. Reused answers
@@ -597,8 +594,7 @@ catches teams off guard.
   beloved feature may get called
   far more often than the
   spreadsheet assumed.
-- Capacity planning for self-
-  hosted or provisioned
+- Capacity planning for self-hosted or provisioned
   workloads must include peak
   behavior, not just average
   volume.
@@ -743,8 +739,7 @@ hope rather than spend.
 :::note Unit economics beat total monthly numbers
 
 A total monthly forecast is
-useful for finance. A cost-per-
-request or cost-per-user number
+useful for finance. A cost-per-request or cost-per-user number
 is useful for engineering and
 product. You need both. The
 first explains budget. The
@@ -771,8 +766,7 @@ catch drift early.
   and feature, then decide
   whether prompt or routing
   changes are needed.
-- Quarterly: rerun quality-
-  versus-cost comparisons across
+- Quarterly: rerun quality-versus-cost comparisons across
   candidate models and
   renegotiate with vendors if
   usage justifies it.
@@ -791,8 +785,7 @@ request counts, growth curves,
 feature mix, and credible
 expansion plans. That is how you
 earn pricing conversations,
-enterprise credits, or premium-
-model flexibility.
+enterprise credits, or premium-model flexibility.
 
 - Show the vendor where you are
   getting value. That makes
@@ -808,7 +801,7 @@ model flexibility.
   learning usage patterns, ask
   for short-term protections
   such as price review points,
-  flexible true- ups, or caps
+  flexible true-ups, or caps
   with alerting rather than hard
   punitive overage terms.
 
@@ -833,31 +826,13 @@ model flexibility.
   type.
 - Optimization usually starts
   with prompt trimming, output
-  control, caching, and right-
-  sizing the model.
+  control, caching, and right-sizing the model.
 
 ## Further Reading
 
-- [GitHub Docs: Usage-based
-  billing for organizations and
-  enterprises](https://docs.gith
-  ub.com/en/copilot/
-  concepts/billing/usage-based-
-  billing-for- organizations-
-  and-enterprises)
-- [Anthropic Docs: Prompt cachin
-  g](https://docs.anthropic.com/
-  en/docs/build- with-
-  claude/prompt-caching)
-- [OpenAI Pricing](https://opena
-  i.com/api/pricing/)
-- [Google Cloud Vertex AI pricin
-  g](https://cloud.google.com/ve
-  rtex- ai/generative-
-  ai/pricing)
-- [Mistral Pricing](https://mist
-  ral.ai/pricing)
-- [LangSmith guide on evaluation
-  and observability](https://doc
-  s.smith.langchain.com/)
-
+- [GitHub Docs: Usage-based billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises)
+- [Anthropic Docs: Prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching)
+- [OpenAI Pricing](https://openai.com/api/pricing/)
+- [Google Cloud Vertex AI pricing](https://cloud.google.com/vertex-ai/generative-ai/pricing)
+- [Mistral Pricing](https://mistral.ai/pricing)
+- [LangSmith guide on evaluation and observability](https://docs.smith.langchain.com/)

@@ -67,7 +67,7 @@ ideas with three questions.
    acceptable? Some tasks
    tolerate drafts and
    suggestions. Others need
-   near- perfect correctness or
+   near-perfect correctness or
    strong human review.
 3. Is there enough data or
    context? A model without the
@@ -111,8 +111,7 @@ ideas with three questions.
 - Mission-critical decisions
   with no human review,
   especially in health, finance,
-  employment, or safety-
-  sensitive domains.
+  employment, or safety-sensitive domains.
 - Tasks that depend on current
   real-world facts when
   freshness is hard to
@@ -137,8 +136,7 @@ of the way there. That can still
 be valuable. But the final
 twenty percent is where product
 cost and complexity often
-explode. Validation logic, edge-
-case handling, user trust,
+explode. Validation logic, edge-case handling, user trust,
 uncertainty UI, and fallback
 behavior live in that last mile.
 
@@ -165,7 +163,7 @@ notice one crucial difference:
 the model can change even when
 your code does not. AI systems
 require ongoing evaluation, not
-just pre- launch QA.
+just pre-launch QA.
 
 | Stage | What engineers should do | Main risk |
 | --- | --- | --- |
@@ -348,7 +346,7 @@ responses feel faster because
 users see progress immediately.
 It also creates design
 obligations. If the model is
-wrong early and self- corrects
+wrong early and self-corrects
 later, users may still anchor on
 the first misleading text they
 saw. Streaming is a UX tool, not
@@ -440,8 +438,7 @@ the feature.
   languages, or contexts.
 - Test edge cases that reflect
   your actual user base, not
-  only the easiest English-
-  language scenarios.
+  only the easiest English-language scenarios.
 - If the feature influences
   prioritization or opportunity,
   fairness review should happen
@@ -478,8 +475,7 @@ increases trust for long.
 - Sample outputs regularly and
   review high-risk categories.
 - Create an internal incident
-  path for harmful or policy-
-  violating responses.
+  path for harmful or policy-violating responses.
 - Instrument categories like
   unsupported claims, toxic
   language, sensitive leakage,
@@ -555,8 +551,7 @@ When several AI ideas compete
 for attention, score them
 quickly. The goal is not
 mathematical certainty. The goal
-is to stop treating every AI-
-flavored idea as equally ready
+is to stop treating every AI-flavored idea as equally ready
 or equally valuable.
 
 | Criterion | High score means | Low score means |
@@ -595,8 +590,7 @@ or equally valuable.
    production logs or metadata?
 4. Do we know what the user sees
    when generation fails, times
-   out, or returns low-
-   confidence output?
+   out, or returns low-confidence output?
 5. Have we sampled outputs from
    realistic edge cases, not
    just the happy path?
@@ -696,27 +690,13 @@ after launch.”
   the beginning.
 - Model updates and data shift
   mean AI quality is a
-  continuous concern, not a one-
-  time test event.
+  continuous concern, not a one-time test event.
 
 ## Further Reading
 
-- [OpenAI Cookbook: Evals design
-  patterns](https://cookbook.ope
-  nai.com/)
-- [Anthropic Docs: Evaluate
-  results and reduce errors](htt
-  ps://docs.anthropic.com/)
-- [Google PAIR Guidebook](https:
-  //pair.withgoogle.com/guideboo
-  k/)
-- [NIST AI Risk Management Frame
-  work](https://www.nist.gov/itl
-  /ai-risk- management-
-  framework)
-- [Eugene Yan: Applied AI
-  engineering and eval essays](h
-  ttps://eugeneyan.com/)
-- [Chip Huyen: AI engineering wr
-  iting](https://huyenchip.com/)
-
+- [OpenAI Cookbook: Evals design patterns](https://cookbook.openai.com/)
+- [Anthropic Docs: Evaluate results and reduce errors](https://docs.anthropic.com/)
+- [Google PAIR Guidebook](https://pair.withgoogle.com/guidebook/)
+- [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)
+- [Eugene Yan: Applied AI engineering and eval essays](https://eugeneyan.com/)
+- [Chip Huyen: AI engineering writing](https://huyenchip.com/)

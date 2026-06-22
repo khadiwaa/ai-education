@@ -525,7 +525,7 @@ Pick a small test matrix that includes:
 - the actual prompt patterns or tools you plan to use
 Otherwise you will compare checkpoints under different conditions and learn almost nothing.
 ### Use public leaderboards for shortlist generation, not final decisions
-The Open LLM Leaderboard is useful for getting a sense of which families are competitive and widely tested.
+Public leaderboards are useful for getting a sense of which families are competitive and widely tested. (Note: Hugging Face **archived the original Open LLM Leaderboard in early 2025** — it is now read-only, so cross-check against currently maintained leaderboards and arenas such as LMArena.)
 It is not a substitute for product evaluation.
 Benchmarks often reward broad academic capability rather than your exact latency,
 format,
@@ -804,7 +804,7 @@ FP16 and Q4 memory rules of thumb matter more than marketing claims.
 - [Hugging Face Hub](https://huggingface.co/models)
 - [Ollama documentation](https://github.com/ollama/ollama/tree/main/docs)
 - [llama.cpp GitHub repository](https://github.com/ggerganov/llama.cpp)
-- [Open LLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard)
+- [Open LLM Leaderboard (archived, read-only)](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard) · [LMArena (current)](https://lmarena.ai/)
 - [Meta, The Llama 3 Herd of Models technical report](https://ai.meta.com/research/publications/the-llama-3-herd-of-models/)
 - [Hugging Face GGUF documentation](https://huggingface.co/docs/hub/gguf)
 - [Hugging Face Model cards documentation](https://huggingface.co/docs/hub/model-cards)

@@ -6,11 +6,11 @@ const config = {
   tagline: 'Building AI fluency across engineering teams',
   favicon: 'img/herbalife-favicon.ico',
 
-  url: 'https://your-org.github.io',
-  baseUrl: '/', // Change to '/ai-education-hl/' when deploying to GitHub Pages
+  url: 'https://alexkhadiwala-hl.github.io',
+  baseUrl: '/', // Change to '/ai-education/' when deploying to GitHub Pages
 
-  organizationName: 'herbalife',
-  projectName: 'ai-education-hl',
+  organizationName: 'alexkhadiwala-hl',
+  projectName: 'ai-education',
 
   onBrokenLinks: 'throw',
   markdown: {
@@ -32,7 +32,7 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
-          editUrl: 'https://github.com/your-org/ai-education-hl/tree/main/docs/',
+          editUrl: 'https://github.com/alexkhadiwala-hl/ai-education/tree/main/docs/',
           showLastUpdateTime: false,
           showLastUpdateAuthor: false,
         },
@@ -88,7 +88,7 @@ const config = {
             position: 'left',
           },
           {
-            href: 'https://github.com/your-org/ai-education-hl',
+            href: 'https://github.com/alexkhadiwala-hl/ai-education',
             label: 'GitHub',
             position: 'right',
           },
@@ -128,11 +128,11 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/your-org/ai-education-hl',
+                href: 'https://github.com/alexkhadiwala-hl/ai-education',
               },
               {
                 label: 'Contributing Guide',
-                href: 'https://github.com/your-org/ai-education-hl/blob/main/CONTRIBUTING.md',
+                href: 'https://github.com/alexkhadiwala-hl/ai-education/blob/main/CONTRIBUTING.md',
               },
             ],
           },

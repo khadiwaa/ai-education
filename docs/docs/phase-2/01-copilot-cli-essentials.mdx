@@ -138,22 +138,34 @@ The VS Code terminal opens in your current workspace folder — which means if y
 
 ### Prerequisites
 
-- GitHub account with Copilot access
-- GitHub CLI (`gh`) installed — [cli.github.com](https://cli.github.com)
-- Terminal on macOS, Linux, or Windows (WSL recommended on Windows)
+- An active GitHub Copilot subscription (through your Herbalife organization)
+- For the npm install: **Node.js 22 or later**
+- Terminal on macOS, Linux, or Windows (PowerShell v6+ on Windows)
 
 ### Install
 
-```shell
-# Authenticate the GitHub CLI
-gh auth login --web
+Copilot CLI is a standalone agentic tool — install it directly, not as a `gh` extension. Pick whichever package manager fits your setup:
 
-# Install the Copilot CLI extension
-gh extension install github/gh-copilot --force
+```shell
+# npm (all platforms — requires Node.js 22+)
+npm install -g @github/copilot
+
+# Homebrew (macOS / Linux)
+brew install copilot-cli
+
+# WinGet (Windows)
+winget install GitHub.Copilot
+
+# Install script (macOS / Linux)
+curl -fsSL https://gh.io/copilot-install | bash
 
 # Verify
 copilot --version
 ```
+
+:::tip First-run authentication
+The first time you launch `copilot`, if you're not already logged in you'll be prompted to run the `/login` slash command inside the session. Run it and follow the on-screen instructions — there's no separate `gh auth login` step.
+:::
 
 ### Start your first session
 
@@ -678,9 +690,10 @@ Starting every session from scratch, re-explaining project context repeatedly. F
 
 ### First time
 
-- [ ] Install: `gh extension install github/gh-copilot --force`
+- [ ] Install: `npm install -g @github/copilot` (Node.js 22+) — or `brew install copilot-cli` / `winget install GitHub.Copilot`
 - [ ] Verify: `copilot --version`
 - [ ] Start your first session from a repo root: `cd your-repo && copilot`
+- [ ] On first launch, authenticate with the `/login` slash command if prompted
 - [ ] When prompted to trust the directory: confirm you are in the right project
 - [ ] Run `/init` to set up the repo (creates `.github/copilot-instructions.md`)
 - [ ] Run `/help` to see all available commands

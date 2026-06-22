@@ -211,7 +211,7 @@ Explain the error-handling strategy in #selection.
 ```
 
 ```text
-@file Compare this file to the service pattern used elsewhere in the repo. What is inconsistent?
+#file Compare this file to the service pattern used elsewhere in the repo. What is inconsistent?
 ```
 
 ```text
@@ -223,6 +223,10 @@ Explain the error-handling strategy in #selection.
 ## Context variables in Chat
 
 Context variables are one of the biggest productivity unlocks in VS Code Chat because they let you ground the prompt without copy-pasting everything.
+
+:::note `@` vs `#`
+In VS Code Chat, `@` prefixes a **participant** (a specialized agent like `@workspace` or `@github`), while `#` prefixes a **context reference** (a file, selection, or terminal — `#file`, `#selection`, `#terminal`). The exact set evolves with VS Code releases, so check the Copilot Chat docs if a variable doesn't autocomplete.
+:::
 
 ### `@workspace`
 
@@ -245,16 +249,16 @@ Best for:
 - tracing flows across files
 - finding existing patterns before adding new code
 
-### `@file`
+### `#file`
 
 Use when one specific file matters most.
 
 ```text
-@file Explain the invariants in this module.
+#file Explain the invariants in this module.
 ```
 
 ```text
-@file Suggest the smallest safe refactor to make this easier to test.
+#file Suggest the smallest safe refactor to make this easier to test.
 ```
 
 Best for:
@@ -320,7 +324,7 @@ Best for:
 | Variable | Scope | Best for |
 |---|---|---|
 | `@workspace` | Whole repo/workspace | Architecture, discovery, tracing |
-| `@file` | Specific file | Explanations and scoped questions |
+| `#file` | Specific file | Explanations and scoped questions |
 | `#selection` | Selected code | Precise fixes, docs, tests |
 | `#terminal` | Terminal output | Debugging build/test/runtime failures |
 | `@github` | Issues, PRs, GitHub artifacts | Linking code to discussion and ticket context |
@@ -648,7 +652,7 @@ Here is a realistic pattern that works well.
 
 1. **Inline completions, Chat, and Edits are different tools.** Use the right one for the shape of the task.
 2. **The model completes from context.** Strong names, comments, selections, and open files matter more than clever phrasing.
-3. **Context variables are a force multiplier.** `@workspace`, `@file`, `#selection`, `#terminal`, and `@github` reduce copy-paste and improve grounding.
+3. **Context variables are a force multiplier.** `@workspace`, `#file`, `#selection`, `#terminal`, and `@github` reduce copy-paste and improve grounding.
 4. **Edits is for reviewable multi-file change.** Treat the diff as a proposal, not an answer.
 5. **Repo-level instructions improve consistency.** `.github/copilot-instructions.md` is one of the best team investments you can make.
 

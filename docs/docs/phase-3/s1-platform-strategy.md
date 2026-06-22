@@ -95,8 +95,7 @@ agent frameworks all live here.
 
 - A product layer can create more user value than the
   underlying model because workflow integration
-  matters more than raw model quality in many day-to-
-  day tasks.
+  matters more than raw model quality in many day-to-day tasks.
 - Good orchestration reduces switching cost by
   abstracting the model behind a stable interface, but
   some tools hard-wire themselves to one provider in
@@ -170,8 +169,7 @@ platform strategy. You have unmanaged shadow adoption.
 
 Business is the normal default for companies that want
 sanctioned usage, central billing, and basic
-governance. It usually gets you out of the personal-
-account mess and into a place where identity, policy,
+governance. It usually gets you out of the personal-account mess and into a place where identity, policy,
 and cost can be managed as a team concern rather than
 a reimbursement problem.
 
@@ -206,8 +204,7 @@ enterprise-specific capabilities.
 :::info How to talk about Copilot plans internally
 
 Do not sell Enterprise as “the premium AI.” Sell it as
-“the plan that closes our governance and internal-
-context gaps if those gaps are materially limiting
+“the plan that closes our governance and internal-context gaps if those gaps are materially limiting
 us.” That framing keeps the conversation anchored in
 business need instead of prestige.
 
@@ -410,8 +407,7 @@ profiles.
   assistant because you dislike a vendor contract.
 - If the workflow is part of your product moat, build
   on top of APIs. Your differentiation is in your
-  data, UX, evaluation, and product logic, not in re-
-  implementing a model provider.
+  data, UX, evaluation, and product logic, not in re-implementing a model provider.
 - If several teams are each building similar prompt
   services, retrieval layers, and cost dashboards, you
   may eventually justify platform work. But platform
@@ -698,8 +694,7 @@ is to make the decision auditable later.
 
 ## Key Takeaways
 
-- Separate model providers, product layers, and open-
-  source deployment options. They solve different
+- Separate model providers, product layers, and open-source deployment options. They solve different
   problems.
 - Evaluate vendors on real tasks, not demos.
   Capability without workflow fit is not enough.
@@ -715,20 +710,9 @@ is to make the decision auditable later.
 
 ## Further Reading
 
-- [GitHub Docs: Plans for GitHub
-  Copilot](https://docs.github.com/en/copilot/about-
-  github-copilot/subscription-plans-for-github-
-  copilot)
-- [GitHub Docs: About data use for GitHub
-  Copilot](https://docs.github.com/en/copilot/about-
-  github-copilot/github-copilot-data-privacy)
-- [Anthropic Trust
-  Center](https://trust.anthropic.com/)
-- [OpenAI Enterprise
-  Privacy](https://openai.com/enterprise-privacy/)
-- [Google Cloud: Generative AI governance and security
-  documentation](https://cloud.google.com/security/com
-  pliance)
-- [Mistral Platform
-  documentation](https://docs.mistral.ai/)
-
+- [GitHub Docs: Plans for GitHub Copilot](https://docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot)
+- [GitHub Docs: About data use for GitHub Copilot](https://docs.github.com/en/copilot/about-github-copilot/github-copilot-data-privacy)
+- [Anthropic Trust Center](https://trust.anthropic.com/)
+- [OpenAI Enterprise Privacy](https://openai.com/enterprise-privacy/)
+- [Google Cloud: Generative AI governance and security documentation](https://cloud.google.com/security/compliance)
+- [Mistral Platform documentation](https://docs.mistral.ai/)

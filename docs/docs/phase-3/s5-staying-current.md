@@ -65,8 +65,7 @@ is the nature of the space.
 - Tool vendors ship new UX
   and integration features
   that matter more than the
-  underlying model in day-
-  to-day use.
+  underlying model in day-to-day use.
 - Benchmarks and
   leaderboards tell only
   part of the story and can
@@ -131,8 +130,7 @@ general news consumers.
 Pay attention when models
 get materially better at
 reasoning, coding, tool use,
-multimodal input, or long-
-context retrieval.
+multimodal input, or long-context retrieval.
 Capability jumps can make
 previously fragile workflows
 newly viable.
@@ -480,8 +478,7 @@ only if you understand what
 they can and cannot tell
 you. They are orientation
 tools, not procurement
-decisions and not product-
-roadmap decisions.
+decisions and not product-roadmap decisions.
 
 | Benchmark result says | What you can infer | What you still need to test yourself |
 | --- | --- | --- |
@@ -675,8 +672,7 @@ possible to build.
 - Release notes, security
   research, pricing changes,
   and your own evals usually
-  matter more than social-
-  media hype.
+  matter more than social-media hype.
 - Use a lightweight weekly,
   monthly, and quarterly
   cadence to stay current
@@ -694,26 +690,11 @@ possible to build.
 
 ## Further Reading
 
-- [deeplearning.ai: The
-  Batch newsletter](https://
-  www.deeplearning.ai/the-
-  batch/)
-- [Import AI by Jack Clark](
-  https://importai.substack.
-  com/)
-- [AI Snake Oil](https://www
-  .aisnakeoil.com/)
-- [Latent Space](https://www
-  .latent.space/)
-- [Hugging Face Papers](http
-  s://huggingface.co/papers)
-- [GitHub Changelog: Copilot
-  ](https://github.blog/chan
-  gelog/label/copilot/)
-- [Anthropic Release Notes](
-  https://docs.anthropic.com
-  /)
-- [OpenAI News and API updat
-  es](https://openai.com/new
-  s/)
-
+- [deeplearning.ai: The Batch newsletter](https://www.deeplearning.ai/the-batch/)
+- [Import AI by Jack Clark](https://importai.substack.com/)
+- [AI Snake Oil](https://www.aisnakeoil.com/)
+- [Latent Space](https://www.latent.space/)
+- [Hugging Face Papers](https://huggingface.co/papers)
+- [GitHub Changelog: Copilot](https://github.blog/changelog/label/copilot/)
+- [Anthropic Release Notes](https://docs.anthropic.com/)
+- [OpenAI News and API updates](https://openai.com/news/)

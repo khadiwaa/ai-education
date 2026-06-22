@@ -553,7 +553,7 @@ In VS Code Chat:
 Then on a specific file:
 
 ```text
-@file Explain this module and point out where duplicates could slip through.
+#file Explain this module and point out where duplicates could slip through.
 ```
 
 ### 9:40 AM — write the implementation
@@ -642,12 +642,12 @@ Copilot accelerated the work, but the engineer stayed in control at every meanin
 
 | Task | Best starting tool | Good prompt shape |
 |---|---|---|
-| Understand a diff | `gh copilot explain` or Chat | “Explain what this diff does and what risks to inspect” |
+| Understand a diff | `copilot` session (`!git diff`) or VS Code Chat | “Explain what this diff does and what risks to inspect” |
 | Generate tests | VS Code Chat `/tests` | function + framework + edge cases |
 | Debug a failure | Chat with `#terminal` | error + stack trace + expectation + what changed |
-| Write docs | `/docs` or CLI explain | selected function + desired doc style |
+| Write docs | VS Code Chat `/docs` or `copilot` session | selected function + desired doc style |
 | Refactor across files | Copilot Edits or interactive CLI | scope + constraints + files + review diff |
-| Explore unfamiliar code | `@workspace`, `@file`, interactive CLI | “Where is X handled?” / “Explain this flow” |
+| Explore unfamiliar code | `@workspace` (Chat), `@file` (CLI), interactive CLI | “Where is X handled?” / “Explain this flow” |
 
 ---
 

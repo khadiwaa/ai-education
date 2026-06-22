@@ -205,8 +205,7 @@ local and concrete. They
 translate abstract capability
 into team-specific habits.
 
-- Champions can run lunch-and-
-  learns, pair on real tasks,
+- Champions can run lunch-and-learns, pair on real tasks,
   share before-and-after
   examples, and review prompts
   or workflows in code review.
@@ -402,8 +401,7 @@ marketers.
    recognition for
    contributions.
 3. Ask them to do visible,
-   bounded work: lunch-and-
-   learns, pair sessions,
+   bounded work: lunch-and-learns, pair sessions,
    example pull requests, or
    office-hour support.
 4. Rotate new champions in. Do
@@ -419,8 +417,7 @@ marketers.
   swag.
 - Champions need guardrails too.
   They should model calibrated
-  use, not reckless over-
-  automation.
+  use, not reckless over-automation.
 
 ## Managing resistance and fear
 
@@ -583,7 +580,7 @@ Champions make it real in teams.
   sessions so friction gets
   removed quickly.
 - Publish short internal
-  examples: before-and- after
+  examples: before-and-after
   prompts, useful workflows, and
   honest failure cases.
 - Start collecting manager
@@ -602,8 +599,7 @@ Champions make it real in teams.
   or team playbooks.
 - Decide where the program needs
   more support: champions,
-  security guidance, stack-
-  specific material, or manager
+  security guidance, stack-specific material, or manager
   expectations.
 - Publish a short retrospective
   so the program feels iterative
@@ -658,7 +654,7 @@ curriculum quality.
    curriculum or playbook each
    quarter.
 3. Offer occasional pair
-   sessions or office- hour
+   sessions or office-hour
    support within the local
    team.
 4. Escalate recurring friction
@@ -711,30 +707,9 @@ Diagnose before you prescribe.
 
 ## Further Reading
 
-- [GitHub Copilot for Business
-  resources](https://gith ub.com
-  /resources/articles/ai/softwar
-  e-development- with-github-
-  copilot)
-- [DX Core 4 framework from
-  McKinsey and GitHub research](
-  https://github.blog/news-
-  insights/research/research-
-  quantifying-github- copilots-
-  impact-on-developer-
-  productivity-and- happiness/)
-- [The SPACE framework for
-  developer productivity](htt ps
-  ://queue.acm.org/detail.cfm?id
-  =3454124)
-- [Team Topologies](https://team
-  topologies.com/)
-- [Accelerate by Forsgren,
-  Humble, and Kim](https://itrev
-  olution.com/product/accelerate
-  /)
-- [Nielsen Norman Group:
-  Learning and skill adoption re
-  search](https://www.nngroup.co
-  m/)
-
+- [GitHub Copilot for Business resources](https://github.com/resources/articles/ai/software-development-with-github-copilot)
+- [DX Core 4 framework from McKinsey and GitHub research](https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/)
+- [The SPACE framework for developer productivity](https://queue.acm.org/detail.cfm?id=3454124)
+- [Team Topologies](https://teamtopologies.com/)
+- [Accelerate by Forsgren, Humble, and Kim](https://itrevolution.com/product/accelerate/)
+- [Nielsen Norman Group: Learning and skill adoption research](https://www.nngroup.com/)

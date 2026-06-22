@@ -68,29 +68,31 @@ The model itself is stateless. The **tool** maintains context across your sessio
 
 > An **agent** is a model + tools + a loop that keeps going until a task is done.
 
+In [Module 1](./how-ai-works#the-agentic-loop) you saw the mechanics of this loop (plan → act → observe). Here we focus on the engineering definition and when to use it.
+
 A single prompt-response is not an agent. An agent:
 1. Gets a task
-2. **Thinks** — decides what to do next
+2. **Plans** — decides what to do next
 3. **Acts** — calls a tool (read file, run command, search web)
 4. **Observes** — sees the result
 5. Repeats until done or asks for help
 
-This is called the **agent loop** (or ReAct pattern: Reason → Act → Observe).
+This is the same **agentic loop** from Module 1 — also known formally as the **ReAct pattern** (Reason + Act). The plan step is the "reason," and act/observe close the cycle.
 
 ### Example agent loop
 
 ```
 Task: "Find all TODO comments in this repo and create a list"
 
-Think:   I need to search the codebase for TODO comments
+Plan:    I need to search the codebase for TODO comments
 Act:     run_command("grep -r 'TODO' --include='*.ts' .")
 Observe: [47 matches with file:line references]
 
-Think:   Now I'll format these as a markdown list
+Plan:    Now I'll format these as a markdown list
 Act:     write_file("todos.md", formatted_list)
 Observe: File written successfully
 
-Think:   Task complete
+Plan:    Task complete
 Result:  "Found 47 TODOs. See todos.md"
 ```
 
@@ -361,7 +363,7 @@ Notice: What context does it use? Where does it do well? Where does it need more
 | Term | What it means |
 |------|--------------|
 | **Agent** | Model + tools + a loop; runs autonomously until a task is done |
-| **Agent loop** | Think → Act (call tool) → Observe result → repeat |
+| **Agentic loop** | Plan → Act (call tool) → Observe result → repeat (a.k.a. ReAct) |
 | **Tool use** | The model requesting actions to be executed on its behalf |
 | **MCP** | Model Context Protocol — standard for exposing tools to AI models |
 | **Orchestration** | The system around the model: prompt injection, tool routing, history |
