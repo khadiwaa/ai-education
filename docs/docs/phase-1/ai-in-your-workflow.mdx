@@ -187,6 +187,57 @@ Be honest about where it adds real value:
 
 ---
 
+## Using AI safely: what every engineer needs to know
+
+These aren't optional guidelines — they're the baseline for using any AI tool at Herbalife.
+
+### What not to share
+
+:::danger Never paste these into any AI tool (approved or not)
+- **Secrets and credentials** — API keys, tokens, passwords, certificates, `.env` files
+- **Production data** — customer PII, order history, payment data, health data
+- **Sensitive internal code** — proprietary algorithms, unreleased features, code from systems with regulatory requirements
+:::
+
+If you need to share code context that references sensitive values, **redact or replace** them first:
+```
+# Instead of this:
+db_password = "prod-super-secret-123"
+
+# Paste this:
+db_password = "<REDACTED>"
+```
+
+The same applies to logs — strip out user IDs, session tokens, and any real data before sharing a log snippet with an AI tool.
+
+### Treat AI-generated code as untrusted
+
+AI assistants produce confident-sounding code. That confidence is not the same as correctness.
+
+- **Review AI-generated code like you'd review a PR from a new contractor** — you are responsible for what you merge
+- **Verify exact API names, method signatures, and package names** against official documentation; models hallucinate these, especially for less-common libraries
+- **Be especially skeptical of version-specific behavior** — models have training cutoffs and may describe APIs that changed or were deprecated
+- **Never trust AI security claims at face value** — if the model says "this is the secure way to do X," verify it yourself against official security guidance (OWASP, vendor docs, your security team)
+
+:::tip Ask for sources
+Get into the habit of asking: *"Can you point me to the official docs for this?"* A trustworthy answer will cite a real URL. An answer that can't cite a source is a sign you need to verify independently.
+:::
+
+### Your normal engineering controls still apply — every time
+
+AI doesn't replace or skip any of these:
+
+| Control | Still required |
+|---------|---------------|
+| **Peer code review** | Yes — AI-generated code needs human review just like handwritten code |
+| **Testing** | Yes — don't assume AI-generated tests actually cover the right cases |
+| **Static analysis and scanning** | Yes — run your SAST/DAST tools regardless of who (or what) wrote the code |
+| **Secure SDLC checks** | Yes — threat modeling, dependency audits, and secure design reviews don't change |
+
+Thinking of AI as a contributor who writes fast but needs careful review is the right mental model.
+
+---
+
 ## Prompt injection: mandatory security knowledge
 
 If your team is building any AI-powered feature, this is non-negotiable.
@@ -331,6 +382,9 @@ Notice: What context does it use? Where does it do well? Where does it need more
 3. **AI is a force multiplier for well-defined tasks, not a replacement for judgment.**
 4. **Prompt injection is the #1 AI security risk.** If your feature reads external content or has tools, think about this now.
 5. **The best AI users iterate.** The first response is a starting point, not a final answer.
+6. **Never share secrets, credentials, or production data with any AI tool.** Redact before you share.
+7. **AI-generated code is untrusted code.** Review it, test it, scan it — same as any other code.
+8. **Verify, don't trust.** APIs, package names, version behavior, and security claims need verification against official docs. Ask for sources.
 
 ---
 
