@@ -5,6 +5,11 @@ This is the **Herbalife AI Education** curriculum: a contributable, living set o
 learning materials that builds AI fluency across Herbalife's engineering teams.
 Read this file before making changes, and keep it accurate as conventions evolve.
 
+> **This file is the single source of truth for repo conventions.** The root
+> [`AGENTS.md`](../AGENTS.md) is a thin, tool-agnostic pointer to this file — when
+> you change a rule here, check whether `AGENTS.md`'s short quick-reference needs a
+> matching tweak (keep it minimal; detail lives here).
+
 ## What this repo is
 
 - A **Docusaurus** documentation site (`docs/`) for self-paced learning.

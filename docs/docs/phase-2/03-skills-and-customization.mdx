@@ -255,6 +255,10 @@ Path:
 
 This is a Markdown file containing repo-specific guidance that gets injected into Copilot interactions in supported tools, including VS Code and the newer Copilot CLI.
 
+:::note `AGENTS.md` — the tool-agnostic cousin
+You'll also see a root-level **`AGENTS.md`** in many repos (the [agents.md](https://agents.md) convention). It's the same idea as `.github/copilot-instructions.md` — a Markdown "README for AI agents" — but it's *tool-agnostic*: editors and agents beyond GitHub's (Cursor, Codex, Aider, Zed, and others) look for it. The practical move: pick **one** file as the source of truth and have the other point to it, so the two never drift. **This very repo does exactly that** — read [`.github/copilot-instructions.md`](https://github.com/alexkhadiwala-hl/ai-education/blob/main/.github/copilot-instructions.md) and the root [`AGENTS.md`](https://github.com/alexkhadiwala-hl/ai-education/blob/main/AGENTS.md) as a real example.
+:::
+
 It is the right place for information like:
 
 - project purpose
