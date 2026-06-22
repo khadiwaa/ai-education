@@ -113,6 +113,25 @@ const MODULES = {
         focusAreaDetail:
           "Review what parameters encode and why scale affects both capability and compute requirements.",
       },
+      {
+        id: "1-4",
+        shortTitle: "The AI harness and agentic loop",
+        question:
+          "Describe what an AI harness does. When you type a message to Copilot CLI, what happens before and after the LLM is called?",
+        evaluationGuidance: {
+          strong:
+            "Explains the harness as the orchestration layer that assembles context (memory, history, instructions, skills/extensions, MCP tools) before calling the LLM, and then handles tool calls, feeds results back, and loops until the task is done. Understands the LLM itself is stateless and passive — the harness creates the illusion of memory and agency.",
+          solid:
+            "Knows the harness does context assembly and tool execution but is fuzzy on the looping nature or doesn't distinguish LLM from harness clearly.",
+          developing:
+            "Treats the LLM as directly accessing files, memory, or the internet on its own without understanding the harness layer.",
+        },
+        learningTopics: ["AI harness", "agentic loop", "context assembly", "tool calls", "skills and extensions"],
+        sectionLink: "/docs/phase-1/how-ai-works#what-happens-when-you-send-a-prompt",
+        focusAreaTopic: "AI harness and agentic loop",
+        focusAreaDetail:
+          "Review how the harness assembles context from memory, instructions, and skills before calling the LLM, and how tool calls and the observe loop work during multi-step tasks.",
+      },
     ],
   },
   2: {

@@ -37,6 +37,13 @@ const PHASES = [
             topics: ['model parameters', 'model scale', 'compute requirements'],
             sectionLink: '/docs/phase-1/how-ai-works#parameters-and-scale',
           },
+          {
+            id: '1-4',
+            shortTitle: 'The AI harness and agentic loop',
+            question: "Describe what an AI harness does. When you type a message to Copilot CLI, what happens before and after the LLM is called?",
+            topics: ['AI harness', 'agentic loop', 'context assembly', 'tool calls', 'skills and extensions'],
+            sectionLink: '/docs/phase-1/how-ai-works#what-happens-when-you-send-a-prompt',
+          },
         ],
       },
       {

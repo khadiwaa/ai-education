@@ -123,23 +123,134 @@ When your team uses Copilot, ChatGPT, or any AI API, you're doing *inference* �
 
 ## What happens when you send a prompt
 
+At the LLM level, it's simple: tokens in, tokens out. But the tooling wrapped around that LLM — the **AI harness** — does a lot of heavy lifting before your prompt even reaches the model.
+
+```mermaid
+flowchart TD
+    A["🧑 You type a message"] --> B["AI Harness\n(Copilot CLI, ChatGPT, etc.)"]
+    B --> C["Context Assembly"]
+    C --> C1["Conversation history"]
+    C --> C2["Memory & instructions"]
+    C --> C3["Skills & extensions"]
+    C --> C4["MCP tools & external context"]
+    C1 & C2 & C3 & C4 --> D["Assembled prompt\nsent to LLM"]
+    D --> E["LLM\n(Claude, GPT-4, etc.)"]
+    E --> F{{"Does the LLM want\nto use a tool?"}}
+    F -- Yes --> G["Tool call executed\n(search, file read, API call, etc.)"]
+    G --> H["Tool result added\nback to context"]
+    H --> E
+    F -- No --> I["Final response\nstreamed back to you"]
 ```
-Your message
-    ↓
-Tokenize (text → tokens)
-    ↓
-Embed (tokens → vectors)
-    ↓
-Process through transformer layers
-    ↓
-Predict next token
-    ↓
-Convert back to text
-    ↓
-Repeat until done
-    ↓
-Response
+
+The LLM itself only does one thing: given tokens in, predict tokens out. Everything else — pulling context, calling tools, routing results back — happens in the harness.
+
+---
+
+## The Agentic Loop
+
+When an AI assistant completes a multi-step task (fixing a bug, writing a feature, investigating an error), it doesn't do it in one shot. It runs an **agentic loop** — a cycle of planning, acting, and observing until the task is done.
+
+```mermaid
+flowchart LR
+    START["Task received"] --> PLAN
+    PLAN["🧠 Plan\nWhat's the next step?"] --> ACT
+    ACT["⚡ Act\nCall a tool or write output"] --> OBSERVE
+    OBSERVE["👁️ Observe\nWhat did the tool return?"] --> DONE{{"Is the task\ncomplete?"}}
+    DONE -- No --> PLAN
+    DONE -- Yes --> RESPOND["✅ Final response\ndelivered to user"]
 ```
+
+Each iteration the model:
+1. **Plans** — decides what to do next based on the goal and what it's learned so far
+2. **Acts** — calls a tool (reads a file, runs a search, executes a command) or produces output
+3. **Observes** — reads the result and updates its understanding
+
+This is why Copilot CLI can say "let me check your package.json first" and then pivot based on what it finds. It's not a single inference — it's many inferences looped together.
+
+---
+
+## What the harness assembles: context in depth
+
+When you type a message, the harness doesn't just forward your words to the LLM. It builds a **prompt package** from multiple sources:
+
+```mermaid
+flowchart TD
+    subgraph Context ["Context Package (what the LLM actually sees)"]
+        SYS["System prompt\n(who you are, rules, format)"]
+        HIST["Conversation history\n(everything said so far this session)"]
+        MEM["Memory\n(persistent facts about you and your project)"]
+        INST["Instructions\n(.github/copilot-instructions.md)"]
+        SKILLS["Active skills & extensions\n(assessment tool, custom workflows)"]
+        MCP["MCP tool results\n(GitHub data, Jira tickets, DB queries)"]
+        ATTACH["Attached files or open tabs"]
+    end
+    Context --> LLM["LLM sees all of this\nas one big prompt"]
+```
+
+The LLM has **no memory between sessions** on its own — the harness creates the illusion of memory by injecting stored facts into every prompt. The LLM has **no ability to take actions** on its own — the harness executes tool calls on behalf of the LLM and feeds results back.
+
+:::info The model doesn't know what time it is
+Unless the harness injects it. The model doesn't know your name, your codebase, or your company's conventions — unless those are in the context window. This is why good context hygiene (memory, instructions, `.github/copilot-instructions.md`) makes AI dramatically more useful.
+:::
+
+---
+
+## A real-world walkthrough
+
+**Scenario:** You're using Copilot CLI and type: *"This test is failing — can you help me figure out why?"*
+
+Here's what actually happens:
+
+```mermaid
+sequenceDiagram
+    participant You
+    participant Harness as AI Harness
+    participant LLM
+    participant Tools as Tools (file system, shell)
+
+    You->>Harness: "This test is failing — why?"
+    Harness->>Harness: Assemble context<br/>(history + memory + instructions)
+    Harness->>LLM: Full context + your message
+    LLM-->>Harness: "I need to see the test file.<br/>Call: read_file('src/auth.test.ts')"
+    Harness->>Tools: read_file('src/auth.test.ts')
+    Tools-->>Harness: [file contents]
+    Harness->>LLM: Previous context + file contents
+    LLM-->>Harness: "I also need the implementation.<br/>Call: read_file('src/auth.ts')"
+    Harness->>Tools: read_file('src/auth.ts')
+    Tools-->>Harness: [file contents]
+    Harness->>LLM: Previous context + both files
+    LLM-->>Harness: "Found it. The mock is returning<br/>undefined for getUser(). Here's the fix..."
+    Harness->>You: Streams response with explanation + fix
+```
+
+Notice what happened:
+- You wrote one sentence
+- The LLM was called **three times**
+- Two file reads happened in between
+- Each LLM call got the full accumulated context
+- You saw one seamless response
+
+This is the agentic loop in action.
+
+---
+
+## Where skills and extensions fit in
+
+**Skills and extensions** are how the harness gets extended. They register additional **tools** the LLM can call during its agentic loop.
+
+```mermaid
+flowchart LR
+    HARNESS["AI Harness"] --> CORE["Core tools\n(file read/write, shell)"]
+    HARNESS --> SKILLS["Skills\n(.github/extensions/)"]
+    HARNESS --> MCP["MCP servers\n(GitHub, Jira, DB, APIs)"]
+    CORE & SKILLS & MCP --> LLM["Available to the LLM\nduring the agentic loop"]
+```
+
+The assessment skill in this repo is exactly this: a tool registered with the harness that the LLM can invoke when you ask to be assessed. The LLM decides *when* to call it based on your message — it's not hardcoded to a keyword.
+
+:::tip What this means for you as an engineer
+Every extension, MCP tool, or instruction you add to your Copilot setup is expanding what the LLM can *perceive* and *do*. A well-configured setup isn't just convenience — it changes what's possible.
+:::
 
 ---
 
@@ -169,6 +280,12 @@ Response
 | **Training** | Computing the model's weights — what providers do |
 | **Inference** | Running the model — what happens every time you send a prompt |
 | **Autoregressive** | Generating one token at a time, each conditioned on the previous ones |
+| **AI Harness** | The orchestration layer between you and the LLM — assembles context, runs tools, manages the loop |
+| **Agentic Loop** | Plan → Act → Observe → repeat — how AI assistants handle multi-step tasks |
+| **Context Window** | The total amount of text the LLM can see at once (your input + history + injected context) |
+| **Tool Call** | When the LLM instructs the harness to run an action (read a file, call an API, etc.) |
+| **Skill / Extension** | Code that registers additional tools with the harness, expanding what the LLM can do |
+| **MCP** | Model Context Protocol — a standard for connecting external services as LLM tools |
 
 ---
 
@@ -179,6 +296,9 @@ Response
 3. **Parameters = learned knowledge.** Model size roughly correlates to capability, but bigger isn't always necessary.
 4. **Training ≠ inference.** Your team runs inference. The model provider does training.
 5. **The Transformer and attention** are what make context and relationships work.
+6. **The LLM sees only what the harness puts in front of it.** Memory, instructions, skills, and tool results are all assembled by the harness — the LLM has no independent access to any of it.
+7. **The agentic loop** is how multi-step tasks work: plan, act, observe, repeat. Each loop iteration is a separate LLM inference.
+8. **Context is everything.** Well-configured memory, instructions, and extensions aren't just convenience — they fundamentally change what the LLM can perceive and accomplish.
 
 ---
 
