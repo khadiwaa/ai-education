@@ -121,6 +121,71 @@ When your team uses Copilot, ChatGPT, or any AI API, you're doing *inference* �
 
 ---
 
+## Thinking and Reasoning modes
+
+Modern AI assistants give you a dial: how much should the model *think* before it answers?
+
+### What "thinking" actually is
+
+Some models (Claude's extended thinking, OpenAI's o1/o3/o4 series, Gemini 2.5 Flash Thinking) can generate **internal reasoning tokens** before producing their final response. Think of it as the model writing out a scratchpad — working through the problem step by step — before committing to an answer.
+
+Those reasoning tokens are usually hidden from you (you see only the final response), but they're real computation happening on the model's side. The model is literally taking more inference steps before answering.
+
+This is different from a standard response, where the model goes directly from input tokens to output tokens in one pass.
+
+```mermaid
+flowchart LR
+    subgraph Standard ["Standard mode"]
+        direction LR
+        P1["Your prompt"] --> OUT1["Response"]
+    end
+
+    subgraph Thinking ["Thinking / Reasoning mode"]
+        direction LR
+        P2["Your prompt"] --> THINK["🧠 Internal reasoning\n(hidden scratchpad)"]
+        THINK --> OUT2["Response"]
+    end
+```
+
+### Reasoning effort levels
+
+Most AI tools that expose this feature offer a **reasoning effort** setting:
+
+| Level | What it means | When to use it |
+|-------|--------------|----------------|
+| **Disabled / Off** | No extended thinking. Standard forward pass. | Quick lookups, simple code edits, explaining a concept, formatting tasks |
+| **Low** | Minimal thinking budget — a few reasoning steps | Light tasks where you want slightly better accuracy without much extra latency |
+| **Medium** | Balanced thinking budget — the default for most models | Day-to-day coding, moderate debugging, writing and editing |
+| **High** | Large thinking budget — the model spends significant time reasoning | Complex bugs, architectural decisions, multi-step logic, math, anything where accuracy really matters |
+
+:::tip Rule of thumb
+Use the lowest level that gives you a good answer. High reasoning is slower and costs more tokens. For most engineering tasks, **medium is the right default**. Reach for high when you've tried medium and the answer isn't good enough.
+:::
+
+### What "thinking disabled" means in practice
+
+When thinking is off, the model is doing a single forward pass: tokens in, tokens out. It's fast, and it's good enough for most tasks. The model still has all its knowledge — it just isn't taking extra steps to reason through the problem.
+
+When thinking is enabled, the model is essentially running the agentic loop *internally*: it plans and reconsiders before locking in its response. This is why reasoning models dramatically outperform standard models on logic puzzles, math, and complex multi-step problems — but offer little benefit on simple factual questions.
+
+### In Copilot CLI
+
+Use the `/model` command in your Copilot CLI session to see available models and switch between them. Models like `claude-sonnet-4.5` and `claude-opus-4.8` have reasoning effort parameters that you can set:
+
+```
+/model                          # see available models
+claude-sonnet-4.6               # standard — good for most tasks
+claude-opus-4.8                 # high capability, supports high reasoning effort
+```
+
+Some models surface reasoning effort as a selectable option; others bake it into the model name (e.g., OpenAI's `o4-mini` vs `o3`). The capability exists in both cases — the interface just differs.
+
+:::info The cost of thinking
+Extended thinking tokens count against your token budget just like regular tokens. A high-reasoning response might consume 5–10× more tokens than a standard one. For high-volume tasks, keep this in mind.
+:::
+
+---
+
 ## What happens when you send a prompt
 
 At the LLM level, it's simple: tokens in, tokens out. But the tooling wrapped around that LLM — the **AI harness** — does a lot of heavy lifting before your prompt even reaches the model.
@@ -286,6 +351,8 @@ Every extension, MCP tool, or instruction you add to your Copilot setup is expan
 | **Tool Call** | When the LLM instructs the harness to run an action (read a file, call an API, etc.) |
 | **Skill / Extension** | Code that registers additional tools with the harness, expanding what the LLM can do |
 | **MCP** | Model Context Protocol — a standard for connecting external services as LLM tools |
+| **Thinking / Extended Thinking** | Internal reasoning tokens the model generates before its final response — not shown to the user |
+| **Reasoning Effort** | A dial (low / medium / high) controlling how much internal thinking the model does before answering |
 
 ---
 
@@ -299,6 +366,7 @@ Every extension, MCP tool, or instruction you add to your Copilot setup is expan
 6. **The LLM sees only what the harness puts in front of it.** Memory, instructions, skills, and tool results are all assembled by the harness — the LLM has no independent access to any of it.
 7. **The agentic loop** is how multi-step tasks work: plan, act, observe, repeat. Each loop iteration is a separate LLM inference.
 8. **Context is everything.** Well-configured memory, instructions, and extensions aren't just convenience — they fundamentally change what the LLM can perceive and accomplish.
+9. **Thinking and reasoning effort** are a dial you can control. Higher reasoning effort = more internal thinking steps = better accuracy on complex tasks, but slower and more expensive. Use medium as your default; reach for high on hard problems.
 
 ---
 
