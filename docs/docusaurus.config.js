@@ -7,7 +7,7 @@ const config = {
   favicon: 'img/favicon.svg',
 
   // Production domain (Vercel). If it changes, re-run `npm run build:skill`.
-  url: 'https://ai-education-mu-woad.vercel.app',
+  url: 'https://ai-education.alexkhadiwala.com',
   baseUrl: '/',
 
   onBrokenLinks: 'throw',

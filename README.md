@@ -92,7 +92,7 @@ in `skills/ai-assessment/rubrics.json`. The build script validates the two stay 
 
 ## Deployment
 
-The live site is **https://ai-education-mu-woad.vercel.app**. Every push to `main`
+The live site is **https://ai-education.alexkhadiwala.com**. Every push to `main`
 auto-deploys via GitHub Actions (`.github/workflows/deploy.yml`) — the workflow
 builds with Vercel (which enforces the broken-link/anchor checks) and deploys the
 prebuilt output. It relies on three repo secrets: `VERCEL_TOKEN`, `VERCEL_ORG_ID`,

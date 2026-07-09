@@ -65,7 +65,7 @@ When renaming doc slugs, also update: `docs/src/lib/progress.js` (CURRICULUM ids
 
 ## Deployment
 
-Production: https://ai-education-mu-woad.vercel.app (Vercel project `ai-education`,
+Production: https://ai-education.alexkhadiwala.com (Vercel project `ai-education`,
 Root Directory `docs`). **Pushes to `main` auto-deploy** via
 `.github/workflows/deploy.yml` (GitHub Actions runs `vercel build` — which enforces
 the link/anchor checks — then deploys prebuilt; needs the `VERCEL_TOKEN` /
