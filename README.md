@@ -93,17 +93,16 @@ in `skills/ai-assessment/rubrics.json`. The build script validates the two stay 
 ## Deployment
 
 The live site is **https://ai-education.alexkhadiwala.com**. Every push to `main`
-auto-deploys via GitHub Actions (`.github/workflows/deploy.yml`) — the workflow
-builds with Vercel (which enforces the broken-link/anchor checks) and deploys the
-prebuilt output. It relies on three repo secrets: `VERCEL_TOKEN`, `VERCEL_ORG_ID`,
-`VERCEL_PROJECT_ID`. Manual fallback: `cd docs && vercel deploy --prod --yes`.
+auto-deploys through Vercel's Git integration with **Root Directory** set to `docs`.
+GitHub Actions (`.github/workflows/deploy.yml`) only validates the repo by running
+`npm run build:skill` and `npm run build`; it does not deploy. Manual fallback:
+`cd docs && vercel deploy --prod --yes`.
 
 **Forking this for your own team?** The site is a standard Docusaurus app rooted at
 `docs/`:
 
 1. Import your fork at [vercel.com/new](https://vercel.com/new) with **Root
-   Directory** set to `docs` (framework "Docusaurus" is auto-detected), or recreate
-   the Actions secrets above with your own Vercel token and project ids.
+   Directory** set to `docs` (framework "Docusaurus" is auto-detected).
 2. Update `url` in `docs/docusaurus.config.js` to your production domain and run
    `npm run build:skill` so the assessment skill links back to the right site.
 

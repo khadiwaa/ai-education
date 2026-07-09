@@ -66,10 +66,10 @@ When renaming doc slugs, also update: `docs/src/lib/progress.js` (CURRICULUM ids
 ## Deployment
 
 Production: https://ai-education.alexkhadiwala.com (Vercel project `ai-education`,
-Root Directory `docs`). **Pushes to `main` auto-deploy** via
-`.github/workflows/deploy.yml` (GitHub Actions runs `vercel build` — which enforces
-the link/anchor checks — then deploys prebuilt; needs the `VERCEL_TOKEN` /
-`VERCEL_ORG_ID` / `VERCEL_PROJECT_ID` repo secrets). Manual fallback:
-`cd docs && vercel deploy --prod --yes`. If the production domain ever changes,
+Root Directory `docs`). **Pushes to `main` auto-deploy** through Vercel's Git
+integration. `.github/workflows/deploy.yml` is a validation-only workflow: it runs
+`npm run build:skill` and `npm run build` so broken links, anchors, or question/rubric
+drift fail before or alongside deployment. Manual fallback: `cd docs && vercel deploy
+--prod --yes`. If the production domain ever changes,
 update `url` in `docs/docusaurus.config.js` and re-run `npm run build:skill`
 (the skill bakes absolute site URLs).
