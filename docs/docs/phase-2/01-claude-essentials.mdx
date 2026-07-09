@@ -1,0 +1,287 @@
+---
+id: claude-essentials
+sidebar_position: 1
+title: "Module 1: Getting Started with Claude"
+---
+
+import AssessmentResults from '@site/src/components/AssessmentResults';
+
+# Module 1: Getting Started with Claude
+
+*Phase 2 · ~45–60 minutes · Hands-on*
+
+Phase 1 explained how AI works. Phase 2 is about actually using it — and our tool of
+choice is **Claude**, made by Anthropic. Everything in this phase works in the Claude
+desktop app, at [claude.ai](https://claude.ai) in your browser, or on the mobile app.
+
+By the end of this module you'll have Claude set up, know your way around the app, and
+— more importantly — know how to ask for things in a way that gets consistently good
+results.
+
+---
+
+## Setting up
+
+1. Go to [claude.ai](https://claude.ai) and create an account (or sign in).
+2. Optionally, install the desktop app from [claude.ai/download](https://claude.ai/download) —
+   it's the same Claude, one keyboard shortcut away instead of a browser tab.
+3. That's it. You can start typing.
+
+Claude has a free tier and paid plans. The free tier is fine for exploring; the paid
+plans add higher usage limits and features this course leans on later — **Projects**
+(Module 2) and **Skills** (Module 4), including this course's own self-assessment
+skill. If you're doing this course as part of a team rollout, check which plan your
+organization provides.
+
+---
+
+## A quick tour of the app
+
+The interface is deliberately simple:
+
+- **The message box** — where you type. You can also drag files onto it.
+- **New chat** — starts a fresh conversation. You'll use this more than you'd think
+  (see [When to start a new chat](#when-to-start-a-new-chat)).
+- **Chat history** — the sidebar lists your past conversations. Everything is
+  searchable, so old chats work like a notebook you can go back to.
+- **The model picker** — a small menu (usually near the message box) that chooses
+  which Claude model answers you. More on this [below](#choosing-a-model).
+- **Settings** — profile preferences, connected apps, and capabilities live here.
+  We'll visit it in Modules 2 and 4.
+
+Remember from [Phase 1](/docs/phase-1/how-ai-works#what-happens-when-you-send-a-prompt):
+the app around the model is doing real work — assembling your conversation, your
+preferences, and any attached files into the context the model sees. The better the
+material you put into that context, the better the answers.
+
+---
+
+## Writing a good first message
+
+The single highest-leverage skill in this entire course fits in one sentence:
+
+> **Tell Claude the goal, give it the context, and describe the output you want.**
+
+Compare:
+
+```text
+Summarize this report.
+```
+
+```text
+I'm attaching our Q2 operations report. Summarize it for our leadership
+team, who haven't read it and have about 2 minutes: 5 bullet points,
+leading with anything that needs a decision. Plain language, no jargon.
+```
+
+Both are polite, reasonable requests. The second one will be dramatically more useful,
+because it answered the questions Claude would otherwise have to guess at:
+
+| Ingredient | In the example | Why it matters |
+|---|---|---|
+| **Goal** | "Summarize it" | What success looks like |
+| **Context** | The attached report, "leadership team, haven't read it" | What Claude should work from, and for whom |
+| **Audience & stakes** | "about 2 minutes" | Sets depth and length |
+| **Format** | "5 bullet points, leading with decisions" | The shape of the output |
+| **Tone** | "plain language, no jargon" | How it should read |
+
+You don't need all five every time — but when an answer disappoints you, the fix is
+almost always one of these ingredients, not a smarter model.
+
+:::tip Talk to it like a capable new colleague
+The best mental model: Claude is a very capable colleague on their **first day**. Smart,
+fast, well-read — but they know nothing about your company, your client, or what "the
+usual format" means. Brief them the way you'd brief that person.
+:::
+
+One more habit worth building from day one: **say what you want, and also what you
+don't want.** "Keep it under one page." "Don't speculate about causes — stick to
+what's in the document." Constraints are context too.
+
+---
+
+## Attaching files and images
+
+You can attach files to any message: PDFs, Word documents, spreadsheets, slide decks,
+plain text, and images (photos, screenshots, scanned pages, charts). Drag them into
+the message box or use the paperclip.
+
+This matters more than it sounds. Remember
+[hallucination from Phase 1](/docs/phase-1/using-ai-effectively#hallucination): a model
+answering from memory produces plausible text that may be wrong. A model answering
+**from a document you attached** is grounded — it's working from the actual source.
+
+> **Attach the real thing. Don't describe it.**
+
+- Don't summarize the contract to Claude and ask questions about your summary —
+  attach the contract.
+- Don't retype the error message — screenshot it.
+- Don't explain roughly what the spreadsheet contains — attach the spreadsheet.
+
+Every layer of paraphrase between the source and Claude is a place for detail to get
+lost or distorted. Attachments remove those layers.
+
+:::warning Before you attach anything
+Attachments are the point where confidential material can leave your hands. What's
+safe to attach depends on your plan, your organization's policy, and the sensitivity of
+the document. We cover this properly in
+[Phase 3: Confidentiality, Privacy & Sensitive Data](/docs/phase-3/confidentiality-and-privacy)
+— until you've read it, a good rule of thumb: nothing you wouldn't email to an outside
+consultant under NDA.
+:::
+
+---
+
+## Choosing a model
+
+The model picker lets you choose which Claude model answers. The names change as new
+generations ship, but the pattern stays the same:
+
+- **Faster, lighter models** — near-instant answers. Great for quick drafts, short
+  questions, reformatting, and everyday back-and-forth.
+- **More capable models** — slower and more deliberate. Worth it for long documents,
+  multi-step analysis, tricky reasoning, and anything high-stakes.
+
+The default is fine most of the time. The skill worth having: **notice when the task
+deserves the stronger model.** If you're about to trust the output for something
+important, or the task involves genuinely hard thinking, switch up. Some models also
+offer an *extended thinking* mode that lets Claude reason longer before answering —
+same principle: use it when the task is hard, not for everything.
+
+Increasingly, apps also offer an **automatic** setting that picks the model for you
+based on the question. It's a good default — the judgment that remains yours is
+knowing when to *override* it: for high-stakes or genuinely hard work, choose the
+strong model deliberately rather than trusting the router to notice.
+
+---
+
+## Your control panel
+
+Zooming out — [Phase 1](/docs/phase-1/how-ai-works#what-happens-when-you-send-a-prompt)
+taught you that an app like Claude is a *harness* around the model. That harness gives
+you a small set of dials — the first two you just met; here they are beside the other
+two, as the recap to keep:
+
+| Dial | What it changes | One-line rule |
+|------|----------------|---------------|
+| **Model** | Raw capability vs. speed | Default (or auto) for everyday; strongest model when it's hard or high-stakes |
+| **Extended thinking** | How long Claude reasons before answering | On for genuinely hard problems; off for lookups and formatting |
+| **Web search** | Answers from live sources vs. training memory | On (with sources) for anything current or factual |
+| **Memory & preferences** | What persists across chats | Review in Settings occasionally — know what it knows about you |
+
+One practical note that ties them together: **these dials share your usage budget.**
+Paid plans meter usage, and long chats, big attachments, extended thinking, and
+research-style tasks all consume more of it. If you hit a limit mid-week, it's usually
+a sign to spend the dials more deliberately — not a reason to stop using the tool.
+
+---
+
+## The conversation is editable
+
+Two features people discover too late:
+
+- **Edit your message.** If Claude misunderstood, don't argue with it for three rounds
+  — go back, edit your original message to be clearer, and let it regenerate. You get
+  a clean answer instead of a conversation about the misunderstanding.
+- **Retry.** The same request can produce different answers (that's the
+  [sampling](/docs/phase-1/how-ai-works#the-core-idea-next-token-prediction) from
+  Phase 1). If an answer is almost-right in the wrong direction, retrying is sometimes
+  faster than explaining.
+
+And a reassurance: **you can't break anything.** A chat is just a conversation. If it
+goes sideways, start a new one. Which brings us to —
+
+---
+
+## When to start a new chat
+
+The default habit: **one task, one chat.**
+
+A conversation is also Claude's working memory — everything in it rides along with
+every new message (that's the
+[context window](/docs/phase-1/using-ai-effectively#the-context-window) from Phase 1).
+That has two practical consequences:
+
+1. **Old topics contaminate new ones.** If you spend an hour on the marketing plan and
+   then ask about a legal question in the same chat, the marketing context is still
+   *there*, subtly steering tone and assumptions.
+2. **Very long chats degrade.** As a conversation grows, details from the middle get
+   less attention, and answers drift toward vague. If Claude seems to be "getting
+   worse," the chat is probably just long.
+3. **Eventually, the app compacts.** When a chat outgrows the context window entirely,
+   the app doesn't stop — it quietly **summarizes older turns and continues from the
+   summary**. That's why Claude can suddenly "forget" a specific figure or instruction
+   from an hour ago: it may literally no longer have the original, only a compressed
+   version. Compaction is a safety net, not a strategy — a deliberate fresh start with
+   *your* summary (below) always beats an automatic one.
+
+When either happens, start fresh. If the old chat had context worth keeping, use this
+handoff trick:
+
+```text
+Summarize what we've established in this conversation as a briefing
+I can paste into a new chat: the goal, decisions made, and open items.
+```
+
+Paste that summary at the top of the new chat, and you've kept the signal without the
+noise.
+
+:::tip If it's not a one-off, it's a Project
+Re-pasting the same briefing into every new chat is a sign you've outgrown plain chats.
+That's exactly what **Projects** are for — [Module 2](/docs/phase-2/projects-and-instructions).
+:::
+
+---
+
+## Try it now
+
+Fifteen minutes, three exercises, using something real from your work:
+
+1. **The two-version test.** Ask Claude for something twice: once as a one-liner, once
+   with goal + context + format. Compare. This is the fastest way to feel why the
+   ingredients matter.
+2. **Attach something.** Take a real document you know well and ask Claude to summarize
+   it, then ask two follow-up questions about the details. Check it against what you
+   know — this builds calibrated trust.
+3. **The handoff.** In any longer chat, ask for the briefing-summary above, start a new
+   chat with it, and continue where you left off.
+
+---
+
+## Vocabulary from this module
+
+| Term | Meaning |
+|---|---|
+| **Model picker** | The menu that chooses which Claude model answers — faster vs. more capable (or automatic) |
+| **Extended thinking** | A mode where Claude reasons longer before answering hard questions |
+| **Grounding** | Giving Claude the real source material (attachments) so it doesn't answer from memory |
+| **One task, one chat** | The habit of starting a fresh conversation per distinct piece of work |
+| **Compaction** | The app summarizing older turns when a chat outgrows the context window — details fade to the summary |
+| **Usage budget** | The metered allowance on paid plans that long chats, thinking, and big tasks draw from |
+
+---
+
+## Key Takeaways
+
+1. **Goal, context, format.** The quality of Claude's answer is mostly determined by
+   the quality of your first message — brief it like a capable new colleague.
+2. **Attach the real thing.** Real documents ground the answer; descriptions of
+   documents invite guessing.
+3. **Match the model to the stakes.** Defaults for everyday work; the stronger model
+   (or extended thinking) when it's hard or when it matters.
+4. **Edit and retry instead of arguing.** The conversation is editable — use it.
+5. **One task, one chat.** Long mixed chats drift; fresh chats with a short briefing
+   stay sharp.
+
+---
+
+## Next Steps
+
+You're re-explaining your company to Claude in every chat. Let's fix that with
+[Module 2: Projects, Memory & Custom Instructions](/docs/phase-2/projects-and-instructions).
+
+---
+
+## Phase 2 · Module 1 Self-Assessment
+
+<AssessmentResults moduleNumber={4} phase={2} moduleInPhase={1} />

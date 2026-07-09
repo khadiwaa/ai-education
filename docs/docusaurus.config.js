@@ -2,17 +2,16 @@
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Herbalife AI Education',
-  tagline: 'Building AI fluency across engineering teams',
-  favicon: 'img/herbalife-favicon.ico',
+  title: 'AI Education',
+  tagline: 'Practical AI skills for professionals — no coding required',
+  favicon: 'img/favicon.svg',
 
-  url: 'https://alexkhadiwala-hl.github.io',
-  baseUrl: '/', // Change to '/ai-education/' when deploying to GitHub Pages
-
-  organizationName: 'alexkhadiwala-hl',
-  projectName: 'ai-education',
+  // Update to your production domain after the first Vercel deploy.
+  url: 'https://ai-education.vercel.app',
+  baseUrl: '/',
 
   onBrokenLinks: 'throw',
+  onBrokenAnchors: 'throw',
   markdown: {
     mermaid: true,
     hooks: {
@@ -32,7 +31,6 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
-          editUrl: 'https://github.com/alexkhadiwala-hl/ai-education/tree/main/docs/',
           showLastUpdateTime: false,
           showLastUpdateAuthor: false,
         },
@@ -65,11 +63,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'Herbalife AI Education',
-        logo: {
-          alt: 'Herbalife logo',
-          src: 'img/herbalife-icon.png',
-        },
+        title: 'AI Education',
         items: [
           {
             type: 'docSidebar',
@@ -87,11 +81,6 @@ const config = {
             label: 'Question Bank',
             position: 'left',
           },
-          {
-            href: 'https://github.com/alexkhadiwala-hl/ai-education',
-            label: 'GitHub',
-            position: 'right',
-          },
         ],
       },
       footer: {
@@ -102,42 +91,37 @@ const config = {
             items: [
               { label: 'How AI Actually Works', to: '/docs/phase-1/how-ai-works' },
               { label: 'Using AI Effectively', to: '/docs/phase-1/using-ai-effectively' },
-              { label: 'AI in Your Workflow', to: '/docs/phase-1/ai-in-your-workflow' },
+              { label: 'AI in Your Workday', to: '/docs/phase-1/ai-in-your-workflow' },
             ],
           },
           {
-            title: 'Phase 2 — Copilot in Practice',
+            title: 'Phase 2 — Claude in Practice',
             items: [
-              { label: 'Copilot CLI Essentials', to: '/docs/phase-2/copilot-cli-essentials' },
-              { label: 'Copilot in VS Code', to: '/docs/phase-2/copilot-in-vscode' },
-              { label: 'Skills & Customization', to: '/docs/phase-2/skills-and-customization' },
-              { label: 'MCP & Integrations', to: '/docs/phase-2/mcp-and-integrations' },
-              { label: 'Real-World Workflows', to: '/docs/phase-2/real-world-workflows' },
+              { label: 'Getting Started with Claude', to: '/docs/phase-2/claude-essentials' },
+              { label: 'Projects & Instructions', to: '/docs/phase-2/projects-and-instructions' },
+              { label: 'Creating with Artifacts', to: '/docs/phase-2/creating-with-artifacts' },
+              { label: 'Connectors & Skills', to: '/docs/phase-2/connectors-and-skills' },
+              { label: 'Everyday Workflows', to: '/docs/phase-2/everyday-workflows' },
             ],
           },
           {
-            title: 'Phase 3 — Deep Dives',
+            title: 'Phase 3 — Working Confidently with AI',
             items: [
-              { label: 'Overview & Learning Paths', to: '/docs/phase-3/overview' },
-              { label: 'Technical Track', to: '/docs/phase-3/t1-transformer-architecture' },
-              { label: 'Strategic Track', to: '/docs/phase-3/s1-platform-strategy' },
+              { label: 'Overview', to: '/docs/phase-3/overview' },
+              { label: 'Confidentiality & Privacy', to: '/docs/phase-3/confidentiality-and-privacy' },
+              { label: 'Verifying AI Output', to: '/docs/phase-3/verifying-ai-output' },
             ],
           },
           {
-            title: 'Contribute',
+            title: 'More',
             items: [
-              {
-                label: 'GitHub',
-                href: 'https://github.com/alexkhadiwala-hl/ai-education',
-              },
-              {
-                label: 'Contributing Guide',
-                href: 'https://github.com/alexkhadiwala-hl/ai-education/blob/main/CONTRIBUTING.md',
-              },
+              { label: 'Assessments', to: '/assessments' },
+              { label: 'Question Bank', to: '/question-bank' },
+              { label: 'Under the Hood (Appendix)', to: '/docs/appendix/overview' },
             ],
           },
         ],
-        copyright: `© ${new Date().getFullYear()} Herbalife. Built by engineers, for engineers.`,
+        copyright: `© ${new Date().getFullYear()} AI Education. Open source — free to use and adapt for your team.`,
       },
       prism: {
         additionalLanguages: ['bash', 'typescript', 'python'],

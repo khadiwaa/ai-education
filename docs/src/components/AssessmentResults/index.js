@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from '@docusaurus/Link';
+import { getModuleResult, subscribe } from '@site/src/lib/assessments';
 import styles from './styles.module.css';
 
 const LEVELS = {
@@ -24,39 +25,37 @@ export default function AssessmentResults({ moduleNumber, phase, moduleInPhase }
     ? `Phase ${phase} · Module ${moduleInPhase}`
     : `Module ${moduleNumber}`;
 
-  // CLI command uses "phase X module Y" if available, else falls back to global number
-  const cliCommand = (phase && moduleInPhase)
-    ? `assess me phase ${phase} module ${moduleInPhase}`
-    : `assess me module ${moduleNumber}`;
+  // What the learner says to Claude to run this assessment
+  const claudePrompt = (phase && moduleInPhase)
+    ? `Assess me on phase ${phase} module ${moduleInPhase}`
+    : `Assess me on module ${moduleNumber}`;
   const [data, setData] = useState(null);
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/assessments/module-${moduleNumber}-latest.json`)
-      .then(r => {
-        if (!r.ok) throw new Error('not found');
-        return r.json();
-      })
-      .then(json => {
-        if (!json || !json.score) throw new Error('empty');
-        setData(json);
-      })
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
+    // localStorage is only available in the browser, so read inside the effect
+    const refresh = () => setData(getModuleResult(moduleNumber));
+    refresh();
+    setLoading(false);
+    return subscribe(refresh);
   }, [moduleNumber]);
 
   if (loading) return null;
 
-  if (error || !data) {
+  if (!data) {
     return (
       <div className={styles.prompt}>
         <span className={styles.promptIcon}>📋</span>
         <div>
           <strong>Check your understanding</strong>
-          <p>Run this in your terminal from the repo root:</p>
-          <code className={styles.cliCommand}>{cliCommand}</code>
-          <p className={styles.hint}>Your results will appear here after your next <code>npm run start</code>.</p>
+          <p>Open the Claude app and say:</p>
+          <code className={styles.cliCommand}>{claudePrompt}</code>
+          <p className={styles.hint}>
+            First time? <Link to="/assessments#setup">Install the assessment skill</Link> (one-time
+            setup). When Claude gives you your results block,{' '}
+            <Link to="/assessments#import">paste it on the Assessments page</Link> to see your
+            score here.
+          </p>
         </div>
       </div>
     );
@@ -114,8 +113,8 @@ export default function AssessmentResults({ moduleNumber, phase, moduleInPhase }
       )}
 
       <div className={styles.retake}>
-        Want to retake? Run <code>{cliCommand}</code> in your terminal,
-        then refresh after the next <code>npm run start</code>.
+        Want to retake? Say <code>{claudePrompt}</code> to Claude, then paste your new
+        results block on the <Link to="/assessments#import">Assessments page</Link>.
       </div>
     </div>
   );

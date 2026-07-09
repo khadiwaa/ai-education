@@ -1,0 +1,13 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "docs-serve",
+      "cwd": "docs",
+      "autoPort": false,
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["docusaurus", "serve", "--no-open", "--port", "3987"],
+      "port": 3987
+    }
+  ]
+}

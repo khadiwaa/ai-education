@@ -1,66 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '@theme/Layout';
+import Link from '@docusaurus/Link';
 import AssessmentResults from '@site/src/components/AssessmentResults';
+import { importResults, clearResults } from '@site/src/lib/assessments';
+import questionBank from '@site/src/data/question-bank.json';
 import styles from './assessments.module.css';
 
-const MODULES = [
-  {
-    number: 1, moduleInPhase: 1,
-    phase: 1, phaseLabel: 'Phase 1 — AI Essentials',
-    title: 'How AI Actually Works',
-    description: 'Token generation, training vs. inference, parameters and scale.',
-    link: '/docs/phase-1/how-ai-works',
-  },
-  {
-    number: 2, moduleInPhase: 2,
-    phase: 1, phaseLabel: 'Phase 1 — AI Essentials',
-    title: 'Using AI Effectively',
-    description: 'Context windows, hallucination, prompting techniques.',
-    link: '/docs/phase-1/using-ai-effectively',
-  },
-  {
-    number: 3, moduleInPhase: 3,
-    phase: 1, phaseLabel: 'Phase 1 — AI Essentials',
-    title: 'AI in Your Engineering Workflow',
-    description: 'Agents, prompt injection, human-in-the-loop.',
-    link: '/docs/phase-1/ai-in-your-workflow',
-  },
-  {
-    number: 4, moduleInPhase: 1,
-    phase: 2, phaseLabel: 'Phase 2 — Copilot in Practice',
-    title: 'Copilot CLI Essentials',
-    description: 'Interactive sessions, slash commands, memory management.',
-    link: '/docs/phase-2/copilot-cli-essentials',
-  },
-  {
-    number: 5, moduleInPhase: 2,
-    phase: 2, phaseLabel: 'Phase 2 — Copilot in Practice',
-    title: 'Copilot in VS Code',
-    description: 'Inline completions, Chat, Edits, context variables.',
-    link: '/docs/phase-2/copilot-in-vscode',
-  },
-  {
-    number: 6, moduleInPhase: 3,
-    phase: 2, phaseLabel: 'Phase 2 — Copilot in Practice',
-    title: 'Skills & Customization',
-    description: 'Instructions files, custom skills, extension locations.',
-    link: '/docs/phase-2/skills-and-customization',
-  },
-  {
-    number: 7, moduleInPhase: 4,
-    phase: 2, phaseLabel: 'Phase 2 — Copilot in Practice',
-    title: 'MCP & Integrations',
-    description: 'Model Context Protocol, connecting tools and services.',
-    link: '/docs/phase-2/mcp-and-integrations',
-  },
-  {
-    number: 8, moduleInPhase: 5,
-    phase: 2, phaseLabel: 'Phase 2 — Copilot in Practice',
-    title: 'Real-World Workflows',
-    description: 'Code review, test generation, debugging workflows.',
-    link: '/docs/phase-2/real-world-workflows',
-  },
-];
+// Flatten the shared question data into the module list this page renders.
+const MODULES = questionBank.phases.flatMap((phase) =>
+  phase.modules.map((mod) => ({
+    number: mod.number,
+    moduleInPhase: mod.moduleInPhase,
+    phase: phase.phase,
+    phaseLabel: phase.label,
+    title: mod.title,
+    description: mod.description,
+    link: mod.docLink,
+  }))
+);
+
+function ImportBox() {
+  const [text, setText] = useState('');
+  const [status, setStatus] = useState(null); // { ok, message }
+
+  const handleImport = () => {
+    const { imported, errors } = importResults(text);
+    if (imported.length > 0) {
+      const list = imported.map((n) => `Module ${n}`).join(', ');
+      setStatus({
+        ok: true,
+        message: `Imported results for ${list} ✓${errors.length ? ` (${errors.join(' ')})` : ''}`,
+      });
+      setText('');
+    } else {
+      setStatus({ ok: false, message: errors.join(' ') || 'Nothing to import.' });
+    }
+  };
+
+  const handleClear = () => {
+    clearResults();
+    setStatus({ ok: true, message: 'All saved results cleared from this browser.' });
+  };
+
+  return (
+    <div className={styles.importBox}>
+      <textarea
+        className={styles.importArea}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder={'Paste your results block from Claude here — it starts with {"kind": "ai-education-assessment", ...}'}
+        rows={6}
+      />
+      <div className={styles.importActions}>
+        <button className={styles.importButton} onClick={handleImport} disabled={!text.trim()}>
+          Import results
+        </button>
+        <button className={styles.clearButton} onClick={handleClear}>
+          Clear all results
+        </button>
+      </div>
+      {status && (
+        <p className={status.ok ? styles.statusOk : styles.statusError}>{status.message}</p>
+      )}
+    </div>
+  );
+}
 
 export default function AssessmentsPage() {
   return (
@@ -72,14 +76,54 @@ export default function AssessmentsPage() {
         <div className={styles.hero}>
           <h1>Self-Assessments</h1>
           <p>
-            Run each module&apos;s assessment from your terminal using Copilot CLI, then
-            come back here to review your results and identify areas to revisit.
+            Each module has an interview-style self-assessment you take <strong>inside the
+            Claude app</strong>. Claude asks a few open-ended questions, scores your answers,
+            and gives you a personalized review plan — then you paste your results below to
+            track your progress here.
           </p>
-          <div className={styles.cliBox}>
-            <span className={styles.cliLabel}>How to take an assessment</span>
-            <code>copilot  →  assess me phase 1 module 1</code>
-          </div>
         </div>
+
+        <section id="setup" className={styles.stepCard}>
+          <h2>1 · One-time setup: install the assessment skill</h2>
+          <ol className={styles.stepList}>
+            <li>
+              <a href="/downloads/ai-assessment-skill.zip" download>
+                <strong>Download the assessment skill</strong>
+              </a>{' '}
+              (a small .zip file — don&apos;t unzip it).
+            </li>
+            <li>
+              In the Claude app, open <strong>Settings → Capabilities → Skills</strong> and
+              upload the zip.
+            </li>
+            <li>
+              In any chat, say <code>Assess me on phase 1 module 1</code> — Claude takes it
+              from there.
+            </li>
+          </ol>
+          <p className={styles.stepNote}>
+            Skills require a paid Claude plan — full walkthrough in{' '}
+            <Link to="/docs/phase-2/connectors-and-skills#installing-a-skill">
+              Phase 2 · Module 4
+            </Link>. On a free plan? You can still self-assess: copy a question from
+            the <Link to="/question-bank">Question Bank</Link> into any chat, answer it
+            in your own words, and ask Claude to critique your answer.
+          </p>
+        </section>
+
+        <section id="import" className={styles.stepCard}>
+          <h2>2 · Import your results</h2>
+          <p>
+            At the end of each assessment, Claude gives you a results block (a snippet of
+            text in curly braces). Copy the whole block and paste it here:
+          </p>
+          <ImportBox />
+          <p className={styles.stepNote}>
+            Results are saved in <strong>this browser only</strong> — nothing is uploaded
+            anywhere. If you switch devices or clear your browser data, just re-paste your
+            results blocks.
+          </p>
+        </section>
 
         <div className={styles.grid}>
           {MODULES.map((mod, index) => {

@@ -1,6 +1,3 @@
-# Assessment reports (personal — not committed to the repo)
-/assessments/
-
 # Dependencies
 node_modules/
 .node_modules/
@@ -10,6 +7,9 @@ dist/
 build/
 .docusaurus/
 .cache/
+
+# Skill packaging staging (questions.json is copied in at build time)
+skills/ai-assessment/questions.json
 
 # OS files
 .DS_Store
@@ -22,6 +22,3 @@ Thumbs.db
 # Environment
 .env
 .env.local
-
-# Module assessment JSON results (personal — not committed)
-docs/static/assessments/*.json

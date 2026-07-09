@@ -1,0 +1,214 @@
+---
+id: projects-and-instructions
+sidebar_position: 2
+title: "Module 2: Projects, Memory & Custom Instructions"
+---
+
+import AssessmentResults from '@site/src/components/AssessmentResults';
+
+# Module 2: Projects, Memory & Custom Instructions
+
+*Phase 2 · ~45–60 minutes · Hands-on*
+
+Module 1 ended with a problem: every new chat starts from zero, so you find yourself
+pasting the same background — who you are, what the client cares about, how your team
+formats things — over and over.
+
+This module is about making context **persistent**: Projects, project knowledge,
+custom instructions, and personal preferences. Set these up once and every
+conversation starts already briefed.
+
+---
+
+## What is a Project?
+
+A **Project** is a workspace that groups related chats and gives all of them shared
+context. It has three parts:
+
+- **Chats** — conversations that live inside the Project.
+- **Knowledge** — files and notes you upload once; every chat in the Project can use
+  them.
+- **Instructions** — standing guidance ("you are helping with X; always do Y") that
+  applies to every chat in the Project.
+
+The rule of thumb for when to create one:
+
+> **One-off question → plain chat. Recurring work → Project.**
+
+Good Project candidates from a typical work week:
+
+| Project | Knowledge you'd upload | Instructions you'd set |
+|---|---|---|
+| *Vendor contracts* | Your standard terms, a glossary, two examples of past redlines | "Flag deviations from our standard terms. Be precise, cite section numbers." |
+| *Weekly leadership update* | Last month's updates, the template, org chart | "Match the template. Terse, numbers first, no adjectives." |
+| *Hiring — Operations role* | Job description, rubric, anonymized example notes | "Help screen candidates against the rubric. Never guess at facts not in the notes." |
+
+Projects are also an organizational win even before the shared-context benefits: three
+months from now, every conversation about the vendor contract is in one place.
+
+:::info Availability
+Projects are a paid-plan feature. On team plans, Projects can also be shared with
+colleagues — one well-stocked Project can brief the whole team's chats.
+:::
+
+---
+
+## Project knowledge
+
+Knowledge is where you put the **stable reference material** — the things you'd hand a
+new colleague on day one:
+
+- Background documents (the plan, the contract, the policy)
+- Templates and past examples of "what good looks like"
+- Glossaries: your acronyms, product names, team names
+- Notes you write directly ("Context: we're mid-negotiation with X; pricing discussion
+  is off-limits until legal signs off")
+
+Every chat inside the Project starts with this material available — you stop
+re-attaching and re-explaining.
+
+Two habits keep knowledge useful:
+
+1. **Curate, don't dump.** Ten well-chosen documents beat a hundred stale ones. Knowledge
+   competes for the model's attention like everything else in the
+   [context window](/docs/phase-1/using-ai-effectively#the-context-window).
+2. **Keep it current.** An out-of-date org chart in knowledge is worse than none — Claude
+   will confidently use it. When a document changes, replace it.
+
+### How Claude actually reads knowledge
+
+A harness detail worth knowing, because it changes how you set Projects up: when a
+Project's knowledge is small, the app can put **all of it** into the context window —
+Claude has genuinely read everything. When knowledge grows past what fits, the app
+switches to **searching** it instead — retrieving only the chunks that look relevant
+to your question (that's [RAG from Phase 1](/docs/phase-1/using-ai-effectively#rag-retrieval-augmented-generation),
+running inside your Project).
+
+Retrieval is good, but it can miss — which is why Claude occasionally whiffs on
+something that's *definitely* in the knowledge. Three habits that work with the
+machinery instead of against it:
+
+- **Curation again, now with a reason:** a lean knowledge base stays in
+  everything-gets-read territory.
+- **Name files descriptively** — `acme-msa-2026-signed.pdf` retrieves better than
+  `final_v3 (2).pdf`.
+- **Point, don't hope.** When a specific document matters, say so: *"Check the
+  pricing addendum in the project knowledge"* beats assuming it was retrieved.
+
+:::tip A note about "memory"
+Depending on your plan, Claude may also offer a **memory** feature — remembering
+useful details across conversations automatically. Worth understanding what that
+really is: the model never "learns" you (weights are
+[frozen](/docs/phase-1/how-ai-works#training-vs-inference)) — the app stores notes
+and injects the relevant ones into future chats, just like everything else in the
+context package.
+
+Treat it as a bonus, not the plan: Projects with explicit knowledge are deliberate,
+inspectable, and editable. And give memory an occasional privacy check-in — review
+what's been remembered in Settings, and prune it; it's one of the quiet places
+[sensitive details can accumulate](/docs/phase-3/confidentiality-and-privacy).
+:::
+
+---
+
+## Project instructions
+
+Knowledge is *what Claude should know*. Instructions are *how Claude should behave* —
+standing guidance applied to every chat in the Project:
+
+```text
+You're helping the operations team draft and review vendor contracts.
+
+- Always cite the section number when referring to the contract.
+- When you flag a risk, rate it high/medium/low and say why.
+- Our templates and standard terms are in the project knowledge —
+  treat deviations from them as findings, not defaults.
+- If information is missing, say so. Never fill gaps with assumptions.
+```
+
+Notice what makes these good instructions — the same ingredients as a good first
+message from [Module 1](/docs/phase-2/claude-essentials#writing-a-good-first-message),
+just made permanent: role, format rules, where to look, and what *not* to do.
+
+Anything you've typed into three different chats belongs in the Project's instructions.
+
+---
+
+## Preferences vs project instructions
+
+Instructions exist at more than one level, and knowing what goes where saves you from
+repeating yourself — or from rules colliding.
+
+| Layer | Where it's set | Applies to | Belongs there |
+|---|---|---|---|
+| **Personal preferences** | Settings → your profile | *Every* chat, everywhere | How you like to be answered, always: "Be concise. Use plain language. When I ask for options, give trade-offs." Plus stable facts: your role, your time zone. |
+| **Project instructions** | Inside each Project | Chats in that Project | Context-specific rules: the client, the format, the tone for *this* work. |
+| **The chat itself** | Your messages | This conversation | The task at hand, one-off adjustments: "shorter", "more formal", "audience is the board". |
+
+The layers stack: preferences + project instructions + your message all shape each
+answer, with the most specific layer winning when they conflict.
+
+A quick test for placement: *"Would I want this in every single chat, forever?"* If
+yes → personal preferences. *"In every chat about this work?"* → project
+instructions. *"Just right now?"* → say it in the chat.
+
+**Styles** are a related shortcut: reusable tone presets (concise, explanatory,
+formal…) you can switch per conversation without rewriting instructions. If you keep
+typing "make it more formal," make it a style instead.
+
+---
+
+## Try it now
+
+Build one real Project, end to end (~20 minutes):
+
+1. Pick the most repetitive AI-suited work you have — the thing you've already
+   explained to Claude more than once.
+2. Create a Project. Upload 3–5 genuinely useful documents to knowledge — including
+   at least one *example of a good past output*, which is worth more than any
+   description of what you want.
+3. Write instructions using the template above: role, format rules, where to look,
+   what not to do.
+4. Start a chat inside it and do the actual task. Note how much shorter your message
+   is now that the briefing already happened.
+5. Separately: open Settings and write two sentences of personal preferences you want
+   in *every* chat.
+
+---
+
+## Vocabulary from this module
+
+| Term | Meaning |
+|---|---|
+| **Project** | A workspace grouping related chats with shared knowledge and instructions |
+| **Project knowledge** | Files and notes uploaded once, available to every chat in the Project |
+| **Project instructions** | Standing behavioral guidance for every chat in the Project |
+| **Personal preferences** | Account-wide guidance that applies to all your chats |
+| **Styles** | Reusable tone/format presets you can switch per conversation |
+
+---
+
+## Key Takeaways
+
+1. **Recurring work deserves a Project.** One-off questions don't.
+2. **Knowledge = what Claude should know.** Stable, curated, current reference
+   material — including examples of good output.
+3. **Instructions = how Claude should behave.** Anything you've typed three times
+   belongs there.
+4. **Layer your guidance.** Everywhere-always → preferences; this-work-always →
+   project instructions; just-now → the chat.
+5. **Explicit beats automatic.** Memory features are convenient, but curated Projects
+   are the system you control.
+
+---
+
+## Next Steps
+
+Claude is now briefed. Time to make it produce real work products —
+[Module 3: Creating Documents & Artifacts](/docs/phase-2/creating-with-artifacts).
+
+---
+
+## Phase 2 · Module 2 Self-Assessment
+
+<AssessmentResults moduleNumber={5} phase={2} moduleInPhase={2} />

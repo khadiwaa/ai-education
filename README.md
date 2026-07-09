@@ -1,106 +1,111 @@
-# Herbalife AI Education — Engineering Curriculum
+# AI Education — Practical AI Skills for Professionals
 
-A living curriculum for building AI fluency across Herbalife's engineering teams. This repo contains a reference documentation site for self-paced learning and interactive self-assessments via Copilot CLI.
+A self-paced curriculum that teaches non-technical professionals how AI actually
+works and how to use it well in everyday knowledge work — writing, research,
+analysis, and planning — using the **Claude desktop app**. No coding required.
+
+It's open source on purpose: fork it, rebrand it, and adapt it for your team.
 
 ---
 
-## Quick Start
+## Quick start (running the site locally)
 
 ```bash
 cd docs
 npm install
-npm run start   # builds search index + serves at localhost:3000
+npm run dev     # hot-reload dev server at localhost:3000 (search disabled in dev)
+npm run build   # full production build — also validates every link and anchor
 ```
-
-> Use `npm run dev` instead if you're editing content and want live hot-reload (search won't work in dev mode).
 
 ---
 
-## Curriculum Overview
+## Curriculum overview
 
 ### Phase 1 — AI Essentials *(start here)*
 
-Foundations every engineer needs to work effectively with AI tools.
+Foundations for working effectively with AI — no technical background assumed.
 
 | Module | Topic | Docs |
 |--------|-------|------|
 | Phase 1 · Module 1 | How AI Actually Works | `docs/docs/phase-1/how-ai-works.mdx` |
 | Phase 1 · Module 2 | Using AI Effectively | `docs/docs/phase-1/using-ai-effectively.mdx` |
-| Phase 1 · Module 3 | AI in Your Engineering Workflow | `docs/docs/phase-1/ai-in-your-workflow.mdx` |
+| Phase 1 · Module 3 | AI in Your Workday | `docs/docs/phase-1/ai-in-your-workflow.mdx` |
 
-### Phase 2 — GitHub Copilot in Practice
+### Phase 2 — Claude in Practice
 
-Practical modules on using GitHub Copilot CLI and VS Code in daily engineering work.
+Hands-on modules for the Claude desktop app.
 
 | Module | Topic | Docs |
 |--------|-------|------|
-| Phase 2 · Module 1 | Copilot CLI Essentials | `docs/docs/phase-2/01-copilot-cli-essentials.mdx` |
-| Phase 2 · Module 2 | Copilot in VS Code | `docs/docs/phase-2/02-copilot-in-vscode.mdx` |
-| Phase 2 · Module 3 | Skills & Customization | `docs/docs/phase-2/03-skills-and-customization.mdx` |
-| Phase 2 · Module 4 | MCP & Integrations | `docs/docs/phase-2/04-mcp-and-integrations.mdx` |
-| Phase 2 · Module 5 | Real-World Workflows | `docs/docs/phase-2/05-real-world-workflows.mdx` |
+| Phase 2 · Module 1 | Getting Started with Claude | `docs/docs/phase-2/01-claude-essentials.mdx` |
+| Phase 2 · Module 2 | Projects, Memory & Custom Instructions | `docs/docs/phase-2/02-projects-and-instructions.mdx` |
+| Phase 2 · Module 3 | Creating Documents & Artifacts | `docs/docs/phase-2/03-creating-with-artifacts.mdx` |
+| Phase 2 · Module 4 | Connectors, MCP & Skills | `docs/docs/phase-2/04-connectors-and-skills.mdx` |
+| Phase 2 · Module 5 | Everyday Workflows | `docs/docs/phase-2/05-everyday-workflows.mdx` |
 
-### Phase 3 — Deep Dives *(self-select)*
+### Phase 3 — Working Confidently with AI
 
-Advanced modules you can take in any order based on your role and interests.
-
-**Technical Track**
+Judgment and responsibility: the difference between using AI and using it well.
 
 | Module | Topic |
 |--------|-------|
-| T1 | Transformer Architecture Deep Dive |
-| T2 | Advanced Prompt Engineering & Evaluation |
-| T3 | Embeddings, RAG & Retrieval Systems |
-| T4 | Agents & Multi-Agent Systems |
-| T5 | Fine-Tuning & Model Customization |
-| T6 | Open-Source & Local Models |
+| 1 | Confidentiality, Privacy & Sensitive Data |
+| 2 | Verifying AI Output & Managing Risk |
+| 3 | Choosing AI Tools & Plans |
+| 4 | Bringing AI to Your Team |
+| 5 | Staying Current |
 
-**Strategic Track**
+### Appendix — Under the Hood *(optional, technical)*
 
-| Module | Topic |
-|--------|-------|
-| S1 | Platform Strategy & Vendor Evaluation |
-| S2 | Cost Modeling & Optimization |
-| S3 | AI Product Strategy |
-| S4 | Team Education & Org Design |
-| S5 | Staying Current |
+Deep dives for readers who want the technical detail: transformer architecture,
+advanced prompting, embeddings & RAG, agents, fine-tuning, local models, and AI
+product strategy. Not required for the curriculum.
 
 ---
 
-## Self-Assessments
+## Self-assessments (Claude skill)
 
-Each module ends with a self-assessment you run from your terminal using Copilot CLI. Results are saved locally and surfaced in the docs site.
+Each Phase 1 and Phase 2 module ends with an interview-style self-assessment that
+runs **inside the Claude app** via a custom skill.
 
-### Running an assessment
+**Setup (once):**
+1. Download the skill from the site: `/downloads/ai-assessment-skill.zip` (or grab it
+   from `docs/static/downloads/` in this repo).
+2. In Claude: **Settings → Capabilities → Skills → upload the zip**.
+3. In any chat, say: `assess me on phase 1 module 1` (or `assess me on phase 2`, etc.).
 
-Start a Copilot CLI session from the repo root, then say:
+Claude asks 3 open-ended questions per module, scores your answers against a hidden
+rubric, gives you a personalized review plan with links back into the site, and ends
+with a results block. Paste that block into the **Assessments** page (`/assessments`)
+to track your scores in the browser — results are stored locally in your browser only.
 
-```
-assess me phase 1 module 1
-assess me phase 2 module 3
-assess me phase 1          # runs all 3 Phase 1 modules
-assess me phase 2          # runs all 5 Phase 2 modules
-```
+**Rebuilding the skill** (after editing questions, rubrics, or the site URL):
 
-The skill asks **3 open-ended questions** per module. After your answers you get per-question scores (1–3), strengths, and focus areas linked back to the relevant doc section.
-
-### Where results appear
-
-**Markdown report** (personal, gitignored):
-```
-assessments/<your-name>-module-<N>-assessment-<YYYY-MM-DD>.md
+```bash
+cd docs && npm run build:skill
 ```
 
-**Browser results** — after running `npm run start`, visit `/assessments` in the docs site to see your scores and focus areas for every completed module. The **Question Bank** page (`/question-bank`) lists every question so you can review what's covered.
-
-> Assessment JSON files in `docs/static/assessments/` are also gitignored — your results stay local.
-
-See [`.github/extensions/ai-assessment/README.md`](.github/extensions/ai-assessment/README.md) for full details.
+Question text lives in `docs/src/data/question-bank.json`; scoring rubrics live only
+in `skills/ai-assessment/rubrics.json`. The build script validates the two stay in sync.
 
 ---
 
-## Contributing
+## Deploying to Vercel
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to add content, fix errors, or propose new modules.
+The site is a standard Docusaurus app rooted at `docs/`:
 
-Content is markdown/MDX — if you can write markdown, you can contribute.
+1. Push the repo to GitHub and import it at [vercel.com/new](https://vercel.com/new).
+2. Set **Root Directory** to `docs` (framework "Docusaurus" is auto-detected;
+   build command `npm run build`, output directory `build`).
+3. Deploy. Then update `url` in `docs/docusaurus.config.js` to your production
+   domain and run `npm run build:skill` so the assessment skill links back to the
+   right site.
+
+---
+
+## Adapting this for your team
+
+Everything is markdown/MDX under `docs/docs/` — if you can write markdown, you can
+adapt it. See [CONTRIBUTING.md](./CONTRIBUTING.md) for conventions, and
+[CLAUDE.md](./CLAUDE.md) if you're editing with an AI coding assistant. Licensed
+under [MIT](./LICENSE).

@@ -34,7 +34,7 @@ export default function ProgressSummary() {
 
   if (!stats) return null;
 
-  const { lastVisited, completedCount, totalModules, phase1Complete, phase1Total, phase2Complete, phase2Total, modules } = stats;
+  const { lastVisited, completedCount, totalModules, phase1Complete, phase1Total, phase2Complete, phase2Total, phase3Complete, phase3Total, modules } = stats;
   const overallPct = Math.round((completedCount / totalModules) * 100);
 
   // Find the last-visited module label
@@ -57,7 +57,8 @@ export default function ProgressSummary() {
       )}
 
       <PhaseBar label="Phase 1 — AI Essentials" complete={phase1Complete} total={phase1Total} />
-      <PhaseBar label="Phase 2 — Copilot in Practice" complete={phase2Complete} total={phase2Total} />
+      <PhaseBar label="Phase 2 — Claude in Practice" complete={phase2Complete} total={phase2Total} />
+      <PhaseBar label="Phase 3 — Working Confidently with AI" complete={phase3Complete} total={phase3Total} />
 
       <div className={styles.moduleList}>
         {modules.map(m => (

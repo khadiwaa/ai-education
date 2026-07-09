@@ -116,7 +116,7 @@ These are completely different operations:
 | **When it happens** | Once, then periodic updates | Every request |
 
 :::note
-When your team uses Copilot, ChatGPT, or any AI API, you're doing *inference* — running a pre-trained model. You're not training anything. Training is what the model providers do.
+When you use Claude, ChatGPT, or any AI app, you're doing *inference* — running a pre-trained model. You're not training anything. Training is what the model providers do.
 :::
 
 ---
@@ -153,13 +153,13 @@ Most AI tools that expose this feature offer a **reasoning effort** setting:
 
 | Level | What it means | When to use it |
 |-------|--------------|----------------|
-| **Disabled / Off** | No extended thinking. Standard forward pass. | Quick lookups, simple code edits, explaining a concept, formatting tasks |
+| **Disabled / Off** | No extended thinking. Standard forward pass. | Quick lookups, simple edits, explaining a concept, formatting tasks |
 | **Low** | Minimal thinking budget — a few reasoning steps | Light tasks where you want slightly better accuracy without much extra latency |
-| **Medium** | Balanced thinking budget — the default for most models | Day-to-day coding, moderate debugging, writing and editing |
-| **High** | Large thinking budget — the model spends significant time reasoning | Complex bugs, architectural decisions, multi-step logic, math, anything where accuracy really matters |
+| **Medium** | Balanced thinking budget — the default for most models | Day-to-day writing, editing, summarizing, and analysis |
+| **High** | Large thinking budget — the model spends significant time reasoning | Complex analysis, multi-step logic, math, planning, anything where accuracy really matters |
 
 :::tip Rule of thumb
-Use the lowest level that gives you a good answer. High reasoning is slower and costs more tokens. For most engineering tasks, **medium is the right default**. Reach for high when you've tried medium and the answer isn't good enough.
+Use the lowest level that gives you a good answer. High reasoning is slower and costs more tokens. For most everyday tasks, **the default is right**. Reach for more thinking when you've tried the default and the answer isn't good enough.
 :::
 
 ### What "thinking disabled" means in practice
@@ -168,17 +168,11 @@ When thinking is off, the model is doing a single forward pass: tokens in, token
 
 When thinking is enabled, the model is essentially running the agentic loop *internally*: it plans and reconsiders before locking in its response. This is why reasoning models dramatically outperform standard models on logic puzzles, math, and complex multi-step problems — but offer little benefit on simple factual questions.
 
-### In Copilot CLI
+### In the Claude app
 
-Use the `/model` command in your Copilot CLI session to see available models and switch between them. Models like `claude-sonnet-4.6` and `claude-opus-4.8` have reasoning effort parameters that you can set:
+The **model picker** near the message box lets you see the available models and switch between them — lighter, faster models for everyday tasks, and more capable models for complex or high-stakes work. Some models also expose an **extended thinking** toggle that turns deeper reasoning on for hard problems.
 
-```
-/model                          # see available models
-claude-sonnet-4.6               # standard — good for most tasks
-claude-opus-4.8                 # high capability, supports high reasoning effort
-```
-
-Some models surface reasoning effort as a selectable option; others bake it into the model name (e.g., OpenAI's `o4-mini` vs `o3`). The capability exists in both cases — the interface just differs.
+Other AI tools expose the same capability differently — some as a settings toggle, some baked into separate model names. The capability exists either way; only the interface differs. (Hands-on model advice comes in [Phase 2, Module 1](/docs/phase-2/claude-essentials#choosing-a-model).)
 
 :::info The cost of thinking
 Extended thinking tokens count against your token budget just like regular tokens. A high-reasoning response might consume 5–10× more tokens than a standard one. For high-volume tasks, keep this in mind.
@@ -192,11 +186,11 @@ At the LLM level, it's simple: tokens in, tokens out. But the tooling wrapped ar
 
 ```mermaid
 flowchart TD
-    A["🧑 You type a message"] --> B["AI Harness\n(Copilot CLI, ChatGPT, etc.)"]
+    A["🧑 You type a message"] --> B["AI Harness\n(Claude app, ChatGPT, etc.)"]
     B --> C["Context Assembly"]
     C --> C1["Conversation history"]
     C --> C2["Memory & instructions"]
-    C --> C3["Skills & extensions"]
+    C --> C3["Skills"]
     C --> C4["MCP tools & external context"]
     C1 & C2 & C3 & C4 --> D["Assembled prompt\nsent to LLM"]
     D --> E["LLM\n(Claude, GPT-4, etc.)"]
@@ -230,7 +224,7 @@ Each iteration the model:
 2. **Acts** — calls a tool (reads a file, runs a search, executes a command) or produces output
 3. **Observes** — reads the result and updates its understanding
 
-This is why Copilot CLI can say "let me check your package.json first" and then pivot based on what it finds. It's not a single inference — it's many inferences looped together.
+This is why Claude can say "let me look at the spreadsheet you attached first" and then pivot based on what it finds. It's not a single inference — it's many inferences looped together.
 
 ---
 
@@ -244,25 +238,27 @@ flowchart TD
         SYS["System prompt\n(who you are, rules, format)"]
         HIST["Conversation history\n(everything said so far this session)"]
         MEM["Memory\n(persistent facts about you and your project)"]
-        INST["Instructions\n(.github/copilot-instructions.md)"]
-        SKILLS["Active skills & extensions\n(assessment tool, custom workflows)"]
-        MCP["MCP tool results\n(GitHub data, Jira tickets, DB queries)"]
-        ATTACH["Attached files or open tabs"]
+        INST["Instructions\n(preferences, project instructions)"]
+        SKILLS["Active skills\n(assessment skill, custom workflows)"]
+        MCP["Connector / MCP tool results\n(calendar, files, web search)"]
+        ATTACH["Attached files and images"]
     end
     Context --> LLM["LLM sees all of this\nas one big prompt"]
 ```
 
 The LLM has **no memory between sessions** on its own — the harness creates the illusion of memory by injecting stored facts into every prompt. The LLM has **no ability to take actions** on its own — the harness executes tool calls on behalf of the LLM and feeds results back.
 
+The harness also manages the context window's fixed budget: when a long conversation outgrows it, most apps quietly **compact** — they summarize older turns and keep going with the summary. The conversation continues, but early details fade to whatever made it into the summary. (This explains a lot of everyday behavior — see [chat hygiene in Phase 2](/docs/phase-2/claude-essentials#when-to-start-a-new-chat).)
+
 :::info The model doesn't know what time it is
-Unless the harness injects it. The model doesn't know your name, your codebase, or your company's conventions — unless those are in the context window. This is why good context hygiene (memory, instructions, `.github/copilot-instructions.md`) makes AI dramatically more useful.
+Unless the harness injects it. The model doesn't know your name, your company, or how your team likes things formatted — unless those are in the context window. This is why good context hygiene (preferences, project instructions, attached material) makes AI dramatically more useful.
 :::
 
 ---
 
 ## A real-world walkthrough
 
-**Scenario:** You're using Copilot CLI and type: *"This test is failing — can you help me figure out why?"*
+**Scenario:** You attach two spreadsheets to a Claude chat and type: *"Why did our April numbers dip compared to March?"*
 
 Here's what actually happens:
 
@@ -271,21 +267,21 @@ sequenceDiagram
     participant You
     participant Harness as AI Harness
     participant LLM
-    participant Tools as Tools (file system, shell)
+    participant Tools as Tools (file reader, analysis)
 
-    You->>Harness: "This test is failing — why?"
-    Harness->>Harness: Assemble context<br/>(history + memory + instructions)
+    You->>Harness: "Why did April dip vs. March?"
+    Harness->>Harness: Assemble context<br/>(history + preferences + instructions)
     Harness->>LLM: Full context + your message
-    LLM-->>Harness: "I need to see the test file.<br/>Call: read_file('src/auth.test.ts')"
-    Harness->>Tools: read_file('src/auth.test.ts')
-    Tools-->>Harness: [file contents]
-    Harness->>LLM: Previous context + file contents
-    LLM-->>Harness: "I also need the implementation.<br/>Call: read_file('src/auth.ts')"
-    Harness->>Tools: read_file('src/auth.ts')
-    Tools-->>Harness: [file contents]
+    LLM-->>Harness: "I need to look at the April data.<br/>Call: read_file('april.xlsx')"
+    Harness->>Tools: read_file('april.xlsx')
+    Tools-->>Harness: [spreadsheet contents]
+    Harness->>LLM: Previous context + April data
+    LLM-->>Harness: "Now I need March for comparison.<br/>Call: read_file('march.xlsx')"
+    Harness->>Tools: read_file('march.xlsx')
+    Tools-->>Harness: [spreadsheet contents]
     Harness->>LLM: Previous context + both files
-    LLM-->>Harness: "Found it. The mock is returning<br/>undefined for getUser(). Here's the fix..."
-    Harness->>You: Streams response with explanation + fix
+    LLM-->>Harness: "Found it. Two regions reported late<br/>in April — here's the breakdown..."
+    Harness->>You: Streams response with the explanation
 ```
 
 Notice what happened:
@@ -299,22 +295,22 @@ This is the agentic loop in action.
 
 ---
 
-## Where skills and extensions fit in
+## Where skills and connectors fit in
 
-**Skills and extensions** are how the harness gets extended. They register additional **tools** the LLM can call during its agentic loop.
+**Skills and connectors** are how the harness gets extended. They register additional **tools** and knowledge the LLM can use during its agentic loop.
 
 ```mermaid
 flowchart LR
-    HARNESS["AI Harness"] --> CORE["Core tools\n(file read/write, shell)"]
-    HARNESS --> SKILLS["Skills\n(.github/extensions/)"]
-    HARNESS --> MCP["MCP servers\n(GitHub, Jira, DB, APIs)"]
+    HARNESS["AI Harness"] --> CORE["Core tools\n(reading files, web search)"]
+    HARNESS --> SKILLS["Skills\n(installed in the app)"]
+    HARNESS --> MCP["Connectors / MCP servers\n(calendar, drive, email, web)"]
     CORE & SKILLS & MCP --> LLM["Available to the LLM\nduring the agentic loop"]
 ```
 
-The assessment skill in this repo is exactly this: a tool registered with the harness that the LLM can invoke when you ask to be assessed. The LLM decides *when* to call it based on your message — it's not hardcoded to a keyword.
+This course's assessment skill is exactly this: packaged instructions loaded into the harness that the LLM applies when you ask to be assessed. The LLM decides *when* to use it based on your message — it's not hardcoded to a keyword. (You'll install it in [Phase 2, Module 4](/docs/phase-2/connectors-and-skills#installing-a-skill).)
 
-:::tip What this means for you as an engineer
-Every extension, MCP tool, or instruction you add to your Copilot setup is expanding what the LLM can *perceive* and *do*. A well-configured setup isn't just convenience — it changes what's possible.
+:::tip What this means for you
+Every connector, skill, or instruction you add to your setup is expanding what the LLM can *perceive* and *do*. A well-configured setup isn't just convenience — it changes what's possible.
 :::
 
 ---
@@ -349,7 +345,7 @@ Every extension, MCP tool, or instruction you add to your Copilot setup is expan
 | **Agentic Loop** | Plan → Act → Observe → repeat — how AI assistants handle multi-step tasks |
 | **Context Window** | The total amount of text the LLM can see at once (your input + history + injected context) |
 | **Tool Call** | When the LLM instructs the harness to run an action (read a file, call an API, etc.) |
-| **Skill / Extension** | Code that registers additional tools with the harness, expanding what the LLM can do |
+| **Skill** | Packaged instructions and tools added to the harness, expanding what the LLM can do |
 | **MCP** | Model Context Protocol — a standard for connecting external services as LLM tools |
 | **Thinking / Extended Thinking** | Internal reasoning tokens the model generates before its final response — not shown to the user |
 | **Reasoning Effort** | A dial (low / medium / high) controlling how much internal thinking the model does before answering |
@@ -365,7 +361,7 @@ Every extension, MCP tool, or instruction you add to your Copilot setup is expan
 5. **The Transformer and attention** are what make context and relationships work.
 6. **The LLM sees only what the harness puts in front of it.** Memory, instructions, skills, and tool results are all assembled by the harness — the LLM has no independent access to any of it.
 7. **The agentic loop** is how multi-step tasks work: plan, act, observe, repeat. Each loop iteration is a separate LLM inference.
-8. **Context is everything.** Well-configured memory, instructions, and extensions aren't just convenience — they fundamentally change what the LLM can perceive and accomplish.
+8. **Context is everything.** Well-configured memory, instructions, and skills aren't just convenience — they fundamentally change what the LLM can perceive and accomplish.
 9. **Thinking and reasoning effort** are a dial you can control. Higher reasoning effort = more internal thinking steps = better accuracy on complex tasks, but slower and more expensive. Use medium as your default; reach for high on hard problems.
 
 ---

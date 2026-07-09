@@ -382,7 +382,7 @@ Relative to the API-level mechanics in this section:
 - and lets you swap or add capabilities without rewriting each client.
 
 Think of API-level tool calling as the underlying contract and MCP as a standard packaging and distribution layer on top of it.
-For practical setup — running and connecting MCP servers — see [Phase 2 · MCP & Integrations](/docs/phase-2/mcp-and-integrations).
+For practical setup — running and connecting MCP servers — see [Phase 2 · Connectors, MCP & Skills](/docs/phase-2/connectors-and-skills).
 
 ## Planning Strategies
 

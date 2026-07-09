@@ -10,12 +10,17 @@ const STORAGE_KEY = 'ai-education-progress';
 export const CURRICULUM = [
   { id: '/docs/phase-1/how-ai-works',          label: 'How AI Actually Works',        phase: 1 },
   { id: '/docs/phase-1/using-ai-effectively',  label: 'Using AI Effectively',          phase: 1 },
-  { id: '/docs/phase-1/ai-in-your-workflow',   label: 'AI in Your Workflow',            phase: 1 },
-  { id: '/docs/phase-2/copilot-cli-essentials',label: 'Copilot CLI Essentials',         phase: 2 },
-  { id: '/docs/phase-2/copilot-in-vscode',     label: 'Copilot in VS Code',             phase: 2 },
-  { id: '/docs/phase-2/skills-and-customization', label: 'Skills & Customization',     phase: 2 },
-  { id: '/docs/phase-2/mcp-and-integrations',  label: 'MCP & Integrations',             phase: 2 },
-  { id: '/docs/phase-2/real-world-workflows',  label: 'Real-World Workflows',           phase: 2 },
+  { id: '/docs/phase-1/ai-in-your-workflow',   label: 'AI in Your Workday',             phase: 1 },
+  { id: '/docs/phase-2/claude-essentials',     label: 'Getting Started with Claude',    phase: 2 },
+  { id: '/docs/phase-2/projects-and-instructions', label: 'Projects & Instructions',    phase: 2 },
+  { id: '/docs/phase-2/creating-with-artifacts', label: 'Creating with Artifacts',      phase: 2 },
+  { id: '/docs/phase-2/connectors-and-skills', label: 'Connectors, MCP & Skills',       phase: 2 },
+  { id: '/docs/phase-2/everyday-workflows',    label: 'Everyday Workflows',             phase: 2 },
+  { id: '/docs/phase-3/confidentiality-and-privacy', label: 'Confidentiality & Privacy', phase: 3 },
+  { id: '/docs/phase-3/verifying-ai-output',   label: 'Verifying AI Output',            phase: 3 },
+  { id: '/docs/phase-3/choosing-tools-and-plans', label: 'Choosing AI Tools & Plans',   phase: 3 },
+  { id: '/docs/phase-3/bringing-ai-to-your-team', label: 'Bringing AI to Your Team',    phase: 3 },
+  { id: '/docs/phase-3/staying-current',       label: 'Staying Current',                phase: 3 },
 ];
 
 function load() {
@@ -71,6 +76,7 @@ export function getStats() {
   const visited = new Set(data.visited || []);
   const phase1 = CURRICULUM.filter(m => m.phase === 1);
   const phase2 = CURRICULUM.filter(m => m.phase === 2);
+  const phase3 = CURRICULUM.filter(m => m.phase === 3);
   return {
     lastVisited: data.lastVisited || null,
     totalModules: CURRICULUM.length,
@@ -80,6 +86,8 @@ export function getStats() {
     phase1Total: phase1.length,
     phase2Complete: phase2.filter(m => completed.has(m.id)).length,
     phase2Total: phase2.length,
+    phase3Complete: phase3.filter(m => completed.has(m.id)).length,
+    phase3Total: phase3.length,
     completedIds: [...completed],
     modules: CURRICULUM.map(m => ({
       ...m,

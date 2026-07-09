@@ -21,30 +21,101 @@
   max-width: 600px;
 }
 
-.cliBox {
-  display: inline-flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 1rem;
-  padding: 14px 20px;
+.stepCard {
+  margin-bottom: 2rem;
+  padding: 1.25rem 1.5rem;
   background: var(--ifm-code-background);
-  border-radius: 8px;
   border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 10px;
+  scroll-margin-top: 80px;
 }
 
-.cliLabel {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-weight: 600;
-  color: var(--ifm-color-secondary-darkest);
+.stepCard h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
 }
 
-.cliBox code {
+.stepCard p {
   font-size: 0.95rem;
-  background: none;
-  padding: 0;
+}
+
+.stepList {
+  margin: 0 0 0.75rem;
+  padding-left: 1.25rem;
+  font-size: 0.95rem;
+}
+
+.stepList li {
+  margin-bottom: 0.4rem;
+}
+
+.stepNote {
+  font-size: 0.85rem;
+  color: var(--ifm-color-secondary-darkest);
+  margin-bottom: 0;
+}
+
+.importBox {
+  margin: 0.75rem 0;
+}
+
+.importArea {
+  width: 100%;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+  padding: 10px 12px;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 8px;
+  background: var(--ifm-background-color);
   color: var(--ifm-font-color-base);
+  resize: vertical;
+}
+
+.importActions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  align-items: center;
+}
+
+.importButton {
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--ifm-color-primary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.importButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.clearButton {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  color: var(--ifm-color-secondary-darkest);
+  background: none;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.statusOk {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+.statusError {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #c62828;
 }
 
 .grid {

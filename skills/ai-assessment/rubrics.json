@@ -1,0 +1,127 @@
+{
+  "1-1": {
+    "strong": "Covers tokenization, the forward pass, probability distribution over next tokens, sampling / temperature, and autoregressive token-by-token generation.",
+    "solid": "Explains token-by-token generation and that the output is probabilistic, but misses important detail.",
+    "developing": "Stays vague or treats the model like it retrieves stored answers."
+  },
+  "1-2": {
+    "strong": "Explains training as expensive learning from massive data, inference as using the model with frozen weights, and connects that to knowledge cutoffs and models not learning from normal chats.",
+    "solid": "Gets the basic distinction but is fuzzy on the practical implications.",
+    "developing": "Suggests the model keeps learning from conversations or confuses the two phases."
+  },
+  "1-3": {
+    "strong": "Explains parameters as learned numerical values adjusted during training, 70B as 70 billion parameters, and the capability / compute / memory tradeoffs of scale.",
+    "solid": "Understands the scale and that parameters encode learned patterns, but is fuzzy on mechanics or tradeoffs.",
+    "developing": "Treats parameters as configuration settings or cannot explain them."
+  },
+  "1-4": {
+    "strong": "Explains the harness as the orchestration layer that assembles context (memory, history, instructions, skills, connected tools) before calling the model, then handles tool calls, feeds results back, and loops until the task is done. Understands the model itself is stateless and passive — the app creates the illusion of memory and agency.",
+    "solid": "Knows the app does context assembly and tool execution but is fuzzy on the looping nature or doesn't clearly distinguish the model from the app around it.",
+    "developing": "Treats the model as directly accessing files, memory, or the internet on its own without understanding the harness layer."
+  },
+  "2-1": {
+    "strong": "Explains the context window as the model's fixed-size working memory and names practical effects such as content falling outside the window, 'lost in the middle', or the value of starting fresh chats for new topics.",
+    "solid": "Knows it limits how much the model can consider at once, but gives only one practical implication or misses nuance.",
+    "developing": "Gives a vague definition and no useful practical implications."
+  },
+  "2-2": {
+    "strong": "Defines hallucination as plausible but false generation and identifies grounding — giving the model real source material to work from — as the most reliable mitigation, with verification or citations as supporting practices.",
+    "solid": "Knows what hallucination is and mentions grounding, but is fuzzy on why it works.",
+    "developing": "Treats hallucination like a simple bug or assumes a better model alone solves it."
+  },
+  "2-3": {
+    "strong": "Correctly defines zero-shot, few-shot, and chain-of-thought prompting and matches each one to appropriate use cases.",
+    "solid": "Knows the definitions but is fuzzy on when to use each technique.",
+    "developing": "Misses one of the techniques, especially chain-of-thought, or cannot explain when to use them."
+  },
+  "3-1": {
+    "strong": "Describes an agent as model + tools + loop, explains that it can act, observe, and iterate, and distinguishes that from a single prompt-response round trip.",
+    "solid": "Understands the multi-step nature but is fuzzy on tools or the observation loop.",
+    "developing": "Treats an agent as just a smarter chatbot."
+  },
+  "3-2": {
+    "strong": "Explains prompt injection as attacker-crafted instructions that try to override the model, distinguishes indirect injection arriving via documents, emails, or web content the AI reads, and gives a realistic work example.",
+    "solid": "Understands direct injection but is fuzzy on indirect injection, or lacks a concrete example.",
+    "developing": "Confuses prompt injection with other kinds of attacks or cannot explain it."
+  },
+  "3-3": {
+    "strong": "Uses blast radius and reversibility to explain why high-stakes or irreversible actions always need approval, while low-stakes reversible actions can be automated.",
+    "solid": "Gets the principle but misses good examples or the reversibility dimension.",
+    "developing": "Argues for fully autonomous or fully supervised agents without a risk-based framework."
+  },
+  "4-1": {
+    "strong": "Includes the goal, the audience, relevant context, and the desired format or length — and attaches the actual report rather than describing it. Explains why each part steers the answer.",
+    "solid": "Writes a reasonable request with a clear goal but misses one or two ingredients (audience, format, or attaching the real source material).",
+    "developing": "Would send a vague one-line request and expect Claude to guess the context, audience, and format."
+  },
+  "4-2": {
+    "strong": "Explains one-task-per-chat as the default, that long mixed-topic conversations drift and dilute context, and that when a chat outgrows the context window the app compacts — summarizes older turns and continues from the summary, which is why early details get 'forgotten.' Knows a deliberate fresh start with their own summary beats relying on automatic compaction.",
+    "solid": "Knows long chats degrade and new chats help, and has some sense of the context window as the reason, but doesn't know about compaction or can't explain when to make the switch.",
+    "developing": "Keeps everything in one endless chat and treats degrading answers as the model being broken."
+  },
+  "4-3": {
+    "strong": "Names several attachment types (documents, PDFs, spreadsheets, images), explains that attaching grounds Claude in the real content instead of its guesses, and knows the model picker exists — faster models for quick tasks, more capable ones for complex or high-stakes work.",
+    "solid": "Knows you can attach files and it helps, but is fuzzy on why grounding matters or unaware model choice is something you can control.",
+    "developing": "Describes documents to Claude instead of attaching them, or is unaware attachments and model selection exist."
+  },
+  "5-1": {
+    "strong": "Describes a Project as a persistent workspace whose knowledge and instructions apply to every chat inside it, and identifies recurring work — a client, a report cycle, a long-running effort — as the trigger for creating one versus a one-off question in a plain chat.",
+    "solid": "Knows Projects group related chats and hold shared context, but is fuzzy on what carries across chats or when one is worth creating.",
+    "developing": "Cannot distinguish a Project from a regular chat or sees no reason to use one."
+  },
+  "5-2": {
+    "strong": "Puts stable reference material (background docs, glossaries, templates, prior examples) in project knowledge and standing guidance (role, tone, format rules) in project instructions, and explains that every chat in the Project starts already informed by them — noting the material must be kept current.",
+    "solid": "Knows you can upload files and set instructions, but is vague on what belongs there or how it changes answers.",
+    "developing": "Re-explains or re-pastes the same background in every chat instead of using project knowledge."
+  },
+  "5-3": {
+    "strong": "Explains preferences as account-wide defaults (how you like to be answered generally) versus project instructions as context-specific guidance, gives a sensible example of each, and understands they layer — with per-chat requests on top.",
+    "solid": "Knows both exist but blurs which applies where, or gives examples that belong at the wrong layer.",
+    "developing": "Unaware instructions can be set at different levels, or puts everything in one place."
+  },
+  "6-1": {
+    "strong": "Describes an artifact as a separate working document Claude creates alongside the chat — editable, versioned, and iterable — and explains why that beats content buried in replies: you can refine it in place, compare versions, and export it.",
+    "solid": "Knows Claude produces documents in a side panel but is fuzzy on iteration, versions, or why it matters.",
+    "developing": "Copies text out of chat replies by hand and is unaware artifacts exist."
+  },
+  "6-2": {
+    "strong": "Keeps the draft and asks for targeted changes — naming the section, describing what's wrong, giving an example of the desired tone — rather than regenerating from scratch, and iterates in small reviewable steps while supplying missing facts themselves.",
+    "solid": "Asks for revisions but vaguely ('make it better'), or regenerates whole drafts and loses the good 70%.",
+    "developing": "Either accepts the mediocre draft or starts over repeatedly, with no revision strategy."
+  },
+  "6-3": {
+    "strong": "Knows Claude can produce and export real files (documents, spreadsheets, slides) and how to download or copy them out, and is clear that verifying facts, numbers, and tone before sharing is always the human's responsibility.",
+    "solid": "Gets content out of Claude but is fuzzy on format options, or mentions review only in passing.",
+    "developing": "Ships AI output without review, or doesn't know how to get work out of the chat into a usable file."
+  },
+  "7-1": {
+    "strong": "Explains a connector as a bridge that lets Claude securely reach live tools and data (calendar, files, email), names MCP as the open standard underneath, and articulates the shift: from answering out of training knowledge to acting on your actual, current information.",
+    "solid": "Knows connectors hook Claude to other apps, but is fuzzy on the standard or on what concretely changes versus a plain chat.",
+    "developing": "Cannot explain what connectors are or assumes Claude already has access to personal data by default."
+  },
+  "7-2": {
+    "strong": "Would check what data the connector can read and what actions it can take, prefer read-only/least access to start, consider who built it and whether the source is trustworthy, and confirm their organization's policy allows connecting that data.",
+    "solid": "Shows some caution (mentions permissions or trust) but misses key checks like least privilege or organizational policy.",
+    "developing": "Would enable anything convenient without considering what it can access or do."
+  },
+  "7-3": {
+    "strong": "Describes a skill as packaged expertise — instructions and supporting files Claude loads when relevant — installed once (e.g., uploading a zip in Settings → Capabilities) and triggered naturally in chat; identifies repeated, multi-step, consistency-sensitive workflows as skill material versus one-off prompts.",
+    "solid": "Knows skills exist and add capabilities but is fuzzy on installation or when a skill beats a prompt.",
+    "developing": "Cannot distinguish a skill from a regular prompt or doesn't know skills can be installed."
+  },
+  "8-1": {
+    "strong": "Attaches the actual document, gives Claude the context (purpose, audience, what could go wrong), asks risk-oriented questions — ambiguities, inconsistencies, missing pieces, tone problems — and treats Claude's findings as input to their own final judgment, never outsourcing the decision.",
+    "solid": "Uses Claude to proofread or summarize but asks generic questions, or is unclear that final responsibility stays with them.",
+    "developing": "Either doesn't involve AI in review or accepts its verdict without applying their own judgment."
+  },
+  "8-2": {
+    "strong": "Grounds the work — uses web search or attached sources when facts matter, asks for sources or citations, and independently verifies anything they'll rely on or repeat, especially names, numbers, dates, and quotes. Knows the difference between a quick search and an autonomous research-mode run (deep, cited, uses more budget, needs a thorough brief) — and that research-mode citations still get verified.",
+    "solid": "Asks Claude to research and may request sources, but has no verification habit for high-stakes claims or doesn't distinguish quick search from deeper research runs.",
+    "developing": "Treats fluent AI answers as verified fact and passes them along unchecked."
+  },
+  "8-3": {
+    "strong": "Attaches the actual spreadsheet, states the question precisely (including what the columns mean and any caveats in the data), asks Claude to show its reasoning or the steps behind the numbers, and spot-checks a few results against the raw data before acting.",
+    "solid": "Gets Claude to analyze the file and asks a clear question, but skips explaining the data or checking the output.",
+    "developing": "Pastes numbers with no context and acts on whatever comes back without any sanity check."
+  }
+}

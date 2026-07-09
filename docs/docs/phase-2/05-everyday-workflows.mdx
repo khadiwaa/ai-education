@@ -1,0 +1,283 @@
+---
+id: everyday-workflows
+sidebar_position: 5
+title: "Module 5: Everyday Workflows"
+---
+
+import AssessmentResults from '@site/src/components/AssessmentResults';
+
+# Module 5: Everyday Workflows
+
+*Phase 2 · ~60–75 minutes · Practical*
+
+You have the toolkit. This module turns it into **repeatable patterns** for the work
+that fills an actual week: reviewing documents, researching, analyzing data, writing,
+and preparing for meetings.
+
+Each pattern has the same skeleton — worth memorizing because it *is* the course:
+
+> **Give the real material → say what you need and for whom → iterate → verify what
+> matters → the judgment call stays yours.**
+
+---
+
+## Reviewing a document
+
+The pattern for anything important that's about to go out the door — a contract, a
+proposal, a policy, a sensitive email:
+
+1. **Attach the actual document.** ([Module 1](/docs/phase-2/claude-essentials#attaching-files-and-images) —
+   never a paraphrase.)
+2. **Give the stakes and the lens:**
+
+   ```text
+   Attached is a proposal we're sending to a prospective client Friday.
+   Review it as a skeptical reader on their side. I care most about:
+   ambiguous commitments, inconsistencies (numbers, dates, names),
+   anything missing a reader would expect, and tone problems.
+   List issues by section, most serious first.
+   ```
+
+3. **Ask risk-oriented questions, not "is this good?"** — "What could be
+   misread?", "Which claims lack support?", "Where do the numbers disagree?" A
+   generic request gets a generic pat on the back; a named lens gets findings.
+4. **Triage the findings yourself.** Claude will over-flag. You decide which issues
+   are real — accepting every suggestion is *not* review, it's outsourcing judgment.
+
+That last point is the heart of it: **Claude reviews the document; you review Claude.**
+The sign-off — "this goes out under my name" — was never delegated.
+
+---
+
+## Research and summarization
+
+Two research modes, and confusing them is how people get burned:
+
+- **Explaining** — "Help me understand how X works." Low risk: you're building
+  intuition, and errors surface as confusion.
+- **Fact-finding** — "What are the current rules / prices / players?" Higher risk:
+  the output looks identical whether it's right or
+  [hallucinated](/docs/phase-1/using-ai-effectively#hallucination), and you're about
+  to repeat it to someone.
+
+The fact-finding pattern:
+
+1. **Push the work onto real sources.** Have Claude search the web
+   ([Module 4](/docs/phase-2/connectors-and-skills#what-connectors-do)) or attach the
+   authoritative documents — ground the answer, don't test Claude's memory.
+2. **Ask for sources inline** — "cite a source for each claim" — so every claim
+   arrives with a way to check it.
+3. **Make uncertainty visible:** "Separate what your sources establish from what
+   you're inferring. Say 'I couldn't verify this' where that's true." Claude is
+   good at this *when asked*.
+4. **Verify what you'll rely on.** Names, numbers, dates, quotes, and legal or
+   safety claims get checked against the actual source — click through; don't trust
+   that a citation says what it's claimed to say.
+
+### Quick search vs. deep research
+
+For bigger questions, Claude (like most AI apps now) offers a **research mode**: instead
+of one search, it works autonomously for several minutes — running dozens of searches,
+reading sources, and assembling a long, cited report. It's the
+[agentic loop](/docs/phase-1/how-ai-works#the-agentic-loop) at full stretch, and it
+changes how you should use it:
+
+- **Use it for questions that deserve an afternoon**, not a glance: "compare how our
+  three main competitors price and package their services," "what should we know
+  before expanding into [market]?" For a quick fact, regular search is faster and
+  cheaper (research runs use much more of your usage budget).
+- **Brief it like you'd brief a person doing a day of research** — the
+  [first-message ingredients](/docs/phase-2/claude-essentials#writing-a-good-first-message)
+  matter *more* here, because you can't steer mid-run. Say what decision the research
+  feeds, what to include and exclude, and what a useful deliverable looks like.
+- **The output is a strong first pass, not a finished analysis.** It arrives with
+  citations — which get exactly the same click-through treatment as everything else.
+  A 20-page cited report *feels* authoritative; that feeling is not verification.
+
+For summarization, one upgrade: tell Claude **what the summary is for**. "Summarize
+for someone deciding whether to attend" produces a different — and more useful —
+document than "summarize this."
+
+---
+
+## Analyzing files and data
+
+Claude handles spreadsheets and data files well — including doing real calculations,
+not just talking about them. The pattern:
+
+1. **Attach the actual file** — the spreadsheet itself, not a screenshot of it.
+2. **Explain the data like you'd brief a temp:** what the rows are, what ambiguous
+   columns mean, known quirks ("region codes changed in March; Q1 uses the old ones").
+   Claude sees the values, not the tribal knowledge behind them.
+3. **State the question precisely.** "Which customers' monthly totals declined for
+   three consecutive months?" beats "any insights?" — vague questions produce
+   plausible-sounding generic answers.
+4. **Ask for the working, not just the answer:** "Show how you got this — which
+   columns, what steps, what you excluded." For real computation, Claude can use its
+   analysis tool to run actual code rather than estimating — for anything beyond
+   trivial arithmetic, ask it to compute, not eyeball.
+5. **Spot-check before acting.** Trace two or three results back to the raw rows.
+   If they hold, trust rises; if not, you just saved yourself a bad decision.
+
+:::warning The believability trap
+A table of AI-produced numbers looks exactly as authoritative when it's subtly wrong.
+Nothing derived from data goes into a decision or a deck until *some* of it has been
+traced back to the source.
+:::
+
+---
+
+## Writing and editing
+
+Beyond the drafting loop from
+[Module 3](/docs/phase-2/creating-with-artifacts#iterating-on-a-draft), the patterns
+that earn daily use:
+
+- **The hard email.** Declining, escalating, delivering bad news: give Claude the
+  situation, the relationship, and the outcome you want — ask for two versions
+  ("one warmer, one firmer") and blend. Cheaper than staring at a blank draft for
+  40 minutes.
+- **Tone translation.** "Rewrite this for the board / for the whole team / for a
+  customer" — same facts, recalibrated register.
+- **Editor mode, not writer mode.** For text you've written: "Tighten this without
+  changing meaning or voice. List what you changed." The change-list keeps you in
+  control of your own voice.
+- **Unblocking.** Can't start? "Ask me five questions about what I'm trying to say,
+  then draft from my answers." Talking beats staring.
+
+---
+
+## Meetings and planning
+
+- **Prep:** attach the agenda and materials → "What should I read carefully vs.
+  skim? What three questions should I be ready to answer? What's likely to be
+  contentious?"
+- **After:** paste or attach your rough notes (mind your organization's rules on
+  recordings) → "Turn these into: decisions made, action items with owners, open
+  questions." From [Module 2](/docs/phase-2/projects-and-instructions#project-instructions):
+  if you do this weekly, it's a Project with the format in instructions — or, per
+  [Module 4](/docs/phase-2/connectors-and-skills#what-skills-are), a skill.
+- **Thinking partner:** before a decision — "Here's the situation and the options
+  I see. Argue against my preferred option. What am I not considering?" Claude is
+  excellent at generating the disagreement your team might be too polite to voice.
+  The decision, as always, is yours.
+
+---
+
+## Making it stick: moving your work over, little by little
+
+A quiet truth about everything above: **nobody adopts AI by redesigning their job.**
+What actually happens — for everyone who ends up using it well — is that ordinary
+work migrates over one task at a time, through trial and error, over months. That's
+not a failure to do it properly; that *is* the method. So do it deliberately:
+
+**1. Install the trigger question.** The hard part isn't prompting — it's
+*remembering AI exists* while you're heads-down in the old way of doing something.
+Build one reflex: whenever a task makes you sigh — the blank page, the third
+reformatting, the report you're dreading — ask *"could Claude do a first pass of
+this?"* The sigh is the trigger. You'll forget constantly at first; that's normal.
+(A sticky note on your monitor with just "first pass?" is not a joke — it works.)
+
+**2. Run cheap experiments on real work.** When the trigger fires, try it — on the
+actual task, not a toy version. You already know the odds: some tries will save you
+an hour, some will produce something you throw away. Both outcomes are the system
+working. The experiment cost you two minutes; the win pays for twenty flops.
+
+**3. When a try disappoints, diagnose before you conclude.** A mediocre result on the
+first attempt is almost never "AI can't do this" — it's usually a one-line briefing
+problem. Before writing the task off, check the
+[usual suspects](/docs/phase-2/claude-essentials#writing-a-good-first-message): did it
+have the goal, the real material (attached, not described), the audience, the format?
+One retry with a better brief changes most verdicts.
+
+**4. Keep score.** A running note — two columns, *worked* and *didn't* — turns
+scattered experiments into a personal playbook. "Meeting notes → action items:
+great. First-draft client emails: great. Final tone on sensitive emails: mine."
+After a month you'll have something nobody can give you: a map of where AI helps
+*your* specific job.
+
+**5. Ratchet the winners.** When something works twice, stop treating it as an
+experiment: give it a home. That's the progression this whole phase has been
+building —
+
+> in-the-moment try → repeat win → [Project](/docs/phase-2/projects-and-instructions#what-is-a-project)
+> with the context baked in → eventually a [skill](/docs/phase-2/connectors-and-skills#what-skills-are)
+> your whole team shares
+
+Each step up the ratchet makes the win automatic instead of remembered.
+
+**6. Expect the migration to be uneven — and let it be.** After six months, a typical
+knowledge worker has moved maybe a third of their recurring work into some AI-assisted
+form, kept the judgment-heavy core exactly as it was, and stopped thinking of any of
+it as "using AI" — it's just how the report gets written now. That's what success
+looks like. Not a transformation; a ratchet.
+
+:::tip One deliberate rep per week
+If the trigger habit is slow to form, schedule it: fifteen minutes, once a week, take
+one task from your *didn't-try-yet* pile and run the experiment. Twelve weeks of that
+beats any training course — including this one.
+:::
+
+---
+
+## A day with Claude
+
+What this looks like assembled — Tuesday, operations manager:
+
+- **8:45** — Project *Weekly Update*: paste raw notes, get the draft in house format,
+  two revision passes, human check on numbers, send.
+- **10:00** — Vendor proposal review (the [document pattern](#reviewing-a-document)):
+  attach, skeptical-reader lens, 11 findings, 4 real. Fix those.
+- **11:30** — Prep for the pricing meeting: attach deck → three questions to be ready
+  for; ask for the argument *against* the proposal; walk in prepared.
+- **2:00** — Analyze the returns spreadsheet (the [data pattern](#analyzing-files-and-data)):
+  brief the columns, precise question, ask for the working, spot-check three rows.
+  One finding goes in the update — verified first.
+- **4:30** — Two hard emails via two-versions-and-blend. Final reads: human.
+
+Nothing exotic — the same five habits, on rotation, saving an hour here and thirty
+minutes there. And note what this day really is: the *end state* of the ratchet above.
+Six months ago, each of these was a sighed-at task and a first experiment.
+
+---
+
+## Vocabulary from this module
+
+| Term | Meaning |
+|---|---|
+| **Risk-oriented review** | Asking for specific failure modes (ambiguity, inconsistency, gaps) instead of "is this good?" |
+| **Fact-finding vs. explaining** | Research modes with different risk: verify facts; explanations self-correct |
+| **Spot-check** | Tracing a sample of AI-produced results back to the raw source before acting |
+| **Editor mode** | Having Claude tighten your text with a change-list, preserving your voice |
+| **Research mode** | An autonomous multi-search run producing a long cited report — for questions that deserve an afternoon |
+| **The ratchet** | Promoting repeat wins: in-the-moment try → recurring habit → Project → shared skill |
+
+---
+
+## Key Takeaways
+
+1. **One skeleton, every workflow:** real material in → clear ask → iterate →
+   verify what matters → judgment stays human.
+2. **Reviews need a lens.** Stakes plus named failure modes turn a pat on the back
+   into findings — then you triage them.
+3. **Research splits by risk.** Explanations are cheap to get wrong; facts aren't —
+   ground in sources, get citations, click through.
+4. **Data work is brief-compute-check.** Explain the data, ask precisely, demand the
+   working, spot-check before anything reaches a decision.
+5. **Adoption is a ratchet, not a leap.** Trigger question → cheap experiment on real
+   work → diagnose flops before concluding → keep score → promote winners to Projects
+   and skills. One task at a time is the method, not a compromise.
+
+---
+
+## Next Steps
+
+Phase 2 complete — you can *use* Claude. Phase 3 is about using it *wisely*:
+confidentiality, verification, choosing tools, and bringing your team along. Start
+with [Confidentiality, Privacy & Sensitive Data](/docs/phase-3/confidentiality-and-privacy).
+
+---
+
+## Phase 2 · Module 5 Self-Assessment
+
+<AssessmentResults moduleNumber={8} phase={2} moduleInPhase={5} />

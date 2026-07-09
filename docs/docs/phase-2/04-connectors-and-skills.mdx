@@ -1,0 +1,184 @@
+---
+id: connectors-and-skills
+sidebar_position: 4
+title: "Module 4: Connectors, MCP & Skills"
+---
+
+import AssessmentResults from '@site/src/components/AssessmentResults';
+
+# Module 4: Connectors, MCP & Skills
+
+*Phase 2 · ~45–60 minutes · Hands-on*
+
+Out of the box, Claude knows what it learned in training plus whatever you put in the
+chat. This module is about extending that in two directions:
+
+- **Connectors** give Claude *reach* — access to live tools and data: your calendar,
+  your documents, the web.
+- **Skills** give Claude *expertise* — packaged instructions for doing a specific job
+  your way, every time.
+
+You'll finish this module by installing a real skill: this course's own self-assessment.
+
+---
+
+## What connectors do
+
+A **connector** is a bridge between Claude and another tool you use — Google Drive,
+your calendar, email, project trackers, and hundreds of others. Under the hood,
+connectors are built on the **Model Context Protocol (MCP)** — an open standard
+(created by Anthropic, adopted across the industry) for how AI apps talk to tools.
+Think of MCP as the USB standard, and each connector as one cable.
+
+Why you care — it changes the kind of question you can ask:
+
+| Without connectors | With connectors |
+|---|---|
+| "Here's my schedule, pasted in — when am I free?" | "When am I free for a 90-minute meeting with the design team this week?" |
+| Download report → attach → ask | "Pull the latest ops report from Drive and summarize what changed since last month" |
+| "You said this stat was from 2024 — anything newer?" | Claude searches the web and cites current sources |
+
+The shift, in Phase 1 terms: connectors are
+[tools in the agentic loop](/docs/phase-1/how-ai-works#what-happens-when-you-send-a-prompt).
+Claude stops being limited to its training data and your attachments, and starts
+working with your *actual, current* information.
+
+**Web search** is the connector-like capability you'll use most. When a question
+involves anything after Claude's knowledge cutoff — prices, people, news, laws — make
+sure it searches rather than recalls, and ask for sources. (More on verification in
+[Phase 3](/docs/phase-3/verifying-ai-output).)
+
+You'll find connectors in **Settings → Connectors**: browse the directory, connect
+the tools you use, and each one typically asks you to sign in to that service and
+approve what Claude may access.
+
+---
+
+## Before you enable a connector
+
+Connectors are the moment Claude goes from "app I type into" to "app with access to my
+stuff." That deserves 60 seconds of thought per connector — four questions:
+
+1. **What can it read?** Your whole Drive or one folder? All email or one inbox?
+   Prefer the narrowest access that does the job (the classic security principle of
+   **least privilege**).
+2. **What can it *do*?** Reading your calendar is one thing; sending email or editing
+   documents is another. Be deliberately slower to grant *act* permissions than
+   *read* permissions — remember
+   [blast radius from Phase 1](/docs/phase-1/ai-in-your-workflow#human-in-the-loop).
+3. **Who built it?** Official connectors from companies you already trust are one
+   thing; a third-party connector from an unknown developer deserves the same
+   skepticism as an unknown app asking for your files.
+4. **Does your organization allow it?** Connecting work data to any tool is a policy
+   question, not just a personal one. If there's an IT or security team, this is
+   their lane — ask first.
+
+:::warning Connected content is untrusted content
+One more Phase 1 callback: once Claude reads external content — web pages, shared
+documents, emails — it can encounter
+[indirect prompt injection](/docs/phase-1/ai-in-your-workflow#prompt-injection-mandatory-security-knowledge):
+text crafted to manipulate the AI reading it. This is a real reason to keep *act*
+permissions narrow and approve consequential actions yourself, not a reason to avoid
+connectors entirely.
+:::
+
+A sensible rollout for yourself, or a team: start with **one or two read-only
+connectors that remove your most annoying copy-paste** (usually files + calendar), live
+with them for a couple of weeks, then expand.
+
+---
+
+## What skills are
+
+A **skill** is packaged know-how: a small bundle of instructions (and sometimes
+reference files) that teaches Claude to do a specific job a specific way. Install one
+once, and Claude automatically applies it whenever it's relevant — you just ask
+normally.
+
+The difference from a good prompt: a prompt is something *you* remember to write; a
+skill is expertise that's *always loaded*. That makes skills the right tool when:
+
+- the job **recurs** — weekly reports, intake checklists, standard reviews
+- the job has **rules worth enforcing every time** — formats, rubrics, checklists
+- **several people** should get the same quality — install the same skill, get the
+  same process
+
+Anthropic ships some skills built-in (e.g., producing polished Word/Excel/PowerPoint
+files), and anyone can create one — including the team behind this course.
+
+---
+
+## Installing a skill
+
+Time to do it for real — install this course's assessment skill:
+
+1. **Download it:** [ai-assessment-skill.zip](/downloads/ai-assessment-skill.zip)
+   (a small zip file — don't unzip it).
+2. In the Claude app, open **Settings → Capabilities → Skills** and upload the zip.
+   (Menus evolve; if you don't see it, search Settings for "skills." Skills require a
+   paid plan.)
+3. Open any chat and say:
+
+```text
+Assess me on phase 1 module 1
+```
+
+Claude will interview you — a few open-ended questions, one at a time — score your
+answers against the course rubric, build you a personal review plan with links back
+into this site, and end with a results block you paste into the
+<a href="/assessments#import">Assessments page</a> to track your progress.
+
+Notice what just happened, because it's the whole idea of skills in miniature: you
+didn't paste a rubric, explain a scoring system, or describe a report format. You said
+four words, and Claude knew the entire process. **That's what packaged expertise
+feels like** — and anything your team does repeatedly could work the same way.
+
+---
+
+## Try it now
+
+1. **Connect one connector** that kills your most frequent copy-paste (check the
+   four questions first). Use it for something real.
+2. **Ask a current-events question** and confirm Claude searches and cites sources.
+3. **Install the assessment skill** (above) and take the Module 1 assessment — you've
+   read the material; see what stuck.
+
+---
+
+## Vocabulary from this module
+
+| Term | Meaning |
+|---|---|
+| **Connector** | A bridge giving Claude access to another tool or data source (calendar, files, web) |
+| **MCP** | Model Context Protocol — the open standard connectors are built on |
+| **Least privilege** | Granting the narrowest access that gets the job done |
+| **Skill** | An installable bundle of instructions that teaches Claude a specific job |
+
+---
+
+## Key Takeaways
+
+1. **Connectors change the question you can ask** — from "here's my data, pasted" to
+   "go look at my actual data."
+2. **MCP is the standard underneath** — one open protocol, many connectors, and the
+   same idea works across AI tools.
+3. **Four checks before enabling:** what it reads, what it can do, who built it,
+   what your organization's policy says. Read before act; narrow before broad.
+4. **Skills are always-loaded expertise.** Repeated, rule-bound, multi-person jobs
+   belong in a skill, not in everyone's memory of the right prompt.
+5. **You've installed one.** The assessment skill is your working example of how
+   packaged expertise feels in practice.
+
+---
+
+## Next Steps
+
+You have the full toolkit: briefing, Projects, artifacts, connectors, skills. The
+final module puts it together into repeatable patterns for a real work week —
+[Module 5: Everyday Workflows](/docs/phase-2/everyday-workflows).
+
+---
+
+## Phase 2 · Module 4 Self-Assessment
+
+<AssessmentResults moduleNumber={7} phase={2} moduleInPhase={4} />

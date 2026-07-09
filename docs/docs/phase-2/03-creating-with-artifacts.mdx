@@ -1,0 +1,182 @@
+---
+id: creating-with-artifacts
+sidebar_position: 3
+title: "Module 3: Creating Documents & Artifacts"
+---
+
+import AssessmentResults from '@site/src/components/AssessmentResults';
+
+# Module 3: Creating Documents & Artifacts
+
+*Phase 2 · ~45–60 minutes · Hands-on*
+
+So far, Claude's output has lived inside chat replies. That's fine for answers — but
+most knowledge work produces *things*: documents, plans, spreadsheets, slides, web
+pages. This module is about getting real, finished work products out of Claude.
+
+---
+
+## What is an artifact?
+
+When you ask Claude to create something substantial — a document, a table, a
+checklist, even a small interactive page — it creates an **artifact**: a separate
+working document that opens beside the conversation instead of scrolling by inside it.
+
+Why that's more than cosmetic:
+
+- **It's a draft, not a reply.** The artifact updates in place as you ask for changes —
+  you always see the current version, not version fragments scattered through a chat.
+- **It's versioned.** You can flip back to earlier versions when a revision goes the
+  wrong way. Nothing is lost by iterating.
+- **It's exportable.** Copy it, download it, or publish it when it's done — more in
+  [Exporting your work](#exporting-your-work).
+
+The chat becomes the *conversation about the work*, and the artifact is *the work*.
+That separation is what makes real revision cycles possible.
+
+:::tip Not just prose
+Artifacts can be documents, tables, checklists, diagrams, and even small interactive
+things — a working calculator, a sortable table, a simple quiz. If you can describe
+it, it's worth asking. You don't need to know how it's built.
+:::
+
+---
+
+## Getting a good first draft
+
+Everything from
+[Module 1's first-message ingredients](/docs/phase-2/claude-essentials#writing-a-good-first-message)
+applies double when the output is a document. Two additions:
+
+**1. Show an example.** The single biggest upgrade for generated documents:
+
+```text
+Draft this quarter's board update. I'm attaching last quarter's as an
+example — match its structure, headings, and level of detail exactly.
+The new numbers are in the attached spreadsheet.
+```
+
+A good past example communicates format, tone, and depth better than any description.
+(This is [few-shot prompting](/docs/phase-1/using-ai-effectively#prompt-engineering-techniques)
+from Phase 1, applied to documents.)
+
+**2. Supply the facts.** Claude drafts structure and prose brilliantly; it does not
+know your numbers, names, or dates. Give them explicitly — attached or pasted — or
+you'll get placeholder-quality content in confident packaging. The draft can only be
+as factual as what you fed it.
+
+---
+
+## Iterating on a draft
+
+The first draft is the starting point, not the deliverable. The skill of this module
+is the revision loop:
+
+> **Keep the draft. Ask for targeted changes. Review each pass.**
+
+The most common mistake is the opposite: the draft is 70% right, so you throw it away
+and re-ask from scratch — and the new draft is a *different* 70%. Iterate instead:
+
+- **Name the section.** "In the risks section…" beats "the part about risks, I think
+  near the end."
+- **Describe the problem, not just the wish.** "The opening buries the
+  recommendation — lead with it, then justify" gives Claude something to aim at.
+  "Make it better" doesn't.
+- **Steer with examples.** "Rewrite the second paragraph in the tone of the intro,
+  which is right."
+- **One or two changes per message.** Small passes keep each version reviewable —
+  you can see what changed and whether it worked.
+- **You supply missing substance.** If the draft is thin because a fact is missing,
+  the fix is giving the fact, not asking for another rewrite.
+
+And when a revision makes things worse: say so and go back — versions exist for
+exactly this — or edit your request (Module 1's edit-and-regenerate works on
+artifacts too).
+
+:::tip Ask for a critique before you polish
+A useful pass before final: "Read this as a skeptical [board member / client /
+new employee]. What's unclear, unsupported, or missing?" Claude critiques its own
+drafts surprisingly well — then you decide which critiques matter.
+:::
+
+---
+
+## Exporting your work
+
+A finished artifact needs to leave Claude and become a real file:
+
+- **Copy or download** an artifact directly from its panel.
+- **Ask for the file format you actually need.** Claude can create real files —
+  Word documents, spreadsheets, PowerPoint decks, PDFs — ready to download:
+  *"Turn this into a formatted Word document with a title page"* or *"Build this
+  as a spreadsheet with the summary on the first tab."*
+- **Publish (carefully).** Artifacts can be shared via a link. Treat that as
+  publishing: check your organization's rules before sharing anything work-related.
+
+And the part that doesn't get automated:
+
+> **The final review before anything leaves your hands is yours. Always.**
+
+Before you send, check the things AI plausibly gets wrong: every number against its
+source, every name and date, any claim you couldn't personally defend if asked. You're
+the author; Claude is the drafting help. Whatever goes out goes out under your name —
+[Phase 3 has a full verification workflow](/docs/phase-3/verifying-ai-output) for
+high-stakes documents.
+
+---
+
+## Try it now
+
+Produce one real deliverable end-to-end (~25 minutes):
+
+1. Pick a document you actually owe someone this week.
+2. Brief Claude with goal + audience + facts (attach them) + a past example if you
+   have one. Let it create the artifact.
+3. Do **at least three targeted revision passes** — name sections, describe problems.
+   Notice you're editing, not re-rolling dice.
+4. Run the skeptical-reader critique. Apply the critiques you agree with.
+5. Export to the format you need, then do your human pass: numbers, names, dates,
+   claims.
+
+You've just done the full loop: brief → draft → iterate → critique → export → verify.
+That's the workflow for every document from now on.
+
+---
+
+## Vocabulary from this module
+
+| Term | Meaning |
+|---|---|
+| **Artifact** | A working document Claude creates beside the chat — editable, versioned, exportable |
+| **Targeted revision** | Asking for a specific change to a specific part, rather than regenerating |
+| **Versions** | An artifact's saved states — you can go back when a revision misfires |
+| **Publishing** | Sharing an artifact by link — treat it like posting, not like saving |
+
+---
+
+## Key Takeaways
+
+1. **Artifacts separate the work from the chat about the work.** That's what makes
+   real revision possible.
+2. **Great drafts come from great briefs** — and nothing upgrades a brief like a good
+   past example plus the actual facts.
+3. **Iterate, don't regenerate.** Keep the 70% and fix the 30% with targeted,
+   reviewable passes.
+4. **Export in the format the work needs** — real documents, spreadsheets, and decks,
+   not copy-pasted chat text.
+5. **The final check is human.** Numbers, names, dates, and claims get verified by
+   you before anything ships.
+
+---
+
+## Next Steps
+
+Claude can draft anything you can brief. Next: letting it reach beyond the chat — your
+files, your calendar, live information — in
+[Module 4: Connectors, MCP & Skills](/docs/phase-2/connectors-and-skills).
+
+---
+
+## Phase 2 · Module 3 Self-Assessment
+
+<AssessmentResults moduleNumber={6} phase={2} moduleInPhase={3} />

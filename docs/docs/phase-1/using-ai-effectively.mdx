@@ -18,15 +18,21 @@ Every model has a **context window** — the total amount of text it can "see" a
 
 The context window includes everything: your message, system instructions, conversation history, and any documents you've provided.
 
-| Model | Context window | ~Words |
-|-------|---------------|--------|
-| GPT-4o | 128K tokens | ~96K words |
-| Claude Sonnet 4.6 | 200K tokens | ~150K words |
-| Gemini 2.5 Pro | 1M tokens | ~750K words |
-| Smaller / local models | 4K–128K tokens | — |
+Exact sizes change with every model generation (check your provider's current docs),
+but the practical intuition is stable — here's roughly what fits in a typical frontier
+model's window:
+
+| Material | Rough size | Fits? |
+|----------|-----------|-------|
+| A long email thread | a few thousand tokens | Easily |
+| A 50-page report | ~25–35K tokens | Easily |
+| A 300-page contract or book | ~150–200K tokens | Usually — but you're filling most of the window |
+| Several books, a whole document archive | 500K+ tokens | No — this is what retrieval (RAG, below) is for |
 
 :::note Models change fast
-These figures were current as of mid-2025 — context windows and model generations update frequently. Check the provider's current docs for the latest numbers. The relative ordering (local < GPT-4o/Sonnet < Gemini) is the stable mental model; the exact numbers shift.
+Window sizes grow with each generation — some models now advertise a million-plus
+tokens. The stable rule: a document or two fits; a library doesn't, and gets
+*searched* instead of *read* (see RAG below).
 :::
 
 **What this means in practice:**
@@ -72,7 +78,7 @@ Every interaction with an LLM has these components:
 └──────────────────────────────────────────────┘
 ```
 
-The **system prompt** is how tools like Copilot and ChatGPT shape the model's behavior before your message arrives. This is why the same underlying model behaves differently in different products.
+The **system prompt** is how tools like Claude and ChatGPT shape the model's behavior before your message arrives. This is why the same underlying model behaves differently in different products.
 
 ---
 
@@ -114,17 +120,16 @@ For complex reasoning, ask the model to think step by step:
     recommendation."
 ```
 
-When the model writes out its reasoning, it's more likely to catch errors in its own logic. Use this for architecture decisions, debugging, and any task where you want the reasoning visible — not for simple lookups or boilerplate.
+When the model writes out its reasoning, it's more likely to catch errors in its own logic. Use this for planning, analysis, and any task where you want the reasoning visible — not for simple lookups or formatting.
 
-### Temperature
+### A note on randomness
 
-Temperature controls how random the model's output is:
-
-| Temperature | Behavior | Use when |
-|-------------|----------|----------|
-| 0.0 | Always picks the highest-probability token | Code generation, data extraction, factual Q&A |
-| 0.7 | Balanced | General assistance, summaries |
-| 1.0+ | More random, sometimes surprising | Brainstorming, creative writing |
+The same request can produce different answers each time — that's the sampling from
+[Module 1](./how-ai-works#the-core-idea-next-token-prediction) at work, and it's why
+*retrying* is a legitimate technique when an answer is almost-right. Under the hood
+this randomness is a tunable setting called **temperature**, but consumer apps don't
+expose it — if you're curious about the dial itself, it's covered in the
+[appendix](/docs/appendix/t2-advanced-prompting).
 
 ---
 
@@ -182,14 +187,14 @@ RAG is the dominant pattern for grounding AI in real, current, or private knowle
 
 ```mermaid
 flowchart LR
-    Q["User question"] --> R["Retrieve\nSearch your docs/code\nfor relevant chunks"]
+    Q["User question"] --> R["Retrieve\nSearch your documents\nfor relevant chunks"]
     R --> A["Augment\nInject those chunks\ninto the prompt"]
     A --> G["Generate\nModel answers using\nthe injected context"]
     G --> RESP["Grounded response"]
-    KB[("Knowledge base\ndocs · code · wikis")] -.-> R
+    KB[("Knowledge base\ndocs · files · wikis")] -.-> R
 ```
 
-The model reads the documents you inject — it's not recalling from training data. This makes it far more accurate for questions about your specific codebase, internal docs, or any data that changes.
+The model reads the documents you inject — it's not recalling from training data. This makes it far more accurate for questions about your own documents, internal information, or any data that changes.
 
 ### RAG vs. alternatives
 
@@ -211,7 +216,7 @@ LLMs have no memory between conversations. Every call starts completely fresh.
 | Type | How it works | Examples |
 |------|-------------|---------|
 | **Short-term (in-context)** | Previous messages included in each prompt | All chat interfaces |
-| **Medium-term (files)** | Model reads/writes files as persistent notes | Copilot CLI, Claude Code |
+| **Medium-term (files)** | Reference material kept in a workspace the AI always sees | Claude Projects (project knowledge) |
 | **Long-term (vector DB)** | Past interactions embedded and retrieved by meaning | ChatGPT memory feature |
 
 :::note
@@ -227,7 +232,7 @@ Take one real task from your work. Solve it four ways:
 1. **Zero-shot** — just ask directly
 2. **Few-shot** — give 2–3 examples of what you want before asking
 3. **Chain-of-thought** — ask it to reason step by step first
-4. **With context** — paste in the relevant doc or code, then ask
+4. **With context** — attach the relevant document, then ask
 
 Compare the quality of responses. Notice which approach works best for which type of task.
 
@@ -242,7 +247,7 @@ Compare the quality of responses. Notice which approach works best for which typ
 | **Zero-shot** | Asking without examples |
 | **Few-shot** | Providing examples before your request |
 | **Chain-of-thought** | Asking the model to reason step by step |
-| **Temperature** | How random/creative the model's output is |
+| **Temperature** | The underlying randomness setting — why retries differ; not a dial consumer apps expose |
 | **Hallucination** | When a model confidently states something false |
 | **Grounding** | Providing source material so the model reasons from fact, not recall |
 | **RAG** | Retrieval-Augmented Generation — search + inject + generate |
@@ -262,7 +267,7 @@ Compare the quality of responses. Notice which approach works best for which typ
 
 ---
 
-*Next: [Module 3 — AI in Your Engineering Workflow](./ai-in-your-workflow)*
+*Next: [Module 3 — AI in Your Workday](./ai-in-your-workflow)*
 
 ---
 

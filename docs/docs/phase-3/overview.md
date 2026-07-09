@@ -4,65 +4,34 @@ sidebar_position: 1
 title: Phase 3 Overview
 ---
 
-# Phase 3 — Deep Dives
+# Phase 3 — Working Confidently with AI
 
-*Self-paced · Take in any order · Build on Phase 1 & 2 foundations*
+*Do this after Phase 2. Five modules, ~3.5 hours total.*
 
----
+Phase 1 gave you the mental models. Phase 2 gave you the hands-on skills. Phase 3 is
+the layer that separates *using AI* from *using AI well*: judgment, safety, and
+leadership.
 
-Phase 3 modules go deep on specific topics. Complete Phase 1 and Phase 2 first — these modules assume that foundation. Take them in any order based on what's most relevant to your current work.
+These modules matter more than any feature walkthrough — features change monthly;
+judgment compounds for a career.
 
-:::info Who this is for
-Phase 3 is **optional continued education**. The **Technical Track** is for engineers who want to understand the systems under the hood or build AI features. The **Strategic Track** is for engineers and technical leads who influence product, platform, or org decisions around AI. Take only what's relevant to you — there's no need to complete all of it.
-:::
+## The modules
 
----
+| Module | Time | What you'll be able to do |
+|--------|------|---------------------------|
+| [**1. Confidentiality, Privacy & Sensitive Data**](./confidentiality-and-privacy) | ~45 min | Know exactly what should and shouldn't go into an AI tool — and redact well when it's borderline |
+| [**2. Verifying AI Output & Managing Risk**](./verifying-ai-output) | ~45 min | Match verification effort to stakes, catch fabricated specifics, and know when not to use AI at all |
+| [**3. Choosing AI Tools & Plans**](./choosing-tools-and-plans) | ~40 min | Evaluate tools and plans on the axes that last — data terms, real-work capability, cost that includes adoption |
+| [**4. Bringing AI to Your Team**](./bringing-ai-to-your-team) | ~45 min | Roll AI out to a team: policy, pilots, training, champions, and measuring what matters |
+| [**5. Staying Current**](./staying-current) | ~30 min | Stay comfortably up to date in about an hour a month |
 
-## Technical Track
+**Recommended order:** 1 → 2 first (they're the safety core, and they apply to
+everyone). 3 and 4 matter most if you make buying or leadership decisions. 5 closes
+the loop.
 
-For engineers who want to understand how the systems work under the hood, how to build AI features reliably, and how to go beyond prompting.
+## Going deeper
 
-| Module | What you'll learn | Best for |
-|--------|------------------|---------|
-| [T1: Transformer Architecture](./t1-transformer-architecture) | Self-attention, multi-head attention, positional encoding, scaling laws, emergent abilities | Engineers who want to understand *why* models behave the way they do |
-| [T2: Advanced Prompt Engineering & Evaluation](./t2-advanced-prompting) | CoT, ReAct, structured output, prompt chaining, evals, LLM-as-judge, regression testing | Engineers building or improving AI features |
-| [T3: Embeddings, RAG & Retrieval](./t3-embeddings-rag) | Embeddings, vector databases, RAG architecture, chunking, hybrid search, re-ranking, eval | Engineers working on search, docs AI, or data-grounded features |
-| [T4: Agents & Multi-Agent Systems](./t4-agents-multi-agent) | Agent architecture, tool design, multi-agent patterns, memory, production agents | Engineers building agentic workflows or tools |
-| [T5: Fine-Tuning & Model Customization](./t5-fine-tuning) | LoRA, QLoRA, RLHF, DPO, data preparation, when to fine-tune vs. RAG | Engineers evaluating when and how to customize models |
-| [T6: Open-Source & Local Models](./t6-local-open-source-models) | Open-weight model families, Ollama, llama.cpp, quantization, local deployment | Engineers evaluating self-hosted or privacy-sensitive AI |
-
----
-
-## Strategic Track
-
-For engineers and technical leads who influence product, platform, or organizational decisions around AI.
-
-| Module | What you'll learn | Best for |
-|--------|------------------|---------|
-| [S1: Platform Strategy & Vendor Evaluation](./s1-platform-strategy) | Vendor evaluation framework, Copilot tiers, build vs. buy, data compliance, piloting | Evaluating and choosing AI providers and infrastructure |
-| [S2: Cost Modeling & Optimization](./s2-cost-modeling) | Token pricing, cost estimation, ROI framing, optimization strategies, visibility | Managing AI infrastructure costs at scale |
-| [S3: AI Product Strategy](./s3-ai-product-strategy) | Identifying good use cases, eval strategy, latency, responsible AI, model drift | Making product decisions about AI features |
-| [S4: Team AI Adoption & Education](./s4-team-education) | Running this curriculum, measuring adoption, champions, managing resistance | Designing learning programs and org structures for AI |
-| [S5: Staying Current](./s5-staying-current) | Signal vs. noise, curated sources, personal learning system, evaluating new tools | Keeping up with a field that changes monthly |
-
----
-
-## Recommended paths
-
-Not sure where to start? Pick the path closest to your current work:
-
-**Building AI features into products →** T2 → T3 → T4 → S3
-
-**Deep technical understanding →** T1 → T2 → T4 → T5
-
-**Running local/private AI →** T6 → T5 → T3
-
-**Evaluating platforms and managing cost →** S1 → S2 → S3
-
-**Running an AI education program →** S4 → S5 → S1
-
----
-
-## Contributing a module
-
-If you've gone deep on a topic and want to share what you've learned — open a PR. See [CONTRIBUTING.md](https://github.com/alexkhadiwala-hl/ai-education/blob/main/CONTRIBUTING.md).
+When you want to know how the machinery actually works — transformer internals,
+retrieval systems, agents, fine-tuning — the
+[**Under the Hood appendix**](/docs/appendix/overview) has the technical deep dives.
+Entirely optional; nothing in Phases 1–3 depends on it.
