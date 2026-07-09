@@ -113,7 +113,7 @@ Add:
   if anything, we're changing.* Everyone else is thereby licensed to ignore the news.
 - **A yearly curriculum touch-up.** If you forked this course, once a year swap stale
   examples and note what changed. The
-  [contributing guide](https://github.com/alexkhadiwala/ai-education/blob/main/CONTRIBUTING.md)
+  [contributing guide](https://github.com/alexkhadiwala-hl/ai-education/blob/main/CONTRIBUTING.md)
   is set up for exactly this.
 
 ---

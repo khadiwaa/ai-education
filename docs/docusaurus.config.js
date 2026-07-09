@@ -6,8 +6,8 @@ const config = {
   tagline: 'Practical AI skills for professionals — no coding required',
   favicon: 'img/favicon.svg',
 
-  // Update to your production domain after the first Vercel deploy.
-  url: 'https://ai-education.vercel.app',
+  // Production domain (Vercel). If it changes, re-run `npm run build:skill`.
+  url: 'https://ai-education-mu-woad.vercel.app',
   baseUrl: '/',
 
   onBrokenLinks: 'throw',
